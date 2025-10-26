@@ -28,7 +28,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Configuration precedence handling (Local > Project > Global)
   - Security: Path traversal prevention, input validation
   - Performance: < 10ms scope detection
-- [ ] LLM adapter architecture (Claude + future LLMs)
+- [x] **LLM Adapter Architecture** (#3) - Multi-LLM adapter pattern for skills, commands, agents
+  - `src/core/llm_adapter.py` - Abstract base class and ClaudeAdapter implementation
+  - `src/core/adapter_exceptions.py` - Custom exceptions for adapter operations
+  - `src/core/adapter_models.py` - Data models (CreationResult, AdapterMetadata, ElementType)
+  - `tests/test_llm_adapter.py` - Comprehensive test suite (43 tests)
+  - `tests/test_adapter_integration.py` - Integration tests (12 tests, 89% coverage)
+  - `docs/architecture/ADR/ADR-002-llm-adapter-architecture.md` - Architecture decision record
+  - `src/core/README.md` - Updated with adapter API documentation
+  - LLMAdapter abstract base class with validation and sanitization
+  - ClaudeAdapter for Claude Code (Markdown-based)
+  - Support for skills, commands, and agents creation
+  - Scope integration (global/project/local)
+  - Security: Input validation, path traversal prevention, sanitization
+  - Performance: < 50ms file creation, < 5ms validation
+  - Extensible design for future adapters (CodexAdapter, OpenCodeAdapter)
 - [ ] Documentation fetcher tool
 - [ ] Documentation manifest system
 - [ ] Initial Anthropic/Claude Code documentation
