@@ -1,6 +1,6 @@
 {
   "version": "1.1",
-  "last_updated": "2025-10-26T10:01:59.923506",
+  "last_updated": "2025-10-26T10:47:07.669182",
   "providers": [
     "anthropic"
   ],
@@ -160,8 +160,8 @@
       "provider": "anthropic",
       "url": "https://docs.claude.com/en/docs/agents-and-tools/agent-skills/overview",
       "local_path": "docs/anthropic/agent-skills/overview.md",
-      "hash": "c55bdb0df41afe37a5a5ca395702b6360a0ad875e12b5a671500735f726867d2",
-      "last_fetched": "2025-10-26T10:01:40.323937",
+      "hash": "4eca6241be06c02ca02c6bfdaaefc70cc4a81d00f718e431718d7186e8e8ee66",
+      "last_fetched": "2025-10-26T10:46:50.174504",
       "category": "agent-skills",
       "title": "Agent Skills - Claude Docs",
       "description": "Agent Skills are modular capabilities that extend Claude's functionality. Each Skill packages instructions, metadata, and optional resources (scripts, templates) that Claude uses automatically when relevant.",
@@ -257,7 +257,7 @@
       "url": "https://docs.claude.com/en/api/messages",
       "local_path": "docs/anthropic/api/messages.md",
       "hash": "0af9a8725bad7bfed97bec3fdd116a50519882fcef45c224aa7237855315086b",
-      "last_fetched": "2025-10-26T10:01:57.823544",
+      "last_fetched": "2025-10-26T10:47:07.668736",
       "category": "api",
       "title": "Messages - Claude Docs",
       "description": "Send a structured list of input messages with text and/or image content, and the model will generate the next message in the conversation.\n\nThe Messages API can be used for either single queries or stateless multi-turn conversations.\n\nLearn more about the Messages API in our [user guide](/en/docs/initial-setup)",

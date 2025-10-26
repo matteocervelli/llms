@@ -388,5 +388,3 @@ Help and security
 Learn
 [MCP connectors](https://claude.com/partners/mcp)[Customer stories](https://www.claude.com/customers)[Powered by Claude](https://claude.com/partners/powered-by-claude)[Service partners](https://claude.com/partners/services)[Startups program](https://claude.com/programs/startups)
 Terms and policies
-![Agent Skills Architecture - showing how Skills integrate with the agent's configuration and virtual machine](https://mintcdn.com/anthropic-claude-docs/4Bny2bjzuGBK7o00/images/agent-skills-architecture.png?w=560&fit=max&auto=format&n=4Bny2bjzuGBK7o00&q=85&s=5569fe72706deda67658467053251837)
-![Skills loading into context window - showing the progressive loading of skill metadata and content](https://mintcdn.com/anthropic-claude-docs/4Bny2bjzuGBK7o00/images/agent-skills-context-window.png?w=560&fit=max&auto=format&n=4Bny2bjzuGBK7o00&q=85&s=267349b063954588d4fae2650cb90cd8)

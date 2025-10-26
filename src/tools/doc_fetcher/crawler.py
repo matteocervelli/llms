@@ -146,6 +146,7 @@ class DocumentationCrawler:
                     exclude_external_links=True,
                     remove_overlay_elements=remove_overlay,
                     word_count_threshold=10,  # Minimum words per section
+                    check_robots_txt=False,  # Documentation crawling for personal use
                 )
 
                 result = await crawler.arun(url=url, config=config)

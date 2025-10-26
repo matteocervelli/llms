@@ -26,10 +26,8 @@ import click
 import yaml
 from pydantic import HttpUrl, ValidationError
 
-from .converter import DocumentConverter
 from .crawler import DocumentationCrawler
-from .exceptions import ConversionError, CrawlError, DocFetcherError, FetchError
-from .fetcher import DocumentFetcher
+from .exceptions import CrawlError, DocFetcherError
 from .manifest import ManifestManager
 from .models import DocumentSource, ManifestEntry, ProviderConfig
 
@@ -58,8 +56,6 @@ class DocFetcherCLI:
             logging.getLogger().setLevel(logging.DEBUG)
 
         self.manifest_manager = ManifestManager()
-        self.fetcher = DocumentFetcher()
-        self.converter = DocumentConverter()
         self.crawler = DocumentationCrawler()  # Crawl4AI for LLM-optimized markdown
 
     def load_provider_config(self, provider: str) -> ProviderConfig:
@@ -105,84 +101,7 @@ class DocFetcherCLI:
 
         return [p.stem for p in self.PROVIDERS_DIR.glob("*.yaml") if p.is_file()]
 
-    def fetch_document(self, source: DocumentSource, provider_config: ProviderConfig) -> bool:
-        """
-        Fetch and save a single document.
-
-        Args:
-            source: DocumentSource to fetch
-            provider_config: Provider configuration
-
-        Returns:
-            True if successful, False otherwise
-        """
-        url_str = str(source.url)
-
-        try:
-            # Check if document needs update
-            existing_entry = self.manifest_manager.get_entry(url_str)
-            if existing_entry:
-                click.echo(f"  Checking for changes: {url_str}")
-            else:
-                click.echo(f"  Fetching new document: {url_str}")
-
-            # Fetch content
-            result = self.fetcher.fetch(source.url)
-
-            if not result.success:
-                click.secho(f"  ✗ Failed: {result.error}", fg="red")
-                return False
-
-            # Check if content changed
-            if existing_entry and result.hash == existing_entry.hash:
-                click.secho(f"  ✓ No changes (hash: {result.hash[:8]}...)", fg="yellow")
-                return True
-
-            # Convert to Markdown
-            markdown, metadata = self.converter.convert(result.content or "", url_str)
-
-            # Determine local path
-            local_path = (
-                self.DOCS_DIR
-                / provider_config.name
-                / source.category
-                / f"{Path(source.url.path).stem}.md"
-            )
-
-            # Save to file
-            local_path.parent.mkdir(parents=True, exist_ok=True)
-            with open(local_path, "w", encoding="utf-8") as f:
-                f.write(markdown)
-
-            # Update manifest
-            entry = ManifestEntry(
-                provider=provider_config.name,
-                url=source.url,
-                local_path=local_path,
-                hash=result.hash or "",
-                last_fetched=datetime.now(),
-                category=source.category,
-                title=metadata.get("title"),
-                description=metadata.get("description"),
-            )
-            self.manifest_manager.add_entry(entry)
-
-            if existing_entry:
-                click.secho(f"  ✓ Updated: {local_path} ({len(markdown)} chars)", fg="green")
-            else:
-                click.secho(f"  ✓ Saved: {local_path} ({len(markdown)} chars)", fg="green")
-
-            return True
-
-        except (FetchError, ConversionError, DocFetcherError) as e:
-            click.secho(f"  ✗ Error: {e}", fg="red")
-            return False
-        except Exception as e:
-            logger.exception(f"Unexpected error fetching {url_str}")
-            click.secho(f"  ✗ Unexpected error: {e}", fg="red")
-            return False
-
-    async def fetch_document_crawl4ai(
+    async def fetch_document(
         self, source: DocumentSource, provider_config: ProviderConfig
     ) -> bool:
         """
@@ -263,43 +182,7 @@ class DocFetcherCLI:
             click.secho(f"  ✗ Unexpected error: {e}", fg="red")
             return False
 
-    def fetch_provider(self, provider: str) -> tuple[int, int]:
-        """
-        Fetch all documents for a provider.
-
-        Args:
-            provider: Provider name
-
-        Returns:
-            Tuple of (success_count, total_count)
-        """
-        click.echo(f"\nFetching documents for provider: {provider}")
-        click.echo("=" * 60)
-
-        try:
-            config = self.load_provider_config(provider)
-        except click.ClickException:
-            raise
-
-        if not config.sources:
-            click.secho(f"No sources configured for {provider}", fg="yellow")
-            return (0, 0)
-
-        success_count = 0
-        total_count = len(config.sources)
-
-        with click.progressbar(
-            config.sources,
-            label=f"Processing {total_count} documents",
-            show_pos=True,
-        ) as sources:
-            for source in sources:
-                if self.fetch_document(source, config):
-                    success_count += 1
-
-        return (success_count, total_count)
-
-    async def fetch_provider_crawl4ai(self, provider: str) -> tuple[int, int]:
+    async def fetch_provider(self, provider: str) -> tuple[int, int]:
         """
         Fetch all documents for a provider using Crawl4AI.
 
@@ -396,7 +279,7 @@ def fetch(
                 category=category,
             )
             config = cli_obj.load_provider_config(provider)
-            success = cli_obj.fetch_document(source, config)
+            success = asyncio.run(cli_obj.fetch_document(source, config))
             sys.exit(0 if success else 1)
 
         except ValidationError as e:
@@ -416,7 +299,7 @@ def fetch(
         for prov in providers:
             try:
                 # Use Crawl4AI for LLM-optimized markdown
-                success, count = asyncio.run(cli_obj.fetch_provider_crawl4ai(prov))
+                success, count = asyncio.run(cli_obj.fetch_provider(prov))
                 total_success += success
                 total_count += count
             except click.ClickException as e:
@@ -433,7 +316,7 @@ def fetch(
     if provider:
         try:
             # Use Crawl4AI for LLM-optimized markdown
-            success, count = asyncio.run(cli_obj.fetch_provider_crawl4ai(provider))
+            success, count = asyncio.run(cli_obj.fetch_provider(provider))
             click.echo("\n" + "=" * 60)
             click.secho(
                 f"Summary: {success}/{count} documents fetched successfully",
@@ -449,7 +332,7 @@ def fetch(
 @click.pass_obj
 def update(cli_obj: DocFetcherCLI) -> None:
     """
-    Update all changed documents.
+    Update all changed documents using Crawl4AI.
 
     Checks all documents in manifest and refetches only those that have changed.
     """
@@ -465,49 +348,61 @@ def update(cli_obj: DocFetcherCLI) -> None:
     unchanged_count = 0
     error_count = 0
 
-    with click.progressbar(
-        entries, label=f"Checking {len(entries)} documents", show_pos=True
-    ) as entries_iter:
-        for entry in entries_iter:
-            try:
-                # Fetch current version
-                result = cli_obj.fetcher.fetch(entry.url)
+    async def update_document(entry: ManifestEntry) -> tuple[str, int]:
+        """Update a single document. Returns (status, code) where code: 0=unchanged, 1=updated, 2=error"""
+        try:
+            url_str = str(entry.url)
 
-                if not result.success:
-                    click.echo(f"\n  ✗ Failed: {entry.url} - {result.error}")
-                    error_count += 1
-                    continue
+            # Fetch current version using Crawl4AI
+            markdown, metadata, content_hash = await cli_obj.crawler.crawl_url(url_str)
 
-                # Check if changed
-                if result.hash == entry.hash:
+            # Check if content changed
+            if content_hash == entry.hash:
+                return ("unchanged", 0)
+
+            # Content changed - save to file
+            with open(entry.local_path, "w", encoding="utf-8") as f:
+                f.write(markdown)
+
+            # Update manifest
+            updated_entry = ManifestEntry(
+                provider=entry.provider,
+                url=entry.url,
+                local_path=entry.local_path,
+                hash=content_hash,
+                last_fetched=datetime.now(),
+                category=entry.category,
+                title=metadata.get("title") or entry.title,
+                description=metadata.get("description") or entry.description,
+            )
+            cli_obj.manifest_manager.add_entry(updated_entry)
+
+            return (f"Updated: {entry.local_path}", 1)
+
+        except Exception as e:
+            return (f"Error: {entry.url} - {e}", 2)
+
+    async def update_all():
+        """Update all documents asynchronously"""
+        nonlocal updated_count, unchanged_count, error_count
+
+        with click.progressbar(
+            entries, label=f"Checking {len(entries)} documents", show_pos=True
+        ) as entries_iter:
+            for entry in entries_iter:
+                status, code = await update_document(entry)
+
+                if code == 0:
                     unchanged_count += 1
-                    continue
+                elif code == 1:
+                    click.echo(f"\n  ✓ {status}")
+                    updated_count += 1
+                else:  # code == 2
+                    click.echo(f"\n  ✗ {status}")
+                    error_count += 1
 
-                # Content changed - convert and save
-                markdown, metadata = cli_obj.converter.convert(result.content or "", str(entry.url))
-
-                with open(entry.local_path, "w", encoding="utf-8") as f:
-                    f.write(markdown)
-
-                # Update manifest
-                updated_entry = ManifestEntry(
-                    provider=entry.provider,
-                    url=entry.url,
-                    local_path=entry.local_path,
-                    hash=result.hash or "",
-                    last_fetched=datetime.now(),
-                    category=entry.category,
-                    title=metadata.get("title") or entry.title,
-                    description=metadata.get("description") or entry.description,
-                )
-                cli_obj.manifest_manager.add_entry(updated_entry)
-
-                click.echo(f"\n  ✓ Updated: {entry.local_path}")
-                updated_count += 1
-
-            except Exception as e:
-                click.echo(f"\n  ✗ Error: {entry.url} - {e}")
-                error_count += 1
+    # Run async update
+    asyncio.run(update_all())
 
     click.echo("\n" + "=" * 60)
     click.secho(
