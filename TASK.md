@@ -10,8 +10,8 @@
 
 **Milestone**: [Sprint 1 - Foundation](https://github.com/matteocervelli/llms/milestone/1)
 
-- [ ] [#1](https://github.com/matteocervelli/llms/issues/1) Initialize LLM Configuration Management System
-- [ ] [#2](https://github.com/matteocervelli/llms/issues/2) Build Scope Intelligence System
+- [x] [#1](https://github.com/matteocervelli/llms/issues/1) Initialize LLM Configuration Management System
+- [x] [#2](https://github.com/matteocervelli/llms/issues/2) Build Scope Intelligence System
 - [ ] [#3](https://github.com/matteocervelli/llms/issues/3) Build Basic LLM Adapter Architecture
 - [ ] [#4](https://github.com/matteocervelli/llms/issues/4) Build Documentation Fetcher Tool
 - [ ] [#5](https://github.com/matteocervelli/llms/issues/5) Create Documentation Manifest System
@@ -62,14 +62,15 @@
 
 ## Current Focus
 
-🎯 **Sprint 1, Issue #1**: Initialize LLM Configuration Management System
+🎯 **Sprint 1, Issue #2**: Build Scope Intelligence System ✅ **COMPLETED**
 
-Next steps:
-1. ✅ Create folder structure
-2. ✅ Initialize git repository
-3. ✅ Create CLAUDE.md and AGENTS.md
-4. ✅ Create TASK.md
-5. ⏳ Create README.md
-6. ⏳ Create CONTRIBUTING.md
-7. ⏳ Create CHANGELOG.md
-8. ⏳ Initial commit and push to GitHub
+Completed tasks:
+1. ✅ Create scope exceptions module (src/core/scope_exceptions.py)
+2. ✅ Create scope manager module (src/core/scope_manager.py)
+3. ✅ Write comprehensive unit tests (35 tests, 96% coverage)
+4. ✅ Create scope system documentation (src/core/README.md)
+5. ✅ Create architecture decision record (ADR-001)
+6. ✅ Update main README.md with scope system section
+7. ✅ Run quality checks (mypy, flake8, black, pytest - all passing)
+
+**Next**: Issue #3 - Build Basic LLM Adapter Architecture

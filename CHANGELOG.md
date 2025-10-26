@@ -17,7 +17,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Multi-LLM hybrid architecture design
 
 ### Sprint 1 - Foundation (In Progress)
-- [ ] Scope intelligence system (global/project/local detection)
+- [x] **Scope Intelligence System** (#2) - Three-tier configuration scope management
+  - `src/core/scope_manager.py` - Core scope detection and resolution
+  - `src/core/scope_exceptions.py` - Custom exceptions for scope errors
+  - `tests/test_scope_manager.py` - Comprehensive test suite (35 tests, 96% coverage)
+  - `src/core/README.md` - API documentation and usage examples
+  - `docs/architecture/ADR/ADR-001-scope-intelligence-system.md` - Architecture decision record
+  - Automatic scope detection (Global > Project > Local)
+  - CLI flag support (--global, --project, --local)
+  - Configuration precedence handling (Local > Project > Global)
+  - Security: Path traversal prevention, input validation
+  - Performance: < 10ms scope detection
 - [ ] LLM adapter architecture (Claude + future LLMs)
 - [ ] Documentation fetcher tool
 - [ ] Documentation manifest system

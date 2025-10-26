@@ -76,6 +76,48 @@ python -m src.tools.agent_builder create --name my-agent
 
 ---
 
+## 🎯 Scope Intelligence System
+
+The project includes a powerful **three-tier scope system** for managing configurations at different levels:
+
+### Scope Tiers
+
+- **Global Scope** (`~/.claude/`): User-wide settings that apply to all projects
+- **Project Scope** (`.claude/`): Project-specific settings shared with the team
+- **Local Scope** (`.claude/settings.local.json`): Project-local settings not committed to version control
+
+**Configuration Precedence**: Local > Project > Global
+
+### Quick Example
+
+```python
+from src.core.scope_manager import ScopeManager
+
+# Auto-detect scope based on current directory
+manager = ScopeManager()
+scope = manager.detect_scope()
+print(f"Detected scope: {scope.value}")
+
+# Get effective scope with CLI flag
+scope_config = manager.get_effective_scope('--project')
+print(f"Using path: {scope_config.path}")
+
+# Resolve all scopes with precedence
+scopes = manager.resolve_all_scopes()
+for scope in scopes:
+    print(f"{scope.type.value}: {scope.path} (precedence: {scope.precedence})")
+```
+
+### Use Cases
+
+- **Global**: Personal preferences, default templates, user-wide settings
+- **Project**: Team-shared skills/commands, project configuration (committed)
+- **Local**: Personal overrides, API keys, machine-specific config (gitignored)
+
+See [src/core/README.md](src/core/README.md) for detailed documentation and [ADR-001](docs/architecture/ADR/ADR-001-scope-intelligence-system.md) for design decisions.
+
+---
+
 ## 📁 Project Structure
 
 ```
@@ -157,7 +199,8 @@ pytest -v
 
 ### Tools Documentation
 
-- Documentation Fetcher - `src/tools/doc_fetcher/README.md`
+- **Scope Manager** - [src/core/README.md](src/core/README.md) - Scope intelligence system
+- Documentation Fetcher - `src/tools/doc_fetcher/README.md` (Sprint 1)
 - Skill Builder - `src/tools/skill_builder/README.md` (Sprint 2)
 - Command Builder - `src/tools/command_builder/README.md` (Sprint 2)
 - Agent Builder - `src/tools/agent_builder/README.md` (Sprint 2)
@@ -168,7 +211,7 @@ pytest -v
 
 ### Sprint 1: Foundation (Current)
 - [x] Initialize project structure
-- [ ] Build scope intelligence system
+- [x] Build scope intelligence system
 - [ ] Build LLM adapter architecture
 - [ ] Build documentation fetcher
 - [ ] Fetch Anthropic/Claude Code documentation
