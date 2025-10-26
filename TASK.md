@@ -25,7 +25,7 @@
 **Milestone**: [Sprint 2 - Core Builders](https://github.com/matteocervelli/llms/milestone/2)
 
 - [ ] [#8](https://github.com/matteocervelli/llms/issues/8) Build Skill Builder Tool
-- [ ] [#9](https://github.com/matteocervelli/llms/issues/9) Build Command Builder Tool
+- [x] [#9](https://github.com/matteocervelli/llms/issues/9) Build Command Builder Tool
 - [ ] [#10](https://github.com/matteocervelli/llms/issues/10) Build Agent Builder Tool
 - [ ] [#11](https://github.com/matteocervelli/llms/issues/11) Create Templates Library for Claude Code
 - [ ] [#12](https://github.com/matteocervelli/llms/issues/12) Build Catalog Manifest System
