@@ -14,9 +14,9 @@
 - [x] [#2](https://github.com/matteocervelli/llms/issues/2) Build Scope Intelligence System
 - [x] [#3](https://github.com/matteocervelli/llms/issues/3) Build Basic LLM Adapter Architecture
 - [x] [#4](https://github.com/matteocervelli/llms/issues/4) Build Documentation Fetcher Tool
-- [ ] [#5](https://github.com/matteocervelli/llms/issues/5) Create Documentation Manifest System
-- [ ] [#6](https://github.com/matteocervelli/llms/issues/6) Fetch Initial Anthropic/Claude Code Documentation
-- [ ] [#7](https://github.com/matteocervelli/llms/issues/7) Set Up Weekly Documentation Update Automation
+- [x] [#5](https://github.com/matteocervelli/llms/issues/5) Create Documentation Manifest System
+- [x] [#6](https://github.com/matteocervelli/llms/issues/6) Fetch Initial Anthropic/Claude Code Documentation
+- [x] [#7](https://github.com/matteocervelli/llms/issues/7) Set Up Weekly Documentation Update Automation
 
 ---
 
@@ -62,18 +62,30 @@
 
 ## Current Focus
 
-🎯 **Sprint 1, Issue #4**: Build Documentation Fetcher Tool ✅ **COMPLETED**
+🎯 **Sprint 1**: Foundation ✅ **COMPLETED**
+
+All Sprint 1 issues completed:
+1. ✅ Issue #1 - Initialize LLM Configuration Management System
+2. ✅ Issue #2 - Build Scope Intelligence System
+3. ✅ Issue #3 - Build Basic LLM Adapter Architecture
+4. ✅ Issue #4 - Build Documentation Fetcher Tool
+5. ✅ Issue #5 - Create Documentation Manifest System (v1.1 schema)
+6. ✅ Issue #6 - Fetch Initial Anthropic/Claude Code Documentation (22 docs via Crawl4AI)
+7. ✅ Issue #7 - Set Up Weekly Documentation Update Automation (cron-based)
+
+**Latest**: Issue #7 - Weekly Documentation Update Automation ✅ **COMPLETED**
 
 Completed tasks:
-1. ✅ Create core models and exceptions (models.py, exceptions.py)
-2. ✅ Implement HTML fetcher with rate limiting (fetcher.py)
-3. ✅ Implement HTML to Markdown converter (converter.py)
-4. ✅ Implement manifest management system (manifest.py)
-5. ✅ Create CLI interface with Click (main.py)
-6. ✅ Add provider configurations (anthropic.yaml, openai.yaml)
-7. ✅ Write comprehensive test suite (38 tests, 36 passing, 63-93% coverage)
-8. ✅ Create documentation (README.md, ADR-003)
-9. ✅ Run quality checks (black, flake8, pytest)
-10. ✅ Update CHANGELOG.md and TASK.md
+1. ✅ Create scripts/update_docs.sh (231 lines, comprehensive error handling)
+2. ✅ Environment validation (Python version, dependencies, project structure)
+3. ✅ Log rotation (30-day retention, automatic cleanup)
+4. ✅ Optional email notifications (via mail command, on errors only)
+5. ✅ Exit codes for cron monitoring (0=success, 1=partial, 2=fatal)
+6. ✅ Create logs/doc_fetcher/.gitkeep for directory tracking
+7. ✅ Update README.md with "Automation" section (complete setup guide)
+8. ✅ Create ADR-007 (architecture decision record)
+9. ✅ Create implementation guide (docs/implementation/issue-7-automation.md)
+10. ✅ Test script manually (all scenarios validated)
+11. ✅ Update CHANGELOG.md and TASK.md
 
-**Next**: Issue #5 - Create Documentation Manifest System (integrated with fetcher)
+**Next**: Sprint 2 - Core Builders (Skill Builder, Command Builder, Agent Builder)

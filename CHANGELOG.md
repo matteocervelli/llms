@@ -98,7 +98,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Security: All existing doc_fetcher security measures maintained
   - Performance: ~50 seconds total fetch time (22 pages @ ~2.3s/page including rate limiting)
   - Files: 22 markdown files totaling ~500KB in docs/anthropic/{claude-code,agent-skills,api-sdk,api}/
-- [ ] Weekly documentation update automation (future enhancement)
+- [x] **Weekly Documentation Update Automation** (#7) - Cron-based automation for unattended doc updates
+  - `scripts/update_docs.sh` - Bash wrapper script with comprehensive error handling (231 lines)
+  - `logs/doc_fetcher/.gitkeep` - Log directory structure documentation
+  - `docs/architecture/ADR/ADR-007-weekly-documentation-automation.md` - Architecture decision record
+  - `docs/implementation/issue-7-automation.md` - Implementation guide with testing results
+  - `README.md` - Added "Automation" section with complete setup guide
+  - **Cron-based scheduling** for weekly updates (Sundays 2 AM)
+  - **Environment validation**: Python version, dependencies, project structure
+  - **Log rotation**: Automatic cleanup (30-day retention)
+  - **Optional email notifications** via `mail` command (on errors only)
+  - **Exit codes**: 0=success, 1=partial failure, 2=fatal error
+  - Security: Script permissions 750, log permissions 640, no hardcoded credentials
+  - Performance: < 60s typical execution, ~10KB log files
+  - Tested manually: All scenarios validated (normal execution, wrong directory, log rotation)
 
 ### Sprint 2 - Core Builders (Planned)
 - [ ] Skill builder tool

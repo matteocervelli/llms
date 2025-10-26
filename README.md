@@ -190,6 +190,144 @@ pytest -v
 
 ---
 
+## 🤖 Automation
+
+### Weekly Documentation Updates
+
+Automatically update LLM provider documentation on a weekly schedule using cron.
+
+#### Quick Setup
+
+1. **Test the script manually**:
+```bash
+cd ~/.claude/llms
+./scripts/update_docs.sh
+```
+
+2. **Add to crontab** (Sundays at 2 AM):
+```bash
+crontab -e
+```
+
+Add this line:
+```bash
+# Update LLM documentation weekly (Sundays at 2 AM)
+0 2 * * 0 cd ~/.claude/llms && ./scripts/update_docs.sh >> logs/doc_fetcher/cron.log 2>&1
+```
+
+3. **Verify cron job**:
+```bash
+crontab -l
+```
+
+#### Enable Email Notifications (Optional)
+
+To receive email alerts on errors, set the environment variable:
+
+```bash
+# Add to your shell profile (~/.bashrc, ~/.zshrc, etc.)
+export DOC_UPDATER_EMAIL="your-email@example.com"
+```
+
+**Requirements**:
+- `mail` command (install: `brew install mailutils` on macOS)
+- Configured mail server (sendmail, postfix, or SMTP)
+
+#### Log Management
+
+**Log Locations**:
+- Detailed logs: `logs/doc_fetcher/update_YYYYMMDD_HHMMSS.log`
+- Cron output: `logs/doc_fetcher/cron.log`
+
+**Automatic Rotation**:
+- Logs older than 30 days are automatically deleted
+- Each run creates a new timestamped log file
+
+**View Recent Logs**:
+```bash
+# List all logs
+ls -lh logs/doc_fetcher/
+
+# View latest log
+tail -f logs/doc_fetcher/update_*.log | tail -n 50
+
+# View cron output
+tail -f logs/doc_fetcher/cron.log
+```
+
+#### Disable Automation
+
+To temporarily disable automatic updates:
+
+```bash
+# Comment out the cron job
+crontab -e
+# Add # at the beginning of the line:
+# 0 2 * * 0 cd ~/.claude/llms && ./scripts/update_docs.sh >> logs/doc_fetcher/cron.log 2>&1
+```
+
+To permanently remove:
+```bash
+crontab -e
+# Delete the line completely
+```
+
+#### Troubleshooting
+
+**Cron job not running**:
+1. Check cron is enabled: `sudo launchctl list | grep cron` (macOS)
+2. Check cron logs: `grep CRON /var/log/system.log` (macOS)
+3. Verify script permissions: `ls -l scripts/update_docs.sh` (should be `-rwxr-x---`)
+
+**Script fails with errors**:
+1. Run manually to see detailed output: `./scripts/update_docs.sh`
+2. Check Python installation: `python --version` (should be 3.11+)
+3. Verify dependencies: `pip list | grep -E "(click|requests|pydantic|crawl4ai)"`
+4. Check manifest exists: `ls -l manifests/docs.json`
+
+**Email notifications not working**:
+1. Check `mail` command: `which mail`
+2. Test email manually: `echo "test" | mail -s "Test" your-email@example.com`
+3. Check environment variable: `echo $DOC_UPDATER_EMAIL`
+4. Verify mail server configuration
+
+**Logs filling up disk**:
+- Logs are automatically rotated (30-day retention)
+- Check disk usage: `du -sh logs/doc_fetcher/`
+- Manually delete old logs: `rm logs/doc_fetcher/update_*.log`
+
+#### Advanced Configuration
+
+**Custom Schedule**:
+```bash
+# Daily at 3 AM
+0 3 * * * cd ~/.claude/llms && ./scripts/update_docs.sh >> logs/doc_fetcher/cron.log 2>&1
+
+# Twice weekly (Monday and Thursday at 1 AM)
+0 1 * * 1,4 cd ~/.claude/llms && ./scripts/update_docs.sh >> logs/doc_fetcher/cron.log 2>&1
+
+# Monthly (first Sunday at 2 AM)
+0 2 1-7 * 0 cd ~/.claude/llms && ./scripts/update_docs.sh >> logs/doc_fetcher/cron.log 2>&1
+```
+
+**Custom Python Command**:
+```bash
+# Use specific Python interpreter
+0 2 * * 0 cd ~/.claude/llms && PYTHON_CMD=python3.11 ./scripts/update_docs.sh >> logs/doc_fetcher/cron.log 2>&1
+
+# Use virtual environment
+0 2 * * 0 cd ~/.claude/llms && PYTHON_CMD=.venv/bin/python ./scripts/update_docs.sh >> logs/doc_fetcher/cron.log 2>&1
+```
+
+**Custom Log Retention**:
+
+Edit `scripts/update_docs.sh` and change:
+```bash
+LOG_RETENTION_DAYS=30  # Change to desired number of days
+```
+
+---
+
 ## 📚 Documentation
 
 - [CLAUDE.md](CLAUDE.md) - Project instructions for Claude Code
@@ -200,7 +338,7 @@ pytest -v
 ### Tools Documentation
 
 - **Scope Manager** - [src/core/README.md](src/core/README.md) - Scope intelligence system
-- Documentation Fetcher - `src/tools/doc_fetcher/README.md` (Sprint 1)
+- **Documentation Fetcher** - [src/tools/doc_fetcher/README.md](src/tools/doc_fetcher/README.md) - Automated doc fetching
 - Skill Builder - `src/tools/skill_builder/README.md` (Sprint 2)
 - Command Builder - `src/tools/command_builder/README.md` (Sprint 2)
 - Agent Builder - `src/tools/agent_builder/README.md` (Sprint 2)
