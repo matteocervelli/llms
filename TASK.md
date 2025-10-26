@@ -12,8 +12,8 @@
 
 - [x] [#1](https://github.com/matteocervelli/llms/issues/1) Initialize LLM Configuration Management System
 - [x] [#2](https://github.com/matteocervelli/llms/issues/2) Build Scope Intelligence System
-- [ ] [#3](https://github.com/matteocervelli/llms/issues/3) Build Basic LLM Adapter Architecture
-- [ ] [#4](https://github.com/matteocervelli/llms/issues/4) Build Documentation Fetcher Tool
+- [x] [#3](https://github.com/matteocervelli/llms/issues/3) Build Basic LLM Adapter Architecture
+- [x] [#4](https://github.com/matteocervelli/llms/issues/4) Build Documentation Fetcher Tool
 - [ ] [#5](https://github.com/matteocervelli/llms/issues/5) Create Documentation Manifest System
 - [ ] [#6](https://github.com/matteocervelli/llms/issues/6) Fetch Initial Anthropic/Claude Code Documentation
 - [ ] [#7](https://github.com/matteocervelli/llms/issues/7) Set Up Weekly Documentation Update Automation
@@ -62,15 +62,18 @@
 
 ## Current Focus
 
-🎯 **Sprint 1, Issue #2**: Build Scope Intelligence System ✅ **COMPLETED**
+🎯 **Sprint 1, Issue #4**: Build Documentation Fetcher Tool ✅ **COMPLETED**
 
 Completed tasks:
-1. ✅ Create scope exceptions module (src/core/scope_exceptions.py)
-2. ✅ Create scope manager module (src/core/scope_manager.py)
-3. ✅ Write comprehensive unit tests (35 tests, 96% coverage)
-4. ✅ Create scope system documentation (src/core/README.md)
-5. ✅ Create architecture decision record (ADR-001)
-6. ✅ Update main README.md with scope system section
-7. ✅ Run quality checks (mypy, flake8, black, pytest - all passing)
+1. ✅ Create core models and exceptions (models.py, exceptions.py)
+2. ✅ Implement HTML fetcher with rate limiting (fetcher.py)
+3. ✅ Implement HTML to Markdown converter (converter.py)
+4. ✅ Implement manifest management system (manifest.py)
+5. ✅ Create CLI interface with Click (main.py)
+6. ✅ Add provider configurations (anthropic.yaml, openai.yaml)
+7. ✅ Write comprehensive test suite (38 tests, 36 passing, 63-93% coverage)
+8. ✅ Create documentation (README.md, ADR-003)
+9. ✅ Run quality checks (black, flake8, pytest)
+10. ✅ Update CHANGELOG.md and TASK.md
 
-**Next**: Issue #3 - Build Basic LLM Adapter Architecture
+**Next**: Issue #5 - Create Documentation Manifest System (integrated with fetcher)

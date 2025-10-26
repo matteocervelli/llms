@@ -43,10 +43,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Security: Input validation, path traversal prevention, sanitization
   - Performance: < 50ms file creation, < 5ms validation
   - Extensible design for future adapters (CodexAdapter, OpenCodeAdapter)
-- [ ] Documentation fetcher tool
-- [ ] Documentation manifest system
-- [ ] Initial Anthropic/Claude Code documentation
-- [ ] Weekly documentation update automation
+- [x] **Documentation Fetcher Tool** (#4) - Automated documentation fetching and management
+  - `src/tools/doc_fetcher/models.py` - Pydantic data models with validation
+  - `src/tools/doc_fetcher/exceptions.py` - Custom exceptions for doc_fetcher operations
+  - `src/tools/doc_fetcher/fetcher.py` - HTTP fetching with rate limiting and robots.txt compliance
+  - `src/tools/doc_fetcher/converter.py` - HTML to Markdown conversion with sanitization
+  - `src/tools/doc_fetcher/manifest.py` - Manifest management with atomic writes
+  - `src/tools/doc_fetcher/main.py` - CLI interface with Click (fetch, update, list commands)
+  - `src/tools/doc_fetcher/providers/` - Provider configurations (anthropic.yaml, openai.yaml)
+  - `tests/test_doc_fetcher.py` - Comprehensive test suite (38 tests, 36 passing)
+  - `src/tools/doc_fetcher/README.md` - API documentation and usage examples
+  - `docs/architecture/ADR/ADR-003-documentation-fetcher.md` - Architecture decision record
+  - Multi-provider support (Anthropic, OpenAI, extensible)
+  - SHA-256 hash-based change detection
+  - Token bucket rate limiting (configurable)
+  - robots.txt compliance with automatic checking
+  - XSS prevention and HTML sanitization
+  - Security: URL validation, path traversal prevention, size limits
+  - Performance: < 5s fetch, < 500ms conversion, < 100ms manifest operations
+  - CLI commands: fetch --all, fetch --provider, update, list
+- [ ] Documentation manifest system (integrated with fetcher)
+- [ ] Initial Anthropic/Claude Code documentation (fetcher ready)
+- [ ] Weekly documentation update automation (future enhancement)
 
 ### Sprint 2 - Core Builders (Planned)
 - [ ] Skill builder tool

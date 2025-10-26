@@ -1,0 +1,43 @@
+# Anthropic Documentation Provider Configuration
+
+name: anthropic
+base_url: https://docs.anthropic.com
+rate_limit: 1.0  # requests per second
+robots_txt_url: https://docs.anthropic.com/robots.txt
+
+sources:
+  # Getting Started
+  - url: https://docs.anthropic.com/en/docs/quickstart
+    provider: anthropic
+    category: quickstart
+
+  # Claude Code Documentation
+  - url: https://docs.anthropic.com/en/docs/claude-code/overview
+    provider: anthropic
+    category: claude-code
+
+  - url: https://docs.anthropic.com/en/docs/claude-code/getting-started
+    provider: anthropic
+    category: claude-code
+
+  - url: https://docs.anthropic.com/en/docs/claude-code/features
+    provider: anthropic
+    category: claude-code
+
+  # API Reference
+  - url: https://docs.anthropic.com/en/api/getting-started
+    provider: anthropic
+    category: api
+
+  - url: https://docs.anthropic.com/en/api/messages
+    provider: anthropic
+    category: api
+
+  # Guides
+  - url: https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering
+    provider: anthropic
+    category: guides
+
+  - url: https://docs.anthropic.com/en/docs/build-with-claude/tool-use
+    provider: anthropic
+    category: guides

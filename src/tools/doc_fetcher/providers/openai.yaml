@@ -1,0 +1,42 @@
+# OpenAI Documentation Provider Configuration
+
+name: openai
+base_url: https://platform.openai.com
+rate_limit: 1.0  # requests per second
+robots_txt_url: https://platform.openai.com/robots.txt
+
+sources:
+  # Getting Started
+  - url: https://platform.openai.com/docs/quickstart
+    provider: openai
+    category: quickstart
+
+  - url: https://platform.openai.com/docs/introduction
+    provider: openai
+    category: quickstart
+
+  # API Reference
+  - url: https://platform.openai.com/docs/api-reference/introduction
+    provider: openai
+    category: api
+
+  - url: https://platform.openai.com/docs/api-reference/chat
+    provider: openai
+    category: api
+
+  - url: https://platform.openai.com/docs/api-reference/completions
+    provider: openai
+    category: api
+
+  # Guides
+  - url: https://platform.openai.com/docs/guides/prompt-engineering
+    provider: openai
+    category: guides
+
+  - url: https://platform.openai.com/docs/guides/function-calling
+    provider: openai
+    category: guides
+
+  - url: https://platform.openai.com/docs/guides/embeddings
+    provider: openai
+    category: guides
