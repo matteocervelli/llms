@@ -109,7 +109,8 @@ class DocumentFetcher:
 
     # Security: Whitelist of allowed domains
     ALLOWED_DOMAINS = [
-        "docs.anthropic.com",
+        "docs.anthropic.com",  # Legacy domain
+        "docs.claude.com",  # New Claude documentation domain
         "platform.openai.com",
         "docs.openai.com",
         "claude.ai",

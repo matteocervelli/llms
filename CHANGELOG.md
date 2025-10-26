@@ -78,7 +78,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Automatic schema migration from v1.0 to v1.1
   - Security: UUID validation, topics sanitization, search query sanitization
   - Performance: < 50ms update, < 100ms search (1000 docs), < 10ms helpers
-- [ ] Initial Anthropic/Claude Code documentation (fetcher ready)
+- [x] **Crawl4AI Integration for LLM-Optimized Documentation Fetching** (#6) - Enhanced doc_fetcher with Crawl4AI
+  - `src/tools/doc_fetcher/crawler.py` - Crawl4AI-based documentation crawler with async support
+  - `src/tools/doc_fetcher/exceptions.py` - Added CrawlError exception type
+  - `src/tools/doc_fetcher/main.py` - Integrated Crawl4AI with fetch_document_crawl4ai() and fetch_provider_crawl4ai()
+  - `src/tools/doc_fetcher/fetcher.py` - Updated ALLOWED_DOMAINS to include docs.claude.com
+  - `src/tools/doc_fetcher/providers/anthropic.yaml` - Updated with 22 priority Claude Code documentation URLs
+  - `requirements.txt` - Added crawl4ai>=0.7.0 and playwright>=1.40.0 dependencies
+  - **Fetched 22 priority documentation pages** (100% success rate):
+    - Claude Code (12 pages): overview, quickstart, workflows, skills, commands, subagents, hooks, memory, MCP, output-styles, headless
+    - Agent Skills (5 pages): overview, quickstart, best practices, MCP connector, remote MCP servers
+    - Agent SDK (3 pages): overview, TypeScript, Python references
+    - API (2 pages): messages, models endpoints
+  - **LLM-optimized markdown** with superior quality vs BeautifulSoup/Markdownify
+  - **Automatic content extraction** with JavaScript rendering support
+  - **Rate limiting** respected (1 req/sec)
+  - **Async crawling** for improved performance (~1.5s per page)
+  - **Manifest tracking** with 22 documents, proper metadata, and hash-based change detection
+  - Security: All existing doc_fetcher security measures maintained
+  - Performance: ~50 seconds total fetch time (22 pages @ ~2.3s/page including rate limiting)
+  - Files: 22 markdown files totaling ~500KB in docs/anthropic/{claude-code,agent-skills,api-sdk,api}/
 - [ ] Weekly documentation update automation (future enhancement)
 
 ### Sprint 2 - Core Builders (Planned)

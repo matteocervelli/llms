@@ -15,6 +15,7 @@ Example Usage:
     $ python -m src.tools.doc_fetcher list --provider openai
 """
 
+import asyncio
 import logging
 import sys
 from datetime import datetime
@@ -26,7 +27,8 @@ import yaml
 from pydantic import HttpUrl, ValidationError
 
 from .converter import DocumentConverter
-from .exceptions import ConversionError, DocFetcherError, FetchError
+from .crawler import DocumentationCrawler
+from .exceptions import ConversionError, CrawlError, DocFetcherError, FetchError
 from .fetcher import DocumentFetcher
 from .manifest import ManifestManager
 from .models import DocumentSource, ManifestEntry, ProviderConfig
@@ -58,6 +60,7 @@ class DocFetcherCLI:
         self.manifest_manager = ManifestManager()
         self.fetcher = DocumentFetcher()
         self.converter = DocumentConverter()
+        self.crawler = DocumentationCrawler()  # Crawl4AI for LLM-optimized markdown
 
     def load_provider_config(self, provider: str) -> ProviderConfig:
         """
@@ -179,6 +182,87 @@ class DocFetcherCLI:
             click.secho(f"  ✗ Unexpected error: {e}", fg="red")
             return False
 
+    async def fetch_document_crawl4ai(
+        self, source: DocumentSource, provider_config: ProviderConfig
+    ) -> bool:
+        """
+        Fetch and save a single document using Crawl4AI.
+
+        Uses Crawl4AI for superior LLM-optimized markdown extraction with
+        automatic noise removal and semantic structure preservation.
+
+        Args:
+            source: DocumentSource to fetch
+            provider_config: Provider configuration
+
+        Returns:
+            True if successful, False otherwise
+        """
+        url_str = str(source.url)
+
+        try:
+            # Check if document needs update
+            existing_entry = self.manifest_manager.get_entry(url_str)
+            if existing_entry:
+                click.echo(f"  Checking for changes: {url_str}")
+            else:
+                click.echo(f"  Fetching new document: {url_str}")
+
+            # Fetch content using Crawl4AI
+            markdown, metadata, content_hash = await self.crawler.crawl_url(url_str)
+
+            # Check if content changed
+            if existing_entry and content_hash == existing_entry.hash:
+                click.secho(
+                    f"  ✓ No changes (hash: {content_hash[:8]}...)", fg="yellow"
+                )
+                return True
+
+            # Determine local path
+            local_path = (
+                self.DOCS_DIR
+                / provider_config.name
+                / source.category
+                / f"{Path(source.url.path).stem}.md"
+            )
+
+            # Save to file
+            local_path.parent.mkdir(parents=True, exist_ok=True)
+            with open(local_path, "w", encoding="utf-8") as f:
+                f.write(markdown)
+
+            # Update manifest
+            entry = ManifestEntry(
+                provider=provider_config.name,
+                url=source.url,
+                local_path=local_path,
+                hash=content_hash,
+                last_fetched=datetime.now(),
+                category=source.category,
+                title=metadata.get("title"),
+                description=metadata.get("description"),
+            )
+            self.manifest_manager.add_entry(entry)
+
+            if existing_entry:
+                click.secho(
+                    f"  ✓ Updated: {local_path} ({len(markdown)} chars)", fg="green"
+                )
+            else:
+                click.secho(
+                    f"  ✓ Saved: {local_path} ({len(markdown)} chars)", fg="green"
+                )
+
+            return True
+
+        except CrawlError as e:
+            click.secho(f"  ✗ Crawl error: {e}", fg="red")
+            return False
+        except Exception as e:
+            logger.exception(f"Unexpected error fetching {url_str}")
+            click.secho(f"  ✗ Unexpected error: {e}", fg="red")
+            return False
+
     def fetch_provider(self, provider: str) -> tuple[int, int]:
         """
         Fetch all documents for a provider.
@@ -212,6 +296,38 @@ class DocFetcherCLI:
             for source in sources:
                 if self.fetch_document(source, config):
                     success_count += 1
+
+        return (success_count, total_count)
+
+    async def fetch_provider_crawl4ai(self, provider: str) -> tuple[int, int]:
+        """
+        Fetch all documents for a provider using Crawl4AI.
+
+        Args:
+            provider: Provider name
+
+        Returns:
+            Tuple of (success_count, total_count)
+        """
+        click.echo(f"\nFetching documents for provider: {provider} (using Crawl4AI)")
+        click.echo("=" * 60)
+
+        try:
+            config = self.load_provider_config(provider)
+        except click.ClickException:
+            raise
+
+        if not config.sources:
+            click.secho(f"No sources configured for {provider}", fg="yellow")
+            return (0, 0)
+
+        success_count = 0
+        total_count = len(config.sources)
+
+        click.echo(f"Processing {total_count} documents with LLM-optimized extraction...")
+        for source in config.sources:
+            if await self.fetch_document_crawl4ai(source, config):
+                success_count += 1
 
         return (success_count, total_count)
 
@@ -299,7 +415,8 @@ def fetch(
 
         for prov in providers:
             try:
-                success, count = cli_obj.fetch_provider(prov)
+                # Use Crawl4AI for LLM-optimized markdown
+                success, count = asyncio.run(cli_obj.fetch_provider_crawl4ai(prov))
                 total_success += success
                 total_count += count
             except click.ClickException as e:
@@ -315,7 +432,8 @@ def fetch(
     # Fetch specific provider
     if provider:
         try:
-            success, count = cli_obj.fetch_provider(provider)
+            # Use Crawl4AI for LLM-optimized markdown
+            success, count = asyncio.run(cli_obj.fetch_provider_crawl4ai(provider))
             click.echo("\n" + "=" * 60)
             click.secho(
                 f"Summary: {success}/{count} documents fetched successfully",

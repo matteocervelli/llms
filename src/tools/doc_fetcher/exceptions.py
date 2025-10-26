@@ -4,6 +4,7 @@ Custom exceptions for the Documentation Fetcher tool.
 Provides specific exception types for different failure scenarios:
 - FetchError: HTTP fetching failures
 - ConversionError: HTML to Markdown conversion failures
+- CrawlError: Crawl4AI crawling failures
 - ManifestError: Manifest file operations failures
 - RateLimitError: Rate limiting violations
 """
@@ -60,6 +61,28 @@ class ConversionError(DocFetcherError):
         """
         self.url = url
         super().__init__(f"Failed to convert {url}: {message}")
+
+
+class CrawlError(DocFetcherError):
+    """
+    Raised when Crawl4AI crawling fails.
+
+    Common causes:
+        - Network connectivity issues
+        - JavaScript rendering failures
+        - Browser automation errors
+        - Content extraction failures
+        - Timeout errors
+    """
+
+    def __init__(self, message: str) -> None:
+        """
+        Initialize CrawlError.
+
+        Args:
+            message: Error description
+        """
+        super().__init__(f"Crawl error: {message}")
 
 
 class ManifestError(DocFetcherError):

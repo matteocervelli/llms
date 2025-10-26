@@ -1,43 +1,100 @@
-# Anthropic Documentation Provider Configuration
+# Anthropic/Claude Documentation Provider Configuration
+# Updated for docs.claude.com with comprehensive Claude Code coverage
 
 name: anthropic
-base_url: https://docs.anthropic.com
+base_url: https://docs.claude.com
 rate_limit: 1.0  # requests per second
-robots_txt_url: https://docs.anthropic.com/robots.txt
+robots_txt_url: https://docs.claude.com/robots.txt
 
 sources:
-  # Getting Started
-  - url: https://docs.anthropic.com/en/docs/quickstart
-    provider: anthropic
-    category: quickstart
-
-  # Claude Code Documentation
-  - url: https://docs.anthropic.com/en/docs/claude-code/overview
+  # Claude Code - Core Features (Priority)
+  - url: https://docs.claude.com/en/docs/claude-code/overview
     provider: anthropic
     category: claude-code
 
-  - url: https://docs.anthropic.com/en/docs/claude-code/getting-started
+  - url: https://docs.claude.com/en/docs/claude-code/quickstart
     provider: anthropic
     category: claude-code
 
-  - url: https://docs.anthropic.com/en/docs/claude-code/features
+  - url: https://docs.claude.com/en/docs/claude-code/common-workflows
     provider: anthropic
     category: claude-code
+
+  - url: https://docs.claude.com/en/docs/claude-code/skills
+    provider: anthropic
+    category: claude-code
+
+  - url: https://docs.claude.com/en/docs/claude-code/slash-commands
+    provider: anthropic
+    category: claude-code
+
+  - url: https://docs.claude.com/en/docs/claude-code/subagents
+    provider: anthropic
+    category: claude-code
+
+  - url: https://docs.claude.com/en/docs/claude-code/hooks
+    provider: anthropic
+    category: claude-code
+
+  - url: https://docs.claude.com/en/docs/claude-code/hooks-guide
+    provider: anthropic
+    category: claude-code
+
+  - url: https://docs.claude.com/en/docs/claude-code/memory
+    provider: anthropic
+    category: claude-code
+
+  - url: https://docs.claude.com/en/docs/claude-code/mcp
+    provider: anthropic
+    category: claude-code
+
+  - url: https://docs.claude.com/en/docs/claude-code/output-styles
+    provider: anthropic
+    category: claude-code
+
+  - url: https://docs.claude.com/en/docs/claude-code/headless
+    provider: anthropic
+    category: claude-code
+
+  # Agent Skills (Priority)
+  - url: https://docs.claude.com/en/docs/agents-and-tools/agent-skills/overview
+    provider: anthropic
+    category: agent-skills
+
+  - url: https://docs.claude.com/en/docs/agents-and-tools/agent-skills/quickstart
+    provider: anthropic
+    category: agent-skills
+
+  - url: https://docs.claude.com/en/docs/agents-and-tools/agent-skills/best-practices
+    provider: anthropic
+    category: agent-skills
+
+  - url: https://docs.claude.com/en/docs/agents-and-tools/mcp-connector
+    provider: anthropic
+    category: agent-skills
+
+  - url: https://docs.claude.com/en/docs/agents-and-tools/remote-mcp-servers
+    provider: anthropic
+    category: agent-skills
+
+  # Agent SDK (Priority)
+  - url: https://docs.claude.com/en/api/agent-sdk/overview
+    provider: anthropic
+    category: api-sdk
+
+  - url: https://docs.claude.com/en/api/agent-sdk/typescript
+    provider: anthropic
+    category: api-sdk
+
+  - url: https://docs.claude.com/en/api/agent-sdk/python
+    provider: anthropic
+    category: api-sdk
 
   # API Reference
-  - url: https://docs.anthropic.com/en/api/getting-started
+  - url: https://docs.claude.com/en/api/messages
     provider: anthropic
     category: api
 
-  - url: https://docs.anthropic.com/en/api/messages
+  - url: https://docs.claude.com/en/api/models
     provider: anthropic
     category: api
-
-  # Guides
-  - url: https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering
-    provider: anthropic
-    category: guides
-
-  - url: https://docs.anthropic.com/en/docs/build-with-claude/tool-use
-    provider: anthropic
-    category: guides
