@@ -90,6 +90,31 @@ sources:
     provider: anthropic
     category: api-sdk
 
+  # Claude Code - Additional Resources (Command Builder Focus)
+  - url: https://docs.claude.com/en/docs/claude-code/cli-reference
+    provider: anthropic
+    category: claude-code
+
+  - url: https://docs.claude.com/en/docs/claude-code/sdk/sdk-slash-commands
+    provider: anthropic
+    category: claude-code
+
+  - url: https://docs.claude.com/en/docs/claude-code/plugins
+    provider: anthropic
+    category: claude-code
+
+  - url: https://docs.claude.com/en/docs/claude-code/github-actions
+    provider: anthropic
+    category: claude-code
+
+  - url: https://docs.claude.com/en/docs/claude-code/claude-code-on-the-web
+    provider: anthropic
+    category: claude-code
+
+  - url: https://docs.claude.com/en/docs/claude-code/interactive-mode
+    provider: anthropic
+    category: claude-code
+
   # API Reference
   - url: https://docs.claude.com/en/api/messages
     provider: anthropic

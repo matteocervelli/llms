@@ -1,6 +1,6 @@
 {
   "version": "1.1",
-  "last_updated": "2025-10-26T10:47:07.669182",
+  "last_updated": "2025-10-26T16:31:39.202901",
   "providers": [
     "anthropic"
   ],
@@ -160,8 +160,8 @@
       "provider": "anthropic",
       "url": "https://docs.claude.com/en/docs/agents-and-tools/agent-skills/overview",
       "local_path": "docs/anthropic/agent-skills/overview.md",
-      "hash": "4eca6241be06c02ca02c6bfdaaefc70cc4a81d00f718e431718d7186e8e8ee66",
-      "last_fetched": "2025-10-26T10:46:50.174504",
+      "hash": "c55bdb0df41afe37a5a5ca395702b6360a0ad875e12b5a671500735f726867d2",
+      "last_fetched": "2025-10-26T16:31:11.074912",
       "category": "agent-skills",
       "title": "Agent Skills - Claude Docs",
       "description": "Agent Skills are modular capabilities that extend Claude's functionality. Each Skill packages instructions, metadata, and optional resources (scripts, templates) that Claude uses automatically when relevant.",
@@ -273,6 +273,78 @@
       "category": "api",
       "title": "Get a Model - Claude Docs",
       "description": "Get a specific model.\n\nThe Models API response can be used to determine information about a specific model or resolve a model alias to a model ID.",
+      "topics": []
+    },
+    {
+      "id": "0959cb17-24b3-468e-85f0-a62a40900058",
+      "provider": "anthropic",
+      "url": "https://docs.claude.com/en/docs/claude-code/cli-reference",
+      "local_path": "docs/anthropic/claude-code/cli-reference.md",
+      "hash": "2be2afa270fe1b99747243a1bd7e921f27d908bfdaab12c00573bb902a43d7f2",
+      "last_fetched": "2025-10-26T16:31:28.905070",
+      "category": "claude-code",
+      "title": "CLI reference - Claude Docs",
+      "description": "Complete reference for Claude Code command-line interface, including commands and flags.",
+      "topics": []
+    },
+    {
+      "id": "70008e16-5f18-4b9d-882c-b6af37628df8",
+      "provider": "anthropic",
+      "url": "https://docs.claude.com/en/docs/claude-code/sdk/sdk-slash-commands",
+      "local_path": "docs/anthropic/claude-code/sdk-slash-commands.md",
+      "hash": "109881bee4eec58de52a82a6868637cf534ed785668532c541063a12cb725c43",
+      "last_fetched": "2025-10-26T16:31:30.905118",
+      "category": "claude-code",
+      "title": "Slash Commands in the SDK - Claude Docs",
+      "description": "Learn how to use slash commands to control Claude Code sessions through the SDK",
+      "topics": []
+    },
+    {
+      "id": "6a3ac16b-872b-479a-bbc3-d337f47f20dc",
+      "provider": "anthropic",
+      "url": "https://docs.claude.com/en/docs/claude-code/plugins",
+      "local_path": "docs/anthropic/claude-code/plugins.md",
+      "hash": "fdd93ebb0155def34324b80c960c61f1b93efcb2b88318e9eb42a65806a9ab73",
+      "last_fetched": "2025-10-26T16:31:33.050291",
+      "category": "claude-code",
+      "title": "Plugins - Claude Docs",
+      "description": "Extend Claude Code with custom commands, agents, hooks, Skills, and MCP servers through the plugin system.",
+      "topics": []
+    },
+    {
+      "id": "da8df67b-c727-4f81-ae86-83dc5a5ff17a",
+      "provider": "anthropic",
+      "url": "https://docs.claude.com/en/docs/claude-code/github-actions",
+      "local_path": "docs/anthropic/claude-code/github-actions.md",
+      "hash": "2cb20e0ee57e8b26d0e2220de097b86ca7caacd28a0d260283b319e2f02dc1bc",
+      "last_fetched": "2025-10-26T16:31:35.290332",
+      "category": "claude-code",
+      "title": "Claude Code GitHub Actions - Claude Docs",
+      "description": "Learn about integrating Claude Code into your development workflow with Claude Code GitHub Actions",
+      "topics": []
+    },
+    {
+      "id": "8914b0ff-80f6-474d-bbac-ec5fb940e811",
+      "provider": "anthropic",
+      "url": "https://docs.claude.com/en/docs/claude-code/claude-code-on-the-web",
+      "local_path": "docs/anthropic/claude-code/claude-code-on-the-web.md",
+      "hash": "d30d076bd0606510864b76b651893490d05dee92edbce6716669c3ea474e5551",
+      "last_fetched": "2025-10-26T16:31:37.048626",
+      "category": "claude-code",
+      "title": "Claude Code on the web - Claude Docs",
+      "description": "Run Claude Code tasks asynchronously on secure cloud infrastructure",
+      "topics": []
+    },
+    {
+      "id": "00ab94f8-4db8-4ea8-935b-6340ba5e985b",
+      "provider": "anthropic",
+      "url": "https://docs.claude.com/en/docs/claude-code/interactive-mode",
+      "local_path": "docs/anthropic/claude-code/interactive-mode.md",
+      "hash": "aa7653317ea5a18086654a4db210f4ad08e904c79eb4a38ffd6f2d4e5c23ed22",
+      "last_fetched": "2025-10-26T16:31:39.202610",
+      "category": "claude-code",
+      "title": "Interactive mode - Claude Docs",
+      "description": "Complete reference for keyboard shortcuts, input modes, and interactive features in Claude Code sessions.",
       "topics": []
     }
   ]

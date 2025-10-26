@@ -209,7 +209,7 @@ class DocFetcherCLI:
 
         click.echo(f"Processing {total_count} documents with LLM-optimized extraction...")
         for source in config.sources:
-            if await self.fetch_document_crawl4ai(source, config):
+            if await self.fetch_document(source, config):
                 success_count += 1
 
         return (success_count, total_count)
