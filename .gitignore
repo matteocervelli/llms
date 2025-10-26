@@ -30,6 +30,7 @@ venv/
 ENV/
 env/
 .venv
+uv.lock
 
 # IDEs
 .vscode/
