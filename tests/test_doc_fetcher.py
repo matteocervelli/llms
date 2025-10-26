@@ -469,8 +469,10 @@ class TestManifestManager:
 
         data = manager.load()
 
-        assert data["version"] == "1.0"
+        assert data["version"] == "1.1"
         assert "documents" in data
+        assert "providers" in data
+        assert "categories" in data
         assert len(data["documents"]) == 0
 
     def test_add_entry(self, tmp_path: Path) -> None:
@@ -581,6 +583,362 @@ class TestManifestManager:
         # Check with different hash
         new_hash = manager.check_hash("new content")
         assert manager.detect_changes(url, new_hash) is True
+
+    def test_manifest_v1_1_schema(self, tmp_path: Path) -> None:
+        """Should create manifest with v1.1 schema."""
+        manifest_path = tmp_path / "manifest.json"
+        manager = ManifestManager(manifest_path)
+
+        data = manager.load()
+
+        assert data["version"] == "1.1"
+        assert "providers" in data
+        assert "categories" in data
+        assert isinstance(data["providers"], list)
+        assert isinstance(data["categories"], list)
+
+    def test_entry_with_id_and_topics(self, tmp_path: Path) -> None:
+        """Should handle entries with id and topics fields."""
+        manifest_path = tmp_path / "manifest.json"
+        manager = ManifestManager(manifest_path)
+
+        entry = ManifestEntry(
+            provider="anthropic",
+            url=HttpUrl("https://docs.anthropic.com/api"),
+            local_path=Path("docs/api.md"),
+            hash="a" * 64,
+            last_fetched=datetime.now(),
+            category="api",
+            topics=["api", "rest", "claude"],
+        )
+
+        manager.add_entry(entry)
+
+        # Verify entry
+        retrieved = manager.get_entry(str(entry.url))
+        assert retrieved is not None
+        assert retrieved.id  # ID should be auto-generated
+        assert retrieved.topics == ["api", "rest", "claude"]
+
+        # Verify providers/categories updated
+        data = manager.load()
+        assert "anthropic" in data["providers"]
+        assert "api" in data["categories"]
+
+    def test_update_page(self, tmp_path: Path) -> None:
+        """Should update specific fields of a page."""
+        manifest_path = tmp_path / "manifest.json"
+        manager = ManifestManager(manifest_path)
+
+        # Add initial entry
+        entry = ManifestEntry(
+            provider="anthropic",
+            url=HttpUrl("https://docs.anthropic.com/guide"),
+            local_path=Path("docs/guide.md"),
+            hash="a" * 64,
+            last_fetched=datetime.now(),
+            category="guides",
+            title="Original Title",
+            topics=["guide"],
+        )
+        manager.add_entry(entry)
+
+        # Get the ID
+        retrieved = manager.get_entry(str(entry.url))
+        assert retrieved is not None
+        page_id = retrieved.id
+
+        # Update specific fields
+        manager.update_page(
+            page_id,
+            title="Updated Title",
+            topics=["guide", "tutorial", "getting-started"],
+        )
+
+        # Verify updates
+        updated = manager.get_entry(str(entry.url))
+        assert updated is not None
+        assert updated.title == "Updated Title"
+        assert updated.topics == ["guide", "tutorial", "getting-started"]
+        assert updated.hash == "a" * 64  # Hash should be unchanged
+
+    def test_search_pages(self, tmp_path: Path) -> None:
+        """Should search pages by query."""
+        manifest_path = tmp_path / "manifest.json"
+        manager = ManifestManager(manifest_path)
+
+        # Add test entries
+        entries_data = [
+            {
+                "provider": "anthropic",
+                "url": "https://docs.anthropic.com/api",
+                "title": "API Reference",
+                "description": "Complete API documentation for Claude",
+                "category": "api",
+                "topics": ["api", "rest", "claude"],
+            },
+            {
+                "provider": "anthropic",
+                "url": "https://docs.anthropic.com/guide",
+                "title": "Getting Started Guide",
+                "description": "Learn how to use Claude",
+                "category": "guides",
+                "topics": ["guide", "tutorial"],
+            },
+            {
+                "provider": "openai",
+                "url": "https://platform.openai.com/docs",
+                "title": "OpenAI Documentation",
+                "description": "GPT-4 and ChatGPT documentation",
+                "category": "api",
+                "topics": ["api", "gpt"],
+            },
+        ]
+
+        for data in entries_data:
+            entry = ManifestEntry(
+                provider=data["provider"],
+                url=HttpUrl(data["url"]),
+                local_path=Path(f"docs/{data['category']}.md"),
+                hash="a" * 64,
+                last_fetched=datetime.now(),
+                category=data["category"],
+                title=data.get("title"),
+                description=data.get("description"),
+                topics=data.get("topics", []),
+            )
+            manager.add_entry(entry)
+
+        # Search by title
+        results = manager.search_pages("API Reference")
+        assert len(results) == 1
+        assert results[0].title == "API Reference"
+
+        # Search by description
+        results = manager.search_pages("Claude")
+        assert len(results) == 2  # Both Anthropic docs mention Claude
+
+        # Search by topics
+        results = manager.search_pages("tutorial")
+        assert len(results) == 1
+        assert "tutorial" in results[0].topics
+
+        # Search with provider filter
+        results = manager.search_pages("api", provider="anthropic")
+        assert len(results) == 1
+        assert results[0].provider == "anthropic"
+
+        # Search with category filter
+        results = manager.search_pages("documentation", category="api")
+        assert len(results) == 2  # Both API category docs
+
+        # Empty query returns nothing
+        results = manager.search_pages("")
+        assert len(results) == 0
+
+    def test_get_providers(self, tmp_path: Path) -> None:
+        """Should return list of providers."""
+        manifest_path = tmp_path / "manifest.json"
+        manager = ManifestManager(manifest_path)
+
+        # Initially empty
+        assert manager.get_providers() == []
+
+        # Add entries from different providers
+        for provider in ["anthropic", "openai", "anthropic"]:  # Duplicate anthropic
+            entry = ManifestEntry(
+                provider=provider,
+                url=HttpUrl(f"https://docs.{provider}.com/test"),
+                local_path=Path(f"docs/{provider}.md"),
+                hash="a" * 64,
+                last_fetched=datetime.now(),
+                category="test",
+            )
+            manager.add_entry(entry)
+
+        # Should have unique, sorted providers
+        providers = manager.get_providers()
+        assert providers == ["anthropic", "openai"]
+
+    def test_get_categories(self, tmp_path: Path) -> None:
+        """Should return list of categories."""
+        manifest_path = tmp_path / "manifest.json"
+        manager = ManifestManager(manifest_path)
+
+        # Initially empty
+        assert manager.get_categories() == []
+
+        # Add entries with different categories
+        for category in ["guides", "api", "guides"]:  # Duplicate guides
+            entry = ManifestEntry(
+                provider="test",
+                url=HttpUrl(f"https://docs.test.com/{category}"),
+                local_path=Path(f"docs/{category}.md"),
+                hash="a" * 64,
+                last_fetched=datetime.now(),
+                category=category,
+            )
+            manager.add_entry(entry)
+
+        # Should have unique, sorted categories
+        categories = manager.get_categories()
+        assert categories == ["api", "guides"]
+
+    def test_migrate_schema_v1_0_to_v1_1(self, tmp_path: Path) -> None:
+        """Should migrate schema from v1.0 to v1.1."""
+        manifest_path = tmp_path / "manifest.json"
+
+        # Create a v1.0 manifest manually
+        v1_0_data = {
+            "version": "1.0",
+            "last_updated": datetime.now().isoformat(),
+            "documents": [
+                {
+                    "provider": "anthropic",
+                    "url": "https://docs.anthropic.com/guide",
+                    "local_path": "docs/guide.md",
+                    "hash": "a" * 64,
+                    "last_fetched": datetime.now().isoformat(),
+                    "category": "guides",
+                    "title": "Test Guide",
+                    "description": "Test description",
+                }
+            ],
+        }
+
+        # Write v1.0 manifest
+        manifest_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(manifest_path, "w") as f:
+            json.dump(v1_0_data, f)
+
+        # Load and migrate
+        manager = ManifestManager(manifest_path)
+        manager.migrate_schema("1.0", "1.1")
+
+        # Verify migration
+        data = manager.load()
+        assert data["version"] == "1.1"
+        assert "providers" in data
+        assert "categories" in data
+        assert data["providers"] == ["anthropic"]
+        assert data["categories"] == ["guides"]
+
+        # Verify documents have new fields
+        doc = data["documents"][0]
+        assert "id" in doc
+        assert "topics" in doc
+        assert isinstance(doc["id"], str)
+        assert isinstance(doc["topics"], list)
+
+
+# ============================================================================
+# Test Models - New Fields
+# ============================================================================
+
+
+class TestManifestEntryNewFields:
+    """Tests for new ManifestEntry fields (id, topics)."""
+
+    def test_id_auto_generation(self) -> None:
+        """Should auto-generate UUID v4 for id field."""
+        entry = ManifestEntry(
+            provider="test",
+            url=HttpUrl("https://test.com"),
+            local_path=Path("test.md"),
+            hash="a" * 64,
+            last_fetched=datetime.now(),
+            category="test",
+        )
+
+        assert entry.id
+        # Verify it's a valid UUID
+        import uuid as uuid_module
+        uuid_obj = uuid_module.UUID(entry.id, version=4)
+        assert str(uuid_obj) == entry.id
+
+    def test_id_custom_uuid(self) -> None:
+        """Should accept custom UUID v4."""
+        import uuid as uuid_module
+        custom_id = str(uuid_module.uuid4())
+
+        entry = ManifestEntry(
+            id=custom_id,
+            provider="test",
+            url=HttpUrl("https://test.com"),
+            local_path=Path("test.md"),
+            hash="a" * 64,
+            last_fetched=datetime.now(),
+            category="test",
+        )
+
+        assert entry.id == custom_id
+
+    def test_id_invalid_uuid(self) -> None:
+        """Should reject invalid UUID."""
+        with pytest.raises(ValidationError):
+            ManifestEntry(
+                id="not-a-uuid",
+                provider="test",
+                url=HttpUrl("https://test.com"),
+                local_path=Path("test.md"),
+                hash="a" * 64,
+                last_fetched=datetime.now(),
+                category="test",
+            )
+
+    def test_topics_validation(self) -> None:
+        """Should validate topics field."""
+        entry = ManifestEntry(
+            provider="test",
+            url=HttpUrl("https://test.com"),
+            local_path=Path("test.md"),
+            hash="a" * 64,
+            last_fetched=datetime.now(),
+            category="test",
+            topics=["API", "Rest", "Claude-AI"],
+        )
+
+        # Topics should be lowercase normalized
+        assert entry.topics == ["api", "rest", "claude-ai"]
+
+    def test_topics_max_count(self) -> None:
+        """Should reject more than 20 topics."""
+        with pytest.raises(ValidationError):
+            ManifestEntry(
+                provider="test",
+                url=HttpUrl("https://test.com"),
+                local_path=Path("test.md"),
+                hash="a" * 64,
+                last_fetched=datetime.now(),
+                category="test",
+                topics=[f"topic{i}" for i in range(21)],
+            )
+
+    def test_topics_max_length(self) -> None:
+        """Should reject topics longer than 50 characters."""
+        with pytest.raises(ValidationError):
+            ManifestEntry(
+                provider="test",
+                url=HttpUrl("https://test.com"),
+                local_path=Path("test.md"),
+                hash="a" * 64,
+                last_fetched=datetime.now(),
+                category="test",
+                topics=["a" * 51],
+            )
+
+    def test_topics_invalid_characters(self) -> None:
+        """Should reject topics with invalid characters."""
+        with pytest.raises(ValidationError):
+            ManifestEntry(
+                provider="test",
+                url=HttpUrl("https://test.com"),
+                local_path=Path("test.md"),
+                hash="a" * 64,
+                last_fetched=datetime.now(),
+                category="test",
+                topics=["invalid topic!"],  # Space and ! not allowed
+            )
 
 
 # ============================================================================

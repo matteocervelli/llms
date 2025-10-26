@@ -62,7 +62,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Security: URL validation, path traversal prevention, size limits
   - Performance: < 5s fetch, < 500ms conversion, < 100ms manifest operations
   - CLI commands: fetch --all, fetch --provider, update, list
-- [ ] Documentation manifest system (integrated with fetcher)
+- [x] **Documentation Manifest System** (#5) - Enhanced manifest schema v1.1
+  - `src/tools/doc_fetcher/models.py` - Enhanced ManifestEntry with id and topics fields
+  - `src/tools/doc_fetcher/models.py` - Added ManifestSchema model for top-level validation
+  - `src/tools/doc_fetcher/manifest.py` - Updated to v1.1 schema with providers/categories tracking
+  - `src/tools/doc_fetcher/manifest.py` - New methods: update_page(), search_pages(), get_providers(), get_categories(), migrate_schema()
+  - `tests/test_doc_fetcher.py` - 19 new tests for v1.1 features (all passing, 76% coverage)
+  - `src/tools/doc_fetcher/README.md` - Updated with v1.1 features documentation
+  - `docs/architecture/ADR/ADR-004-manifest-schema-v1.1.md` - Architecture decision record
+  - UUID v4 unique identifiers for documents (auto-generated)
+  - Topic tags for categorization (max 20, max 50 chars each, validated)
+  - Provider/category tracking at schema level (auto-populated, sorted)
+  - Full-text search across title, description, topics with filters
+  - Field-level updates by document ID
+  - Automatic schema migration from v1.0 to v1.1
+  - Security: UUID validation, topics sanitization, search query sanitization
+  - Performance: < 50ms update, < 100ms search (1000 docs), < 10ms helpers
 - [ ] Initial Anthropic/Claude Code documentation (fetcher ready)
 - [ ] Weekly documentation update automation (future enhancement)
 

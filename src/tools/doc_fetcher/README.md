@@ -11,7 +11,11 @@ The Documentation Fetcher is a Python CLI tool that downloads documentation from
 - **Rate Limiting**: Respectful requests with configurable rate limits
 - **robots.txt Compliance**: Automatic robots.txt checking
 - **HTML to Markdown**: Clean conversion preserving structure and code blocks
-- **Manifest Tracking**: Centralized tracking with metadata
+- **Manifest Tracking**: Centralized tracking with metadata (v1.1 schema)
+- **Search & Filter**: Full-text search across documents with provider/category filtering
+- **Unique IDs**: UUID-based document identification for precise updates
+- **Topic Tags**: Categorize documents with customizable topics (max 20)
+- **Schema Migration**: Automatic v1.0 → v1.1 migration support
 - **Security**: URL validation, XSS prevention, path traversal protection
 - **CLI Interface**: Simple commands for fetch, update, and list operations
 
@@ -199,6 +203,7 @@ DocumentSource(
 #### `ManifestEntry`
 ```python
 ManifestEntry(
+    id: str = auto_generated_uuid4,  # NEW in v1.1: Unique identifier
     provider: str,
     url: HttpUrl,
     local_path: Path,
@@ -206,9 +211,14 @@ ManifestEntry(
     last_fetched: datetime,
     category: str,
     title: Optional[str] = None,
-    description: Optional[str] = None
+    description: Optional[str] = None,
+    topics: list[str] = []  # NEW in v1.1: Topic tags (max 20, max 50 chars each)
 )
 ```
+
+**Validation Rules (v1.1)**:
+- `id`: Must be valid UUID v4 (auto-generated if not provided)
+- `topics`: Max 20 topics, max 50 characters each, alphanumeric + hyphens/underscores only, lowercase normalized
 
 ### Fetcher
 
@@ -229,11 +239,63 @@ markdown, metadata = converter.convert(html, url)
 
 ```python
 manager = ManifestManager(manifest_path)
+
+# Load manifest (auto-migrates from v1.0 to v1.1 if needed)
 data = manager.load()
+
+# Add or update entry
 manager.add_entry(entry)
+
+# Get entry by URL
 entry = manager.get_entry(url)
-entries = manager.list_entries(provider="anthropic")
+
+# List entries with optional filtering
+entries = manager.list_entries(provider="anthropic", category="guides")
+
+# Detect changes
 changed = manager.detect_changes(url, new_hash)
+
+# NEW in v1.1: Update specific fields by ID
+manager.update_page(page_id, title="New Title", topics=["api", "guide"])
+
+# NEW in v1.1: Search pages
+results = manager.search_pages(
+    query="Claude API",
+    fields=["title", "description", "topics"],
+    provider="anthropic",
+    category="api"
+)
+
+# NEW in v1.1: Get unique providers/categories
+providers = manager.get_providers()  # Returns ["anthropic", "openai"]
+categories = manager.get_categories()  # Returns ["api", "guides", "reference"]
+
+# NEW in v1.1: Manual schema migration
+manager.migrate_schema("1.0", "1.1")
+```
+
+**Manifest Schema v1.1** (auto-created for new manifests):
+```json
+{
+  "version": "1.1",
+  "last_updated": "2025-01-26T10:00:00",
+  "providers": ["anthropic", "openai"],
+  "categories": ["api", "guides", "reference"],
+  "documents": [
+    {
+      "id": "uuid-v4-here",
+      "provider": "anthropic",
+      "url": "https://docs.anthropic.com/api",
+      "local_path": "docs/anthropic/api.md",
+      "hash": "sha256-hash-here",
+      "last_fetched": "2025-01-26T10:00:00",
+      "category": "api",
+      "title": "API Reference",
+      "description": "Complete API documentation",
+      "topics": ["api", "rest", "claude"]
+    }
+  ]
+}
 ```
 
 ## Testing

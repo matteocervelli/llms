@@ -35,16 +35,20 @@ class ManifestManager:
     - Local file paths
     - Content hashes for change detection
     - Last fetch timestamps
-    - Metadata (title, description, category)
+    - Metadata (title, description, category, topics)
+    - Unique identifiers (UUIDs)
 
     Features:
         - Atomic writes (temp file + rename)
         - Hash-based change detection
         - Schema validation
         - Safe file operations with proper permissions
+        - Provider and category tracking
+        - Full-text search across documents
+        - Schema migration support
     """
 
-    MANIFEST_VERSION = "1.0"
+    MANIFEST_VERSION = "1.1"
     DEFAULT_MANIFEST_PATH = Path("manifests/docs.json")
 
     def __init__(self, manifest_path: Optional[Path] = None) -> None:
@@ -64,10 +68,12 @@ class ManifestManager:
             # Create parent directory
             self.manifest_path.parent.mkdir(parents=True, exist_ok=True)
 
-            # Create empty manifest
+            # Create empty manifest with v1.1 schema
             initial_data = {
                 "version": self.MANIFEST_VERSION,
                 "last_updated": datetime.now().isoformat(),
+                "providers": [],
+                "categories": [],
                 "documents": [],
             }
 
@@ -185,6 +191,7 @@ class ManifestManager:
 
             # Convert entry to dict
             entry_dict = {
+                "id": entry.id,
                 "provider": entry.provider,
                 "url": str(entry.url),
                 "local_path": str(entry.local_path),
@@ -193,6 +200,7 @@ class ManifestManager:
                 "category": entry.category,
                 "title": entry.title,
                 "description": entry.description,
+                "topics": entry.topics,
             }
 
             # Check if entry exists
@@ -204,6 +212,11 @@ class ManifestManager:
                     break
 
             if existing_index is not None:
+                # Preserve existing ID if updating
+                existing_id = data["documents"][existing_index].get("id")
+                if existing_id:
+                    entry_dict["id"] = existing_id
+
                 # Update existing entry
                 data["documents"][existing_index] = entry_dict
                 logger.info(f"Updated manifest entry for {url_str}")
@@ -211,6 +224,9 @@ class ManifestManager:
                 # Add new entry
                 data["documents"].append(entry_dict)
                 logger.info(f"Added new manifest entry for {url_str}")
+
+            # Update providers/categories
+            self._update_providers_categories(data)
 
             # Save manifest
             self.save(data)
@@ -240,6 +256,7 @@ class ManifestManager:
                     # Parse and validate entry
                     try:
                         return ManifestEntry(
+                            id=doc.get("id", ""),
                             provider=doc["provider"],
                             url=doc["url"],
                             local_path=Path(doc["local_path"]),
@@ -248,6 +265,7 @@ class ManifestManager:
                             category=doc["category"],
                             title=doc.get("title"),
                             description=doc.get("description"),
+                            topics=doc.get("topics", []),
                         )
                     except (KeyError, ValidationError) as e:
                         logger.warning(f"Invalid entry for {url}: {e}")
@@ -289,6 +307,7 @@ class ManifestManager:
                 # Parse and validate entry
                 try:
                     entry = ManifestEntry(
+                        id=doc.get("id", ""),
                         provider=doc["provider"],
                         url=doc["url"],
                         local_path=Path(doc["local_path"]),
@@ -297,6 +316,7 @@ class ManifestManager:
                         category=doc["category"],
                         title=doc.get("title"),
                         description=doc.get("description"),
+                        topics=doc.get("topics", []),
                     )
                     entries.append(entry)
                 except (KeyError, ValidationError) as e:
@@ -348,3 +368,254 @@ class ManifestManager:
             logger.debug(f"No changes detected for {url}")
 
         return changed
+
+    def _update_providers_categories(self, data: dict) -> None:
+        """
+        Update providers and categories lists from documents.
+
+        Args:
+            data: Manifest data dictionary
+        """
+        providers = set()
+        categories = set()
+
+        for doc in data.get("documents", []):
+            if "provider" in doc:
+                providers.add(doc["provider"])
+            if "category" in doc:
+                categories.add(doc["category"])
+
+        data["providers"] = sorted(list(providers))
+        data["categories"] = sorted(list(categories))
+
+    def update_page(self, page_id: str, **fields: dict) -> None:
+        """
+        Update specific fields of a manifest entry by ID.
+
+        Args:
+            page_id: UUID of the page to update
+            **fields: Fields to update (provider, category, title, description, topics, etc.)
+
+        Raises:
+            ManifestError: If page not found or update fails
+        """
+        try:
+            data = self.load()
+
+            # Find entry by ID
+            entry_index = None
+            for i, doc in enumerate(data["documents"]):
+                if doc.get("id") == page_id:
+                    entry_index = i
+                    break
+
+            if entry_index is None:
+                raise ManifestError("update_page", f"Page with ID {page_id} not found")
+
+            # Update fields
+            allowed_fields = {
+                "provider", "category", "title", "description", "topics",
+                "url", "local_path", "hash"
+            }
+            for field, value in fields.items():
+                if field not in allowed_fields:
+                    logger.warning(f"Ignoring unknown field: {field}")
+                    continue
+
+                # Update last_fetched if hash changes
+                if field == "hash" and value != data["documents"][entry_index].get("hash"):
+                    data["documents"][entry_index]["last_fetched"] = datetime.now().isoformat()
+
+                data["documents"][entry_index][field] = value
+
+            # Update providers/categories
+            self._update_providers_categories(data)
+
+            # Save manifest
+            self.save(data)
+            logger.info(f"Updated page {page_id} with fields: {list(fields.keys())}")
+
+        except Exception as e:
+            logger.error(f"Failed to update page: {e}")
+            raise ManifestError("update_page", str(e)) from e
+
+    def search_pages(
+        self,
+        query: str,
+        fields: Optional[list[str]] = None,
+        provider: Optional[str] = None,
+        category: Optional[str] = None,
+    ) -> list[ManifestEntry]:
+        """
+        Search for pages matching a query across specified fields.
+
+        Args:
+            query: Search query (case-insensitive)
+            fields: Fields to search (default: ["title", "description", "topics"])
+            provider: Optional provider filter
+            category: Optional category filter
+
+        Returns:
+            List of matching ManifestEntry objects
+
+        Raises:
+            ManifestError: If search fails
+        """
+        try:
+            if fields is None:
+                fields = ["title", "description", "topics"]
+
+            # Sanitize query
+            query_lower = query.lower().strip()
+            if not query_lower:
+                return []
+
+            data = self.load()
+            matching_entries: list[ManifestEntry] = []
+
+            for doc in data["documents"]:
+                # Apply provider/category filters
+                if provider and doc.get("provider") != provider:
+                    continue
+                if category and doc.get("category") != category:
+                    continue
+
+                # Search across specified fields
+                match = False
+                for field in fields:
+                    if field not in doc:
+                        continue
+
+                    field_value = doc[field]
+                    if field_value is None:
+                        continue
+
+                    # Handle list fields (e.g., topics)
+                    if isinstance(field_value, list):
+                        field_text = " ".join(str(item).lower() for item in field_value)
+                    else:
+                        field_text = str(field_value).lower()
+
+                    if query_lower in field_text:
+                        match = True
+                        break
+
+                if match:
+                    # Parse and validate entry
+                    try:
+                        entry = ManifestEntry(
+                            id=doc.get("id", ""),
+                            provider=doc["provider"],
+                            url=doc["url"],
+                            local_path=Path(doc["local_path"]),
+                            hash=doc["hash"],
+                            last_fetched=datetime.fromisoformat(doc["last_fetched"]),
+                            category=doc["category"],
+                            title=doc.get("title"),
+                            description=doc.get("description"),
+                            topics=doc.get("topics", []),
+                        )
+                        matching_entries.append(entry)
+                    except (KeyError, ValidationError) as e:
+                        logger.warning(f"Invalid entry in manifest: {e}")
+                        continue
+
+            logger.info(
+                f"Search found {len(matching_entries)} results for query '{query}' "
+                f"(provider={provider}, category={category})"
+            )
+            return matching_entries
+
+        except Exception as e:
+            logger.error(f"Search failed: {e}")
+            raise ManifestError("search_pages", str(e)) from e
+
+    def get_providers(self) -> list[str]:
+        """
+        Get list of all providers tracked in the manifest.
+
+        Returns:
+            Sorted list of provider names
+
+        Raises:
+            ManifestError: If operation fails
+        """
+        try:
+            data = self.load()
+            return data.get("providers", [])
+        except Exception as e:
+            logger.error(f"Failed to get providers: {e}")
+            raise ManifestError("get_providers", str(e)) from e
+
+    def get_categories(self) -> list[str]:
+        """
+        Get list of all categories tracked in the manifest.
+
+        Returns:
+            Sorted list of category names
+
+        Raises:
+            ManifestError: If operation fails
+        """
+        try:
+            data = self.load()
+            return data.get("categories", [])
+        except Exception as e:
+            logger.error(f"Failed to get categories: {e}")
+            raise ManifestError("get_categories", str(e)) from e
+
+    def migrate_schema(self, from_version: str, to_version: str) -> None:
+        """
+        Migrate manifest schema from one version to another.
+
+        Currently supports:
+        - 1.0 -> 1.1: Add providers, categories, and id fields
+
+        Args:
+            from_version: Source schema version
+            to_version: Target schema version
+
+        Raises:
+            ManifestError: If migration fails or unsupported version
+        """
+        try:
+            if from_version == "1.0" and to_version == "1.1":
+                logger.info("Migrating manifest from v1.0 to v1.1")
+                data = self.load()
+
+                # Add providers and categories arrays
+                if "providers" not in data:
+                    data["providers"] = []
+                if "categories" not in data:
+                    data["categories"] = []
+
+                # Add id field to all documents
+                import uuid as uuid_module
+                for doc in data["documents"]:
+                    if "id" not in doc:
+                        doc["id"] = str(uuid_module.uuid4())
+                        logger.debug(f"Generated ID for {doc.get('url')}: {doc['id']}")
+
+                    # Add empty topics if missing
+                    if "topics" not in doc:
+                        doc["topics"] = []
+
+                # Update providers/categories from documents
+                self._update_providers_categories(data)
+
+                # Update version
+                data["version"] = to_version
+
+                # Save migrated manifest
+                self.save(data)
+                logger.info(f"Successfully migrated manifest to v{to_version}")
+
+            else:
+                raise ManifestError(
+                    "migrate_schema",
+                    f"Unsupported migration: {from_version} -> {to_version}"
+                )
+
+        except Exception as e:
+            logger.error(f"Schema migration failed: {e}")
+            raise ManifestError("migrate_schema", str(e)) from e

@@ -5,9 +5,11 @@ Models provide validation, serialization, and type safety for:
 - DocumentSource: Configuration for a documentation source
 - FetchResult: Result of fetching a URL
 - ManifestEntry: Entry in the documentation manifest
+- ManifestSchema: Top-level manifest structure
 - ProviderConfig: Configuration for an LLM provider
 """
 
+import uuid
 from datetime import datetime
 from pathlib import Path
 from typing import Optional
@@ -78,6 +80,7 @@ class ManifestEntry(BaseModel):
     Entry in the documentation manifest.
 
     Attributes:
+        id: Unique identifier (UUID v4)
         provider: Provider name
         url: Source URL
         local_path: Local file path where content is saved
@@ -86,8 +89,10 @@ class ManifestEntry(BaseModel):
         category: Documentation category
         title: Document title (extracted from HTML)
         description: Document description (extracted from HTML)
+        topics: List of topics/tags for categorization (max 20, max 50 chars each)
     """
 
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     provider: str = Field(..., min_length=1, max_length=100)
     url: HttpUrl
     local_path: Path
@@ -96,6 +101,18 @@ class ManifestEntry(BaseModel):
     category: str = Field(..., min_length=1, max_length=100)
     title: Optional[str] = Field(None, max_length=500)
     description: Optional[str] = Field(None, max_length=1000)
+    topics: list[str] = Field(default_factory=list, max_length=20)
+
+    @field_validator("id")
+    @classmethod
+    def validate_id(cls, v: str) -> str:
+        """Validate id is a valid UUID v4."""
+        try:
+            uuid_obj = uuid.UUID(v, version=4)
+            # Ensure it's the same string representation (handles case sensitivity)
+            return str(uuid_obj)
+        except (ValueError, AttributeError):
+            raise ValueError(f"ID must be a valid UUID v4, got: {v}")
 
     @field_validator("local_path")
     @classmethod
@@ -106,6 +123,30 @@ class ManifestEntry(BaseModel):
         if ".." in path_str or path_str.startswith("/"):
             raise ValueError("Path must not contain '..' or be absolute")
         return v
+
+    @field_validator("topics")
+    @classmethod
+    def validate_topics(cls, v: list[str]) -> list[str]:
+        """Validate topics list content and format."""
+        if len(v) > 20:
+            raise ValueError("Maximum 20 topics allowed")
+
+        validated_topics = []
+        for topic in v:
+            # Check length
+            if len(topic) > 50:
+                raise ValueError(f"Topic '{topic}' exceeds 50 characters")
+
+            # Check characters (alphanumeric + hyphens/underscores)
+            if not all(c.isalnum() or c in "-_" for c in topic):
+                raise ValueError(
+                    f"Topic '{topic}' must contain only alphanumeric characters, hyphens, or underscores"
+                )
+
+            # Normalize to lowercase
+            validated_topics.append(topic.lower())
+
+        return validated_topics
 
     class Config:
         """Pydantic configuration."""
@@ -153,3 +194,43 @@ class ProviderConfig(BaseModel):
         if v > 10:
             raise ValueError("Rate limit must not exceed 10 requests/second")
         return v
+
+
+class ManifestSchema(BaseModel):
+    """
+    Top-level manifest structure for documentation tracking.
+
+    Attributes:
+        version: Schema version (e.g., "1.1")
+        last_updated: Timestamp of last manifest update
+        providers: List of unique providers tracked
+        categories: List of unique categories tracked
+        documents: List of document entries
+    """
+
+    version: str = Field(..., pattern=r"^\d+\.\d+$")
+    last_updated: datetime
+    providers: list[str] = Field(default_factory=list)
+    categories: list[str] = Field(default_factory=list)
+    documents: list[dict] = Field(default_factory=list)
+
+    @field_validator("version")
+    @classmethod
+    def validate_version(cls, v: str) -> str:
+        """Validate version format (major.minor)."""
+        parts = v.split(".")
+        if len(parts) != 2:
+            raise ValueError("Version must be in format 'major.minor'")
+        try:
+            int(parts[0])
+            int(parts[1])
+        except ValueError:
+            raise ValueError("Version parts must be integers")
+        return v
+
+    class Config:
+        """Pydantic configuration."""
+
+        json_encoders = {
+            datetime: lambda v: v.isoformat(),
+        }
