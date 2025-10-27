@@ -9,8 +9,9 @@ import json
 import shutil
 import tempfile
 from pathlib import Path
-from typing import List, Optional
-from uuid import UUID
+from typing import Dict, List, Optional, Tuple
+from uuid import UUID, uuid4
+from datetime import datetime
 
 from .exceptions import CatalogError
 from .models import CommandCatalog, CommandCatalogEntry, ScopeType
@@ -271,19 +272,157 @@ class CatalogManager:
         stats = {
             "total_commands": len(catalog.commands),
             "by_scope": {
-                "global": len([c for c in catalog.commands if c.scope == ScopeType.GLOBAL]),
-                "project": len([c for c in catalog.commands if c.scope == ScopeType.PROJECT]),
-                "local": len([c for c in catalog.commands if c.scope == ScopeType.LOCAL]),
+                "global": len(
+                    [c for c in catalog.commands
+                     if c.scope == ScopeType.GLOBAL]
+                ),
+                "project": len(
+                    [c for c in catalog.commands
+                     if c.scope == ScopeType.PROJECT]
+                ),
+                "local": len(
+                    [c for c in catalog.commands
+                     if c.scope == ScopeType.LOCAL]
+                ),
             },
             "with_parameters": len([
-                c for c in catalog.commands if c.metadata.get("has_parameters", False)
+                c for c in catalog.commands
+                if c.metadata.get("has_parameters", False)
             ]),
             "with_bash": len([
-                c for c in catalog.commands if c.metadata.get("has_bash", False)
+                c for c in catalog.commands
+                if c.metadata.get("has_bash", False)
             ]),
             "with_files": len([
-                c for c in catalog.commands if c.metadata.get("has_files", False)
+                c for c in catalog.commands
+                if c.metadata.get("has_files", False)
             ]),
         }
 
         return stats
+
+    def sync_catalog(
+        self, project_root: Optional[Path] = None
+    ) -> Dict[str, List[str]]:
+        """
+        Sync catalog with actual command files.
+
+        Scans command directories and syncs catalog:
+        - Removes entries for missing files
+        - Adds entries for untracked files
+
+        Args:
+            project_root: Project root path (default: current directory)
+
+        Returns:
+            Dictionary with sync results:
+            {
+                "removed": List of removed command names,
+                "added": List of added command names,
+                "unchanged": Count of unchanged commands
+            }
+
+        Raises:
+            CatalogError: If catalog operations fail
+        """
+        if project_root is None:
+            project_root = Path.cwd()
+
+        catalog = self._read_catalog()
+
+        # Collect all command files from all scopes
+        command_files = {}  # path -> file info
+
+        # Global scope
+        global_dir = Path.home() / ".claude" / "commands"
+        if global_dir.exists():
+            for file_path in global_dir.glob("*.md"):
+                command_files[str(file_path.resolve())] = {
+                    "path": file_path,
+                    "scope": ScopeType.GLOBAL,
+                }
+
+        # Project scope
+        project_dir = project_root / ".claude" / "commands"
+        if project_dir.exists():
+            for file_path in project_dir.glob("*.md"):
+                command_files[str(file_path.resolve())] = {
+                    "path": file_path,
+                    "scope": ScopeType.PROJECT,
+                }
+
+        # Track changes
+        removed = []
+        added = []
+        unchanged = 0
+
+        # Remove catalog entries for missing files
+        updated_commands = []
+        for entry in catalog.commands:
+            if entry.path in command_files:
+                updated_commands.append(entry)
+                # Mark as found
+                command_files[entry.path]["found"] = True
+                unchanged += 1
+            else:
+                removed.append(entry.name)
+
+        # Add catalog entries for untracked files
+        for file_info in command_files.values():
+            if file_info.get("found"):
+                continue  # Already in catalog
+
+            # Read file to get description
+            file_path = file_info["path"]
+            try:
+                content = file_path.read_text(encoding="utf-8")
+
+                # Extract description from frontmatter
+                description = ""
+                if content.startswith("---"):
+                    parts = content.split("---", 2)
+                    if len(parts) >= 3:
+                        # Parse YAML frontmatter (simple extraction)
+                        for line in parts[1].split("\n"):
+                            if line.startswith("description:"):
+                                description = line.split(":", 1)[1].strip()
+                                break
+
+                if not description:
+                    description = f"Command from {file_path.name}"
+
+                # Create catalog entry
+                name = file_path.stem
+                entry = CommandCatalogEntry(
+                    id=uuid4(),
+                    name=name,
+                    description=description,
+                    scope=file_info["scope"],
+                    path=str(file_path.resolve()),
+                    created_at=datetime.now(),
+                    updated_at=datetime.now(),
+                    metadata={
+                        "template": "unknown",
+                        "has_parameters": False,
+                        "has_bash": "!" in content,
+                        "has_files": "@" in content,
+                        "thinking_mode": "thinking: true" in content,
+                        "synced": True,
+                    },
+                )
+                updated_commands.append(entry)
+                added.append(name)
+
+            except Exception as e:
+                # Skip files that can't be read
+                continue
+
+        # Update catalog
+        catalog.commands = updated_commands
+        self._write_catalog(catalog)
+
+        return {
+            "removed": removed,
+            "added": added,
+            "unchanged": unchanged,
+        }

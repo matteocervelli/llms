@@ -343,5 +343,56 @@ def stats():
         raise click.Abort()
 
 
+@cli.command()
+@click.option(
+    "--project-root",
+    type=click.Path(exists=True),
+    help="Project root directory",
+)
+def sync(project_root: Optional[str]):
+    """
+    Sync catalog with actual command files.
+
+    Scans command directories and updates the catalog:
+    - Removes entries for missing files
+    - Adds entries for untracked files
+
+    Useful when files are manually added or deleted.
+    """
+    try:
+        project_path = Path(project_root) if project_root else Path.cwd()
+
+        catalog_manager = CatalogManager()
+
+        click.echo("🔄 Syncing catalog with command files...")
+
+        result = catalog_manager.sync_catalog(project_path)
+
+        # Show results
+        if result["removed"]:
+            click.echo(f"\n❌ Removed {len(result['removed'])} commands:")
+            for name in result["removed"]:
+                click.echo(f"   - {name}")
+
+        if result["added"]:
+            click.echo(f"\n✅ Added {len(result['added'])} commands:")
+            for name in result["added"]:
+                click.echo(f"   + {name}")
+
+        if result["unchanged"]:
+            click.echo(
+                f"\n📝 {result['unchanged']} commands unchanged"
+            )
+
+        if not result["removed"] and not result["added"]:
+            click.echo("\n✨ Catalog is already in sync!")
+        else:
+            click.echo("\n✅ Catalog sync complete!")
+
+    except CatalogError as e:
+        click.echo(f"❌ Error: {e}", err=True)
+        raise click.Abort()
+
+
 if __name__ == "__main__":
     cli()
