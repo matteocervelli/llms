@@ -18,108 +18,6 @@
       }
     },
     {
-      "id": "55ef4bd8-3cc9-4018-a279-97742b0905bc",
-      "name": "ui-component",
-      "description": "Create a UI Component in /components/ui argument-hint: Component name | Component summary",
-      "scope": "global",
-      "path": "/Users/matteocervelli/.claude/commands/ui-component.md",
-      "created_at": "2025-10-26 17:51:38.882495",
-      "updated_at": "2025-10-26 17:51:38.882500",
-      "metadata": {
-        "template": "unknown",
-        "has_parameters": false,
-        "has_bash": true,
-        "has_files": true,
-        "thinking_mode": false,
-        "synced": true
-      }
-    },
-    {
-      "id": "0f0d67f1-69c5-4c78-81b0-2c517bb22492",
-      "name": "issue",
-      "description": "Fix GitHub issue with security and performance validation",
-      "scope": "global",
-      "path": "/Users/matteocervelli/.claude/commands/issue.md",
-      "created_at": "2025-10-26 17:51:38.882583",
-      "updated_at": "2025-10-26 17:51:38.882584",
-      "metadata": {
-        "template": "unknown",
-        "has_parameters": false,
-        "has_bash": true,
-        "has_files": true,
-        "thinking_mode": false,
-        "synced": true
-      }
-    },
-    {
-      "id": "1bfb5a81-3186-440f-9ed1-64bfdb294b91",
-      "name": "new-project",
-      "description": "Initialize new project with complete setup and documentation",
-      "scope": "global",
-      "path": "/Users/matteocervelli/.claude/commands/new-project.md",
-      "created_at": "2025-10-26 17:51:38.882639",
-      "updated_at": "2025-10-26 17:51:38.882639",
-      "metadata": {
-        "template": "unknown",
-        "has_parameters": false,
-        "has_bash": true,
-        "has_files": false,
-        "thinking_mode": false,
-        "synced": true
-      }
-    },
-    {
-      "id": "71525143-d82e-4d31-8e56-35372d70967f",
-      "name": "setup-infrastructure",
-      "description": "Implement production-ready infrastructure with security and performance",
-      "scope": "global",
-      "path": "/Users/matteocervelli/.claude/commands/setup-infrastructure.md",
-      "created_at": "2025-10-26 17:51:38.882691",
-      "updated_at": "2025-10-26 17:51:38.882692",
-      "metadata": {
-        "template": "unknown",
-        "has_parameters": false,
-        "has_bash": true,
-        "has_files": true,
-        "thinking_mode": false,
-        "synced": true
-      }
-    },
-    {
-      "id": "22a23a84-5c51-4e05-9947-ab50b4bf3e77",
-      "name": "feature",
-      "description": "Develop new feature with security-by-design and performance optimization",
-      "scope": "global",
-      "path": "/Users/matteocervelli/.claude/commands/feature.md",
-      "created_at": "2025-10-26 17:51:38.882741",
-      "updated_at": "2025-10-26 17:51:38.882742",
-      "metadata": {
-        "template": "unknown",
-        "has_parameters": false,
-        "has_bash": true,
-        "has_files": true,
-        "thinking_mode": false,
-        "synced": true
-      }
-    },
-    {
-      "id": "18d42e1e-2541-4562-ada9-ac4cae465cfa",
-      "name": "pr-failure",
-      "description": "Fix PR failures from CI/CD bots and automated tests",
-      "scope": "global",
-      "path": "/Users/matteocervelli/.claude/commands/pr-failure.md",
-      "created_at": "2025-10-26 17:51:38.882797",
-      "updated_at": "2025-10-26 17:51:38.882798",
-      "metadata": {
-        "template": "unknown",
-        "has_parameters": false,
-        "has_bash": true,
-        "has_files": false,
-        "thinking_mode": false,
-        "synced": true
-      }
-    },
-    {
       "id": "84532785-1b4c-4bca-b1b6-b7b6522235cf",
       "name": "feature-implement",
       "description": "Implement new feature from GitHub issue with security-by-design and performance optimization",
@@ -287,6 +185,209 @@
         "has_files": false,
         "thinking_mode": false,
         "synced": true
+      }
+    },
+    {
+      "id": "b631faa7-f9e0-4417-9643-e49594584c58",
+      "name": "cc-command-improve",
+      "description": "Improve an existing Claude Code command based on user feedback or requirements",
+      "scope": "global",
+      "path": "/Users/matteocervelli/.claude/commands/cc-command-improve.md",
+      "created_at": "2025-10-28 13:53:15.781578",
+      "updated_at": "2025-10-28 13:53:15.781583",
+      "metadata": {
+        "template": "unknown",
+        "has_parameters": false,
+        "has_bash": true,
+        "has_files": false,
+        "thinking_mode": false,
+        "synced": true
+      }
+    },
+    {
+      "id": "566eaf39-b42c-4829-abc5-c33c74c81f9e",
+      "name": "feature-implement",
+      "description": "Implement new feature from GitHub issue with security-by-design and performance optimization",
+      "scope": "global",
+      "path": "/Users/matteocervelli/.claude/commands/feature-implement.md",
+      "created_at": "2025-10-28 13:53:15.781651",
+      "updated_at": "2025-10-28 13:53:15.781652",
+      "metadata": {
+        "template": "unknown",
+        "has_parameters": false,
+        "has_bash": true,
+        "has_files": true,
+        "thinking_mode": false,
+        "synced": true
+      }
+    },
+    {
+      "id": "1e9e1529-ea3f-4e27-ba59-db0bb0e4b950",
+      "name": "cc-command-create",
+      "description": "Create a new Claude Code command using the command builder tool",
+      "scope": "global",
+      "path": "/Users/matteocervelli/.claude/commands/cc-command-create.md",
+      "created_at": "2025-10-28 13:53:15.781707",
+      "updated_at": "2025-10-28 13:53:15.781707",
+      "metadata": {
+        "template": "unknown",
+        "has_parameters": false,
+        "has_bash": true,
+        "has_files": true,
+        "thinking_mode": false,
+        "synced": true
+      }
+    },
+    {
+      "id": "19b3fd6d-ab16-4c91-a718-5e1c4bd46418",
+      "name": "issue-fix",
+      "description": "Fix bugs and resolve problems from GitHub issues with security and performance validation",
+      "scope": "global",
+      "path": "/Users/matteocervelli/.claude/commands/issue-fix.md",
+      "created_at": "2025-10-28 13:53:15.781755",
+      "updated_at": "2025-10-28 13:53:15.781756",
+      "metadata": {
+        "template": "unknown",
+        "has_parameters": false,
+        "has_bash": true,
+        "has_files": true,
+        "thinking_mode": false,
+        "synced": true
+      }
+    },
+    {
+      "id": "6da0a924-84bc-48df-af80-da449f8df70b",
+      "name": "ui-component-create",
+      "description": "Create a UI Component in /components/ui with variants, tests, and preview",
+      "scope": "global",
+      "path": "/Users/matteocervelli/.claude/commands/ui-component-create.md",
+      "created_at": "2025-10-28 13:53:15.781807",
+      "updated_at": "2025-10-28 13:53:15.781807",
+      "metadata": {
+        "template": "unknown",
+        "has_parameters": false,
+        "has_bash": true,
+        "has_files": true,
+        "thinking_mode": false,
+        "synced": true
+      }
+    },
+    {
+      "id": "c25fdc50-e495-466e-a76f-73f9d3d91f37",
+      "name": "gh-milestone-create",
+      "description": "Create a GitHub milestone with title, description, and due date",
+      "scope": "global",
+      "path": "/Users/matteocervelli/.claude/commands/gh-milestone-create.md",
+      "created_at": "2025-10-28 13:53:15.781856",
+      "updated_at": "2025-10-28 13:53:15.781856",
+      "metadata": {
+        "template": "unknown",
+        "has_parameters": false,
+        "has_bash": true,
+        "has_files": false,
+        "thinking_mode": false,
+        "synced": true
+      }
+    },
+    {
+      "id": "3e901c54-4ca7-4e9a-a24d-0f2ddf01fda1",
+      "name": "pr-analyze-failure",
+      "description": "Fix PR failures from CI/CD bots and automated tests",
+      "scope": "global",
+      "path": "/Users/matteocervelli/.claude/commands/pr-analyze-failure.md",
+      "created_at": "2025-10-28 13:53:15.781903",
+      "updated_at": "2025-10-28 13:53:15.781903",
+      "metadata": {
+        "template": "unknown",
+        "has_parameters": false,
+        "has_bash": true,
+        "has_files": false,
+        "thinking_mode": false,
+        "synced": true
+      }
+    },
+    {
+      "id": "2d932296-6088-493b-9d93-bf7a7f5df3f6",
+      "name": "infrastructure-setup",
+      "description": "Implement production-ready infrastructure with security and performance",
+      "scope": "global",
+      "path": "/Users/matteocervelli/.claude/commands/infrastructure-setup.md",
+      "created_at": "2025-10-28 13:53:15.781952",
+      "updated_at": "2025-10-28 13:53:15.781953",
+      "metadata": {
+        "template": "unknown",
+        "has_parameters": false,
+        "has_bash": true,
+        "has_files": true,
+        "thinking_mode": false,
+        "synced": true
+      }
+    },
+    {
+      "id": "cf6a57d3-f540-4c3f-8941-d5dca4f4f0b8",
+      "name": "pr-create",
+      "description": "Create a pull request with title, description, and branch management",
+      "scope": "global",
+      "path": "/Users/matteocervelli/.claude/commands/pr-create.md",
+      "created_at": "2025-10-28 13:53:15.781996",
+      "updated_at": "2025-10-28 13:53:15.781997",
+      "metadata": {
+        "template": "unknown",
+        "has_parameters": false,
+        "has_bash": true,
+        "has_files": false,
+        "thinking_mode": false,
+        "synced": true
+      }
+    },
+    {
+      "id": "911dfa76-f47a-470f-a0f6-5999003181f4",
+      "name": "code-analyze-quality",
+      "description": "Run comprehensive code quality checks including linting, type checking, and formatting",
+      "scope": "global",
+      "path": "/Users/matteocervelli/.claude/commands/code-analyze-quality.md",
+      "created_at": "2025-10-28 13:53:15.782042",
+      "updated_at": "2025-10-28 13:53:15.782043",
+      "metadata": {
+        "template": "unknown",
+        "has_parameters": false,
+        "has_bash": true,
+        "has_files": false,
+        "thinking_mode": false,
+        "synced": true
+      }
+    },
+    {
+      "id": "a96beb8d-7d06-4b5a-964d-e631db13a850",
+      "name": "project-create",
+      "description": "Initialize new project with complete setup and documentation",
+      "scope": "global",
+      "path": "/Users/matteocervelli/.claude/commands/project-create.md",
+      "created_at": "2025-10-28 13:53:15.782089",
+      "updated_at": "2025-10-28 13:53:15.782090",
+      "metadata": {
+        "template": "unknown",
+        "has_parameters": false,
+        "has_bash": true,
+        "has_files": false,
+        "thinking_mode": false,
+        "synced": true
+      }
+    },
+    {
+      "id": "2689aabf-f2e3-4092-8c0f-d0b6aa7ba146",
+      "name": "pr-review-merge",
+      "description": "Review PR before merging to check for best practices and potential issues",
+      "scope": "project",
+      "path": "/Users/matteocervelli/dev/projects/llms/.claude/commands/pr-review-merge.md",
+      "created_at": "2025-10-28 13:59:59.470998",
+      "updated_at": "2025-10-28 13:59:59.471004",
+      "metadata": {
+        "template": "with_bash",
+        "has_parameters": false,
+        "has_bash": false,
+        "has_files": false,
+        "thinking_mode": false
       }
     }
   ]

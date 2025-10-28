@@ -1,11 +1,11 @@
 ---
 description: Create a new Claude Code command using the command builder tool
-argument-hint: [name] [description]
+argument-hint: [name] [description] [--tech <library>] [--doc-url <url>] [--depth <n>]
 ---
 
 # Create Claude Code Command
 
-Create a new Claude Code slash command using the interactive command builder.
+Create a new Claude Code slash command using the interactive command builder with optional documentation integration.
 
 ## Usage
 
@@ -13,6 +13,10 @@ Create a new Claude Code slash command using the interactive command builder.
 /cc-command-create                      # Interactive wizard
 /cc-command-create my-command          # With name (will prompt for details)
 /cc-command-create my-command "Description"  # Quick create
+
+# With documentation integration
+/cc-command-create test-runner "Run pytest tests" --tech pytest
+/cc-command-create api-docs "Generate API docs" --doc-url https://docs.example.com --depth 2
 ```
 
 **💡 Pro Tip:** For safer command planning, activate Plan Mode (press Shift+Tab twice) before running this command. This allows you to review the command structure before creation.
@@ -29,9 +33,66 @@ Create a new Claude Code slash command using the interactive command builder.
    - Bash commands (optional)
    - File references (optional)
    - Thinking mode (optional)
-3. Generates command file in `.claude/commands/`
-4. Adds to catalog for tracking
-5. Shows usage example
+3. **Optional:** Fetch library documentation via Context7
+4. **Optional:** Deep-crawl documentation sites via Crawl4AI
+5. Generates command file with inline documentation references
+6. Adds to catalog for tracking
+7. Shows usage example
+
+## Parameters
+
+- `name`: Command name (slug format, follows [context-]object-action[-modifier] pattern)
+- `description`: Brief description of what the command does
+- `--tech <library>`: Fetch documentation for a specific library/framework via Context7
+- `--doc-url <url>`: URL to documentation site to crawl
+- `--depth <n>`: Crawl depth for multi-level documentation (1-3, default: 1)
+
+## Documentation Integration
+
+### Context7 Integration
+
+Fetch up-to-date library documentation when creating commands:
+
+```bash
+# Resolve library and fetch docs
+!mcp__context7__resolve-library-id "$tech"
+!mcp__context7__get-library-docs "$context7_library_id" --tokens 3000 --topic "$topic"
+```
+
+**Example:**
+
+```bash
+/cc-command-create test-runner "Run pytest tests" --tech pytest
+```
+
+This will:
+
+- Resolve "pytest" to Context7 library ID
+- Fetch pytest documentation (CLI, fixtures, markers)
+- Add relevant snippets as reference comments in command template
+
+### Crawl4AI Deep Crawling
+
+Crawl documentation sites with configurable depth:
+
+```bash
+# Deep crawl documentation (multi-level)
+!python -m src.tools.doc_fetcher.crawler "$doc_url" --depth "$depth"
+```
+
+**Example:**
+
+```bash
+/cc-command-create api-guide "API integration guide" --doc-url https://docs.example.com/api --depth 2
+```
+
+This will:
+
+- Start from the provided URL
+- Extract internal documentation links
+- Crawl linked pages up to depth 2
+- Consolidate markdown content
+- Inject aggregated docs into command template
 
 ## Execution
 
@@ -112,21 +173,39 @@ Use `--strict-naming` flag for strict validation.
 # Follow wizard prompts
 ```
 
-### Create a test runner command
+### Create a test runner with pytest docs
 
 ```bash
-/cc-command-create run-tests "Run project tests with pytest"
-# Add bash commands: pytest tests/ -v
-# Select template: with_bash
+/cc-command-create test-runner "Run project tests with pytest" --tech pytest
 ```
 
-### Create a documentation command
+This fetches pytest documentation and generates a command with:
+
+- Best practices for test organization
+- Common pytest CLI options
+- Fixture usage examples
+- Marker strategies
+
+### Create API integration guide with deep crawling
 
 ```bash
-/cc-command-create generate-docs "Generate API documentation"
-# Add file references: @README.md, @docs/api.md
-# Select template: with_files
+/cc-command-create api-integration "FastAPI integration guide" --doc-url https://fastapi.tiangolo.com --depth 2
 ```
+
+This crawls FastAPI documentation (2 levels deep) and creates a command with:
+
+- API route definitions
+- Dependency injection patterns
+- Request/response models
+- Authentication examples
+
+### Create command with both integrations
+
+```bash
+/cc-command-create db-migrate "Database migration command" --tech alembic --doc-url https://alembic.sqlalchemy.org/en/latest/ --depth 1
+```
+
+Combines Context7 library docs with site crawling for comprehensive reference.
 
 ## After Creation
 
@@ -157,6 +236,8 @@ python -m src.tools.command_builder.main validate .claude/commands/my-command.md
 ## Tips
 
 - **Use Plan Mode** (Shift+Tab twice) to preview command structure before creation, especially for complex commands with multiple bash commands or file references
+- **Fetch documentation** when creating tech-specific commands to get up-to-date API references
+- **Use deep crawling** (depth 2-3) for comprehensive documentation sites with multiple related pages
 - Use descriptive command names that indicate the action
 - Add comprehensive descriptions for better discoverability
 - Choose the right template for your use case
@@ -164,6 +245,7 @@ python -m src.tools.command_builder.main validate .claude/commands/my-command.md
 - Use project scope for team-shared commands
 - Use global scope for personal commands across all projects
 - Document your commands well for future reference
+- **Combine Context7 + Crawl4AI** for maximum documentation coverage
 
 ## Best Practices
 
