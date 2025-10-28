@@ -20,8 +20,10 @@ Performance Target:
 
 import os
 import shutil
+from datetime import datetime
 from pathlib import Path
 from typing import Optional, Tuple
+from uuid import uuid4
 
 from src.core.scope_manager import ScopeManager
 from src.tools.skill_builder.exceptions import (
@@ -29,9 +31,15 @@ from src.tools.skill_builder.exceptions import (
     SkillExistsError,
     TemplateError,
 )
-from src.tools.skill_builder.models import SkillConfig, ScopeType
+from src.tools.skill_builder.models import SkillCatalogEntry, SkillConfig, ScopeType
 from src.tools.skill_builder.templates import TemplateManager
 from src.tools.skill_builder.validator import SkillValidator
+
+# Import TYPE_CHECKING to avoid circular imports
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from src.tools.skill_builder.catalog import CatalogManager
 
 
 class SkillBuilder:
@@ -44,6 +52,7 @@ class SkillBuilder:
     Attributes:
         scope_manager: ScopeManager for path resolution
         template_manager: TemplateManager for SKILL.md generation
+        catalog_manager: Optional CatalogManager for tracking skills
     """
 
     # File permissions constants
@@ -54,6 +63,7 @@ class SkillBuilder:
         self,
         scope_manager: Optional[ScopeManager] = None,
         template_manager: Optional[TemplateManager] = None,
+        catalog_manager: Optional["CatalogManager"] = None,
     ):
         """
         Initialize skill builder.
@@ -61,13 +71,16 @@ class SkillBuilder:
         Args:
             scope_manager: ScopeManager instance (creates default if not provided)
             template_manager: TemplateManager instance (creates default if not provided)
+            catalog_manager: Optional CatalogManager for tracking skills (optional)
 
         Examples:
-            >>> builder = SkillBuilder()  # Uses defaults
+            >>> builder = SkillBuilder()  # Uses defaults, no catalog
             >>> builder = SkillBuilder(scope_manager=custom_scope_mgr)
+            >>> builder = SkillBuilder(catalog_manager=catalog_mgr)  # With catalog tracking
         """
         self.scope_manager = scope_manager or ScopeManager()
         self.template_manager = template_manager or TemplateManager()
+        self.catalog_manager = catalog_manager
 
     def get_scope_path(
         self, scope: ScopeType, project_root: Optional[Path] = None
@@ -234,6 +247,29 @@ class SkillBuilder:
                 pass  # Best effort cleanup
             raise SkillBuilderError(f"Failed to write SKILL.md: {str(e)}")
 
+        # Add to catalog if manager is provided
+        if self.catalog_manager:
+            try:
+                entry = SkillCatalogEntry(
+                    id=uuid4(),
+                    name=config.name,
+                    description=config.description,
+                    scope=config.scope,
+                    path=skill_dir,
+                    metadata={
+                        "template": config.template,
+                        "has_scripts": (skill_dir / "scripts").exists(),
+                        "file_count": len(list(skill_dir.iterdir())),
+                        "allowed_tools": config.allowed_tools or [],
+                    },
+                )
+                self.catalog_manager.add_skill(entry)
+            except Exception as e:
+                # Log warning but don't fail the skill creation
+                # The skill was created successfully, catalog update is optional
+                import warnings
+                warnings.warn(f"Failed to add skill to catalog: {str(e)}")
+
         return (skill_dir, skill_content)
 
     def update_skill(
@@ -310,6 +346,28 @@ class SkillBuilder:
         except Exception as e:
             raise SkillBuilderError(f"Failed to update SKILL.md: {str(e)}")
 
+        # Update catalog timestamp if manager is provided
+        if self.catalog_manager:
+            try:
+                # Find skill by name and scope
+                skill = self.catalog_manager.get_skill(name=config.name, scope=config.scope)
+                if skill:
+                    self.catalog_manager.update_skill(
+                        skill.id,
+                        description=config.description,
+                        updated_at=datetime.now(),
+                        metadata={
+                            "template": config.template,
+                            "has_scripts": (skill_path / "scripts").exists(),
+                            "file_count": len(list(skill_path.iterdir())),
+                            "allowed_tools": config.allowed_tools or [],
+                        },
+                    )
+            except Exception as e:
+                # Log warning but don't fail the update
+                import warnings
+                warnings.warn(f"Failed to update skill in catalog: {str(e)}")
+
         return (skill_path, skill_content)
 
     def delete_skill(self, skill_path: Path) -> bool:
@@ -356,6 +414,21 @@ class SkillBuilder:
             raise SkillBuilderError(
                 f"Invalid skill path: parent directory must be 'skills', got '{scope_dir.name}'"
             )
+
+        # Find and remove from catalog first (before deletion)
+        skill_name = skill_path.name
+        if self.catalog_manager:
+            try:
+                # Try all scopes to find the skill
+                for scope in [ScopeType.GLOBAL, ScopeType.PROJECT, ScopeType.LOCAL]:
+                    skill = self.catalog_manager.get_skill(name=skill_name, scope=scope)
+                    if skill:
+                        self.catalog_manager.remove_skill(skill.id)
+                        break
+            except Exception as e:
+                # Log warning but don't fail the deletion
+                import warnings
+                warnings.warn(f"Failed to remove skill from catalog: {str(e)}")
 
         # Delete directory tree
         try:

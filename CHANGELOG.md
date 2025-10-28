@@ -127,7 +127,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Tested manually: All scenarios validated (normal execution, wrong directory, log rotation)
 
 ### Sprint 2 - Core Builders (In Progress)
-- [ ] **Skill Builder Tool** - Phase 2 completed, Phase 3-4 in progress
+- [ ] **Skill Builder Tool** - Phase 2-4 completed, Phase 5-6 pending
   - [x] Phase 1: Models, Exceptions, Validator (#8)
   - [x] **Phase 2: Templates and Template Manager** (#21) - Jinja2-based template system
     - `src/tools/skill_builder/templates.py` - TemplateManager with SandboxedEnvironment (220 lines)
@@ -151,7 +151,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Performance: < 50ms skill creation (5-15ms average in tests)
     - Dry-run mode: Validate without filesystem changes
     - Integration: ScopeManager, TemplateManager, SkillValidator, SkillConfig
-  - [ ] Phase 4: Wizard and CLI (#23)
+  - [x] **Phase 4: Catalog Management System** (#23) - CatalogManager for tracking skills
+    - `src/tools/skill_builder/catalog.py` - CatalogManager class (420 lines)
+    - `tests/skill_builder/test_catalog_manager.py` - Comprehensive test suite (27 tests, all passing, 82% coverage)
+    - `docs/implementation/issue-23-catalog.md` - Implementation documentation
+    - Core methods: add_skill(), update_skill(), remove_skill(), get_skill(), list_skills(), search_skills(), sync_catalog(), get_catalog_stats()
+    - Atomic write operations (backup + temp + rename) for corruption prevention
+    - CRUD operations with duplicate detection and UUID-based identification
+    - Query operations: list by scope, search with filters (query, scope, has_scripts, template)
+    - Filesystem sync: adds untracked skills, removes orphaned entries, parses YAML frontmatter
+    - Catalog stats: total count, by-scope breakdown, by-template counts, scripts count
+    - Security: JSON validation, path validation, duplicate prevention, atomic writes
+    - Performance: All operations < 100ms (tested), catalog stored at project_root/skills.json
+    - Integration: Optional CatalogManager in SkillBuilder (dependency injection pattern)
+    - Builder auto-updates catalog on build/update/delete operations
+  - [ ] Phase 5: Interactive Wizard (#24)
+  - [ ] Phase 6: CLI Interface (#25)
 - [x] **Command Builder Tool** (#9) - Generate Claude Code slash commands with interactive wizard
   - `src/tools/command_builder/models.py` - Pydantic models (331 lines): CommandConfig, CommandParameter, CommandCatalogEntry, CommandCatalog
   - `src/tools/command_builder/exceptions.py` - Custom exceptions (45 lines): CommandBuilderError hierarchy
