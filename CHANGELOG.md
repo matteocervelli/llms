@@ -127,11 +127,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Tested manually: All scenarios validated (normal execution, wrong directory, log rotation)
 
 ### Sprint 2 - Core Builders (In Progress)
-- [ ] **Skill Builder Tool** - Phase 2-5 completed, Phase 6 pending
+- [x] **Skill Builder Tool** - Complete 6-phase implementation (#8, #21, #22, #23, #24, #25)
   - [x] Phase 1: Models, Exceptions, Validator (#8)
-  - [x] **Phase 2: Templates and Template Manager** (#21) - Jinja2-based template system
-    - `src/tools/skill_builder/templates.py` - TemplateManager with SandboxedEnvironment (220 lines)
-    - `src/tools/skill_builder/templates/basic.md` - Simple skill template (80 lines)
+  - [x] Phase 2: Templates and Template Manager (#21)
+  - [x] Phase 3: Builder and Catalog Integration (#22)
+  - [x] Phase 4: Catalog Management System (#23)
+  - [x] Phase 5: Interactive Wizard (#24)
+  - [x] **Phase 6: CLI Interface** (#25) - Click-based command-line interface
+    - `src/tools/skill_builder/main.py` - CLI with 8 commands (514 lines)
+    - `tests/test_skill_builder.py` - Added 7 tests (4 CLI + 3 performance), 41 total tests passing
+    - `docs/implementation/issue-25-cli.md` - Implementation documentation
+    - **8 CLI commands**: create (interactive wizard), generate (non-interactive), list (filtering), delete (confirmation), validate, templates, stats, sync
+    - **Interactive mode**: Full wizard integration for guided skill creation
+    - **Non-interactive mode**: Command-line flags for automation and scripting
+    - **Filtering**: List skills by scope, template, search query, has-scripts
+    - **Visual feedback**: Emojis for status (✅/❌/💡/📋/📊) and scope badges (🌐/📁/🔒)
+    - **Error handling**: Clear user-friendly messages, graceful failure handling
+    - **Performance**: All targets met (< 50ms creation, < 100ms catalog ops, < 10ms validation/rendering)
+    - **Testing**: 68% package coverage, all performance targets achieved
+    - **Security**: Input validation, path traversal prevention, scope boundaries enforced
+    - **UX consistency**: Follows command_builder patterns for familiar interface
     - `src/tools/skill_builder/templates/with_tools.md` - Skill with allowed-tools (90 lines)
     - `src/tools/skill_builder/templates/with_scripts.md` - Skill with scripts/ directory (100 lines)
     - `src/tools/skill_builder/templates/advanced.md` - Full-featured multi-file skill (120 lines)

@@ -539,9 +539,7 @@ class TestWizardIntegration:
 
         # Patch all questionary methods
         monkeypatch.setattr("questionary.text", lambda *a, **k: type("", (), {"ask": mock_ask})())
-        monkeypatch.setattr(
-            "questionary.select", lambda *a, **k: type("", (), {"ask": mock_ask})()
-        )
+        monkeypatch.setattr("questionary.select", lambda *a, **k: type("", (), {"ask": mock_ask})())
         monkeypatch.setattr(
             "questionary.confirm", lambda *a, **k: type("", (), {"ask": mock_ask})()
         )
@@ -605,9 +603,7 @@ class TestWizardIntegration:
 
         # Patch questionary
         monkeypatch.setattr("questionary.text", lambda *a, **k: type("", (), {"ask": mock_ask})())
-        monkeypatch.setattr(
-            "questionary.select", lambda *a, **k: type("", (), {"ask": mock_ask})()
-        )
+        monkeypatch.setattr("questionary.select", lambda *a, **k: type("", (), {"ask": mock_ask})())
         monkeypatch.setattr(
             "questionary.confirm", lambda *a, **k: type("", (), {"ask": mock_ask})()
         )
@@ -640,7 +636,9 @@ class TestWizardIntegration:
         def mock_keyboard_interrupt(*args, **kwargs):
             raise KeyboardInterrupt()
 
-        monkeypatch.setattr("questionary.text", lambda *a, **k: type("", (), {"ask": mock_keyboard_interrupt})())
+        monkeypatch.setattr(
+            "questionary.text", lambda *a, **k: type("", (), {"ask": mock_keyboard_interrupt})()
+        )
 
         config = wizard.run(temp_dir)
         assert config is None  # Should return None on KeyboardInterrupt
@@ -652,7 +650,9 @@ class TestWizardIntegration:
         wizard = SkillWizard()
 
         # Test cancel at name prompt
-        monkeypatch.setattr("questionary.text", lambda *a, **k: type("", (), {"ask": lambda: None})())
+        monkeypatch.setattr(
+            "questionary.text", lambda *a, **k: type("", (), {"ask": lambda: None})()
+        )
         config = wizard.run(temp_dir)
         assert config is None
 
@@ -672,9 +672,7 @@ class TestWizardIntegration:
             return next(input_iter)
 
         monkeypatch.setattr("questionary.text", lambda *a, **k: type("", (), {"ask": mock_ask})())
-        monkeypatch.setattr(
-            "questionary.select", lambda *a, **k: type("", (), {"ask": mock_ask})()
-        )
+        monkeypatch.setattr("questionary.select", lambda *a, **k: type("", (), {"ask": mock_ask})())
         monkeypatch.setattr(
             "questionary.confirm", lambda *a, **k: type("", (), {"ask": mock_ask})()
         )
@@ -704,7 +702,9 @@ class TestWizardIntegration:
             def mock_ask(*args, **kwargs):
                 return next(input_iter)
 
-            monkeypatch.setattr("questionary.text", lambda *a, **k: type("", (), {"ask": mock_ask})())
+            monkeypatch.setattr(
+                "questionary.text", lambda *a, **k: type("", (), {"ask": mock_ask})()
+            )
             monkeypatch.setattr(
                 "questionary.select", lambda *a, **k: type("", (), {"ask": mock_ask})()
             )
@@ -715,3 +715,240 @@ class TestWizardIntegration:
             config = wizard.run(temp_dir)
             assert config is not None
             assert config.scope == ScopeType(scope_value)
+
+
+# ============================================================================
+# CLI Tests (Phase 6)
+# ============================================================================
+
+
+class TestCLI:
+    """Test CLI commands from main.py."""
+
+    def test_create_command_with_wizard(self, temp_dir, monkeypatch):
+        """Test create command integrates with wizard."""
+        from click.testing import CliRunner
+        from src.tools.skill_builder.main import cli
+
+        # Mock wizard to return a config
+        def mock_wizard_run(self, project_root):
+            return SkillConfig(
+                name="cli-test-skill",
+                description="CLI test skill. Use when testing CLI.",
+                scope=ScopeType.PROJECT,
+                template="basic",
+            )
+
+        monkeypatch.setattr("src.tools.skill_builder.main.SkillWizard.run", mock_wizard_run)
+
+        runner = CliRunner()
+        with runner.isolated_filesystem(temp_dir=temp_dir) as td:
+            result = runner.invoke(cli, ["create", "--project-root", td])
+            assert result.exit_code == 0
+            assert "✅ Skill created successfully" in result.output
+            assert "cli-test-skill" in result.output
+
+    def test_list_command_with_filters(self, temp_dir):
+        """Test list command with filtering."""
+        from click.testing import CliRunner
+        from src.tools.skill_builder.catalog import CatalogManager
+        from src.tools.skill_builder.main import cli
+        from src.tools.skill_builder.models import SkillCatalogEntry
+
+        runner = CliRunner()
+
+        # Create catalog with test skills
+        catalog_mgr = CatalogManager(catalog_path=temp_dir / "skills.json")
+
+        # Add test skills
+        skill1 = SkillCatalogEntry(
+            name="test-skill-1",
+            description="First test skill",
+            scope=ScopeType.PROJECT,
+            path=str(temp_dir / "skill1"),
+            metadata={"template": "basic"},
+        )
+        skill2 = SkillCatalogEntry(
+            name="test-skill-2",
+            description="Second test skill",
+            scope=ScopeType.GLOBAL,
+            path=str(temp_dir / "skill2"),
+            metadata={"template": "with_tools", "has_scripts": True},
+        )
+        catalog_mgr.add_skill(skill1)
+        catalog_mgr.add_skill(skill2)
+
+        # Test list all
+        result = runner.invoke(cli, ["list", "--project-root", str(temp_dir)])
+        assert result.exit_code == 0
+        assert "test-skill-1" in result.output
+        assert "test-skill-2" in result.output
+        assert "2 total" in result.output
+
+        # Test filter by scope
+        result = runner.invoke(cli, ["list", "--scope", "project", "--project-root", str(temp_dir)])
+        assert result.exit_code == 0
+        assert "test-skill-1" in result.output
+        assert "test-skill-2" not in result.output
+
+        # Test filter by template
+        result = runner.invoke(
+            cli, ["list", "--template", "with_tools", "--project-root", str(temp_dir)]
+        )
+        assert result.exit_code == 0
+        assert "test-skill-2" in result.output
+        assert "test-skill-1" not in result.output
+
+        # Test filter by has-scripts
+        result = runner.invoke(cli, ["list", "--has-scripts", "--project-root", str(temp_dir)])
+        assert result.exit_code == 0
+        assert "test-skill-2" in result.output
+        assert "test-skill-1" not in result.output
+
+    def test_delete_command_with_confirmation(self, temp_dir, valid_config):
+        """Test delete command with confirmation."""
+        from click.testing import CliRunner
+        from src.tools.skill_builder.catalog import CatalogManager
+        from src.tools.skill_builder.main import cli
+        from src.tools.skill_builder.models import SkillCatalogEntry
+
+        runner = CliRunner()
+        builder = SkillBuilder()
+
+        # Create skill
+        skill_path, _ = builder.build_skill(valid_config, temp_dir)
+
+        # Add to catalog
+        catalog_mgr = CatalogManager(catalog_path=temp_dir / "skills.json")
+        entry = SkillCatalogEntry(
+            name="test-skill",
+            description="Test skill",
+            scope=ScopeType.PROJECT,
+            path=str(skill_path),
+            metadata={"template": "basic"},
+        )
+        catalog_mgr.add_skill(entry)
+
+        # Test delete with --yes flag (no confirmation)
+        result = runner.invoke(
+            cli, ["delete", "test-skill", "--yes", "--project-root", str(temp_dir)]
+        )
+        assert result.exit_code == 0
+        assert "✅ Skill 'test-skill' deleted successfully" in result.output
+        assert not skill_path.exists()
+
+    def test_validate_command(self, temp_dir, valid_config):
+        """Test validate command."""
+        from click.testing import CliRunner
+        from src.tools.skill_builder.main import cli
+
+        runner = CliRunner()
+        builder = SkillBuilder()
+
+        # Create valid skill
+        skill_path, _ = builder.build_skill(valid_config, temp_dir)
+
+        # Test validation of valid skill
+        result = runner.invoke(cli, ["validate", str(skill_path)])
+        assert result.exit_code == 0
+        assert "✅ Skill directory is valid" in result.output
+
+        # Test validation of invalid skill (missing SKILL.md)
+        invalid_skill = temp_dir / "invalid-skill"
+        invalid_skill.mkdir()
+
+        result = runner.invoke(cli, ["validate", str(invalid_skill)])
+        assert result.exit_code == 1
+        assert "❌ Skill directory is invalid" in result.output
+        assert "SKILL.md not found" in result.output
+
+        # Cleanup
+        shutil.rmtree(skill_path)
+        shutil.rmtree(invalid_skill)
+
+
+# ============================================================================
+# Additional Performance Tests (Phase 6)
+# ============================================================================
+
+
+class TestCLIPerformance:
+    """Test CLI performance requirements."""
+
+    def test_catalog_operations_performance(self, temp_dir):
+        """Test that catalog operations are < 100ms."""
+        from src.tools.skill_builder.catalog import CatalogManager
+        from src.tools.skill_builder.models import SkillCatalogEntry
+
+        catalog_mgr = CatalogManager(catalog_path=temp_dir / "skills.json")
+
+        # Add 10 test skills
+        for i in range(10):
+            entry = SkillCatalogEntry(
+                name=f"perf-test-{i}",
+                description=f"Performance test skill {i}",
+                scope=ScopeType.PROJECT,
+                path=str(temp_dir / f"skill{i}"),
+                metadata={"template": "basic"},
+            )
+            catalog_mgr.add_skill(entry)
+
+        # Test search performance
+        start_time = time.time()
+        results = catalog_mgr.search_skills(query="test")
+        elapsed_ms = (time.time() - start_time) * 1000
+        assert elapsed_ms < 100, f"Catalog search took {elapsed_ms:.2f}ms, expected < 100ms"
+        assert len(results) == 10
+
+        # Test list performance
+        start_time = time.time()
+        results = catalog_mgr.list_skills()
+        elapsed_ms = (time.time() - start_time) * 1000
+        assert elapsed_ms < 100, f"Catalog list took {elapsed_ms:.2f}ms, expected < 100ms"
+        assert len(results) == 10
+
+        # Test stats performance
+        start_time = time.time()
+        stats = catalog_mgr.get_catalog_stats()
+        elapsed_ms = (time.time() - start_time) * 1000
+        assert elapsed_ms < 100, f"Catalog stats took {elapsed_ms:.2f}ms, expected < 100ms"
+        assert stats["total"] == 10
+
+    def test_validation_performance(self, temp_dir, valid_config):
+        """Test that validation is < 10ms."""
+        builder = SkillBuilder()
+
+        # Create skill
+        skill_path, _ = builder.build_skill(valid_config, temp_dir)
+
+        # Measure validation time
+        start_time = time.time()
+        is_valid, message = builder.validate_skill_directory(skill_path)
+        elapsed_ms = (time.time() - start_time) * 1000
+
+        assert is_valid
+        assert elapsed_ms < 10, f"Validation took {elapsed_ms:.2f}ms, expected < 10ms"
+
+        # Cleanup
+        shutil.rmtree(skill_path)
+
+    def test_template_rendering_performance(self):
+        """Test that template rendering is < 10ms."""
+        from src.tools.skill_builder.templates import TemplateManager
+
+        template_mgr = TemplateManager()
+
+        config = SkillConfig(
+            name="perf-test",
+            description="Performance test. Use when testing performance.",
+            scope=ScopeType.PROJECT,
+            template="basic",
+        )
+
+        # Measure template rendering time
+        start_time = time.time()
+        content = template_mgr.render("basic", config.model_dump())
+        elapsed_ms = (time.time() - start_time) * 1000
+
+        assert "perf-test" in content
+        assert elapsed_ms < 10, f"Template rendering took {elapsed_ms:.2f}ms, expected < 10ms"
