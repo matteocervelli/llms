@@ -141,7 +141,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Performance: < 10ms template rendering, < 5ms loading
     - Template variables: name, description, allowed_tools, content, frontmatter
     - 4 templates with progressive complexity (basic → with_tools → with_scripts → advanced)
-  - [ ] Phase 3: Builder and Catalog Integration (#22)
+  - [x] **Phase 3: Builder and Catalog Integration** (#22) - SkillBuilder core logic
+    - `src/tools/skill_builder/builder.py` - SkillBuilder class (429 lines)
+    - `tests/test_skill_builder.py` - Comprehensive test suite (28 tests, all passing, 77% coverage)
+    - `docs/implementation/issue-22-builder.md` - Implementation documentation
+    - Core methods: get_scope_path(), build_skill(), update_skill(), delete_skill(), validate_skill_directory()
+    - Creates skill **directories** (not single files) with SKILL.md inside
+    - Security: Path traversal prevention, file permissions (755 dirs, 644 files), input validation
+    - Performance: < 50ms skill creation (5-15ms average in tests)
+    - Dry-run mode: Validate without filesystem changes
+    - Integration: ScopeManager, TemplateManager, SkillValidator, SkillConfig
   - [ ] Phase 4: Wizard and CLI (#23)
 - [x] **Command Builder Tool** (#9) - Generate Claude Code slash commands with interactive wizard
   - `src/tools/command_builder/models.py` - Pydantic models (331 lines): CommandConfig, CommandParameter, CommandCatalogEntry, CommandCatalog
