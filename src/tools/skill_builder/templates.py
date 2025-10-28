@@ -51,14 +51,10 @@ class TemplateManager:
             templates_dir = Path(__file__).parent / "templates"
 
         if not templates_dir.exists():
-            raise TemplateError(
-                f"Templates directory not found: {templates_dir}"
-            )
+            raise TemplateError(f"Templates directory not found: {templates_dir}")
 
         if not templates_dir.is_dir():
-            raise TemplateError(
-                f"Templates path is not a directory: {templates_dir}"
-            )
+            raise TemplateError(f"Templates path is not a directory: {templates_dir}")
 
         self.templates_dir = templates_dir.resolve()
 
@@ -119,9 +115,7 @@ class TemplateManager:
         try:
             resolved_path = template_path.resolve()
             if not resolved_path.is_relative_to(self.templates_dir):
-                raise TemplateError(
-                    f"Template path outside templates directory: {template_name}"
-                )
+                raise TemplateError(f"Template path outside templates directory: {template_name}")
         except Exception as e:
             raise TemplateError(f"Path validation failed: {str(e)}")
 
@@ -134,11 +128,7 @@ class TemplateManager:
 
         return resolved_path
 
-    def render(
-        self,
-        template_name: str,
-        variables: Dict[str, Any]
-    ) -> str:
+    def render(self, template_name: str, variables: Dict[str, Any]) -> str:
         """
         Renders a template with provided variables.
 
@@ -176,9 +166,7 @@ class TemplateManager:
         try:
             template_content = template_path.read_text(encoding="utf-8")
         except Exception as e:
-            raise TemplateError(
-                f"Failed to read template {template_name}: {str(e)}"
-            )
+            raise TemplateError(f"Failed to read template {template_name}: {str(e)}")
 
         # Sanitize variables
         sanitized_vars = self._sanitize_variables(variables)
@@ -189,17 +177,11 @@ class TemplateManager:
             rendered = template.render(**sanitized_vars)
             return rendered
         except TemplateSyntaxError as e:
-            raise TemplateError(
-                f"Template syntax error in {template_name}: {str(e)}"
-            )
+            raise TemplateError(f"Template syntax error in {template_name}: {str(e)}")
         except TemplateNotFound as e:
-            raise TemplateError(
-                f"Template not found: {str(e)}"
-            )
+            raise TemplateError(f"Template not found: {str(e)}")
         except Exception as e:
-            raise TemplateError(
-                f"Failed to render template {template_name}: {str(e)}"
-            )
+            raise TemplateError(f"Failed to render template {template_name}: {str(e)}")
 
     def _sanitize_variables(self, variables: Dict[str, Any]) -> Dict[str, Any]:
         """
@@ -216,7 +198,7 @@ class TemplateManager:
             - Validates frontmatter keys
             - Converts allowed_tools list to YAML-safe format
         """
-        sanitized = {}
+        sanitized: Dict[str, Any] = {}
 
         for key, value in variables.items():
             # Sanitize string values
@@ -227,17 +209,21 @@ class TemplateManager:
                 # Validate and format as YAML list
                 is_valid, _ = SkillValidator.validate_allowed_tools(value)
                 if is_valid:
-                    sanitized[key] = value
+                    sanitized_list: Any = value
+                    sanitized[key] = sanitized_list
                 else:
-                    sanitized[key] = []
+                    sanitized_empty_list: Any = []
+                    sanitized[key] = sanitized_empty_list
             # Handle frontmatter dict
             elif key == "frontmatter" and isinstance(value, dict):
                 # Validate frontmatter keys
                 is_valid, _ = SkillValidator.validate_frontmatter_keys(value)
                 if is_valid:
-                    sanitized[key] = value
+                    sanitized_dict: Any = value
+                    sanitized[key] = sanitized_dict
                 else:
-                    sanitized[key] = {}
+                    sanitized_empty_dict: Any = {}
+                    sanitized[key] = sanitized_empty_dict
             else:
                 sanitized[key] = value
 

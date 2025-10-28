@@ -35,6 +35,7 @@ from src.tools.skill_builder.models import (
 # Test Fixtures
 # ============================================================================
 
+
 @pytest.fixture
 def temp_skill_dir(tmp_path):
     """Creates temporary skill directory structure."""
@@ -51,7 +52,7 @@ def sample_skill_config():
         description="Test skill description. Use when testing.",
         scope=ScopeType.PROJECT,
         template="basic",
-        allowed_tools=["Read", "Grep"]
+        allowed_tools=["Read", "Grep"],
     )
 
 
@@ -66,13 +67,14 @@ def sample_catalog_entry(temp_skill_dir):
         path=temp_skill_dir / "test-skill",
         created_at=datetime.now(),
         updated_at=datetime.now(),
-        metadata={"template": "basic"}
+        metadata={"template": "basic"},
     )
 
 
 # ============================================================================
 # Model Tests (10 tests)
 # ============================================================================
+
 
 class TestSkillConfig:
     """Tests for SkillConfig model validation."""
@@ -83,7 +85,7 @@ class TestSkillConfig:
             name="my-skill",
             description="Description with usage context. Use when needed.",
             scope=ScopeType.GLOBAL,
-            template="basic"
+            template="basic",
         )
         assert config.name == "my-skill"
         assert config.scope == ScopeType.GLOBAL
@@ -95,7 +97,7 @@ class TestSkillConfig:
             SkillConfig(
                 name="MySkill",  # Invalid: uppercase
                 description="Test. Use when testing.",
-                scope=ScopeType.GLOBAL
+                scope=ScopeType.GLOBAL,
             )
         assert "lowercase" in str(exc_info.value).lower()
 
@@ -103,20 +105,14 @@ class TestSkillConfig:
         """Test that names over 64 chars are rejected."""
         with pytest.raises(ValidationError) as exc_info:
             SkillConfig(
-                name="a" * 65,
-                description="Test. Use when testing.",
-                scope=ScopeType.GLOBAL
+                name="a" * 65, description="Test. Use when testing.", scope=ScopeType.GLOBAL
             )
         assert "64" in str(exc_info.value)
 
     def test_invalid_name_empty(self):
         """Test that empty names are rejected."""
         with pytest.raises(ValidationError):
-            SkillConfig(
-                name="",
-                description="Test. Use when testing.",
-                scope=ScopeType.GLOBAL
-            )
+            SkillConfig(name="", description="Test. Use when testing.", scope=ScopeType.GLOBAL)
 
     def test_invalid_name_special_chars(self):
         """Test that special characters in names are rejected."""
@@ -124,7 +120,7 @@ class TestSkillConfig:
             SkillConfig(
                 name="my_skill!",  # Invalid: underscore and exclamation
                 description="Test. Use when testing.",
-                scope=ScopeType.GLOBAL
+                scope=ScopeType.GLOBAL,
             )
         assert "lowercase" in str(exc_info.value).lower()
 
@@ -134,18 +130,14 @@ class TestSkillConfig:
             SkillConfig(
                 name="my--skill",  # Invalid: consecutive hyphens
                 description="Test. Use when testing.",
-                scope=ScopeType.GLOBAL
+                scope=ScopeType.GLOBAL,
             )
         assert "consecutive" in str(exc_info.value).lower()
 
     def test_invalid_description_empty(self):
         """Test that empty descriptions are rejected."""
         with pytest.raises(ValidationError):
-            SkillConfig(
-                name="test-skill",
-                description="",
-                scope=ScopeType.GLOBAL
-            )
+            SkillConfig(name="test-skill", description="", scope=ScopeType.GLOBAL)
 
     def test_invalid_description_no_usage_context(self):
         """Test that descriptions without usage context are rejected."""
@@ -153,7 +145,7 @@ class TestSkillConfig:
             SkillConfig(
                 name="test-skill",
                 description="Process PDFs.",  # Missing "when" or "use"
-                scope=ScopeType.GLOBAL
+                scope=ScopeType.GLOBAL,
             )
         error_msg = str(exc_info.value).lower()
         assert "when" in error_msg or "use" in error_msg
@@ -161,11 +153,7 @@ class TestSkillConfig:
     def test_invalid_description_too_long(self):
         """Test that descriptions over 1024 chars are rejected."""
         with pytest.raises(ValidationError) as exc_info:
-            SkillConfig(
-                name="test-skill",
-                description="A" * 1025,
-                scope=ScopeType.GLOBAL
-            )
+            SkillConfig(name="test-skill", description="A" * 1025, scope=ScopeType.GLOBAL)
         assert "1024" in str(exc_info.value)
 
     def test_invalid_template_path_traversal(self):
@@ -175,7 +163,7 @@ class TestSkillConfig:
                 name="test-skill",
                 description="Test. Use when testing.",
                 scope=ScopeType.GLOBAL,
-                template="../../../etc/passwd"
+                template="../../../etc/passwd",
             )
         # Path traversal is rejected (contains '.' and '/')
         assert "template" in str(exc_info.value).lower()
@@ -194,7 +182,7 @@ class TestSkillCatalogEntry:
             path=temp_skill_dir / "test-skill",
             created_at=datetime.now(),
             updated_at=datetime.now(),
-            metadata={}
+            metadata={},
         )
         assert entry.name == "test-skill"
         assert entry.scope == ScopeType.PROJECT
@@ -210,7 +198,7 @@ class TestSkillCatalogEntry:
             path=temp_skill_dir / "test-skill",
             created_at=datetime.now(),
             updated_at=datetime.now(),
-            metadata={"template": "basic", "has_scripts": True}
+            metadata={"template": "basic", "has_scripts": True},
         )
         assert entry.metadata["template"] == "basic"
         assert entry.metadata["has_scripts"] is True
@@ -226,7 +214,7 @@ class TestSkillCatalogEntry:
                 path=Path("relative/path"),  # Invalid: relative
                 created_at=datetime.now(),
                 updated_at=datetime.now(),
-                metadata={}
+                metadata={},
             )
         assert "absolute" in str(exc_info.value).lower()
 
@@ -328,7 +316,7 @@ class TestSkillCatalog:
                 path=temp_skill_dir / f"skill-{scope.value}",
                 created_at=datetime.now(),
                 updated_at=datetime.now(),
-                metadata={}
+                metadata={},
             )
             catalog.add_skill(entry)
 
@@ -341,10 +329,7 @@ class TestSkillCatalog:
         catalog = SkillCatalog()
         catalog.add_skill(sample_catalog_entry)
 
-        result = catalog.update_skill(
-            sample_catalog_entry.id,
-            description="Updated description"
-        )
+        result = catalog.update_skill(sample_catalog_entry.id, description="Updated description")
         assert result is True
 
         updated = catalog.get_by_id(sample_catalog_entry.id)
@@ -354,6 +339,7 @@ class TestSkillCatalog:
 # ============================================================================
 # Validator Tests (15 tests)
 # ============================================================================
+
 
 class TestSkillValidator:
     """Tests for SkillValidator class methods."""
@@ -490,6 +476,7 @@ class TestSkillValidator:
 # Template Tests (8 tests)
 # ============================================================================
 
+
 class TestTemplateManager:
     """Tests for TemplateManager class."""
 
@@ -532,12 +519,15 @@ class TestTemplateManager:
         from src.tools.skill_builder.templates import TemplateManager
 
         manager = TemplateManager()
-        content = manager.render("basic", {
-            "name": "test-skill",
-            "description": "Test description",
-            "content": "Test instructions",
-            "frontmatter": {}
-        })
+        content = manager.render(
+            "basic",
+            {
+                "name": "test-skill",
+                "description": "Test description",
+                "content": "Test instructions",
+                "frontmatter": {},
+            },
+        )
 
         assert "test-skill" in content
         assert "Test description" in content
@@ -548,13 +538,16 @@ class TestTemplateManager:
         from src.tools.skill_builder.templates import TemplateManager
 
         manager = TemplateManager()
-        content = manager.render("with_tools", {
-            "name": "pdf-processor",
-            "description": "Process PDF files",
-            "content": "Extract text from PDFs",
-            "allowed_tools": ["Read", "Bash"],
-            "frontmatter": {"version": "1.0"}
-        })
+        content = manager.render(
+            "with_tools",
+            {
+                "name": "pdf-processor",
+                "description": "Process PDF files",
+                "content": "Extract text from PDFs",
+                "allowed_tools": ["Read", "Bash"],
+                "frontmatter": {"version": "1.0"},
+            },
+        )
 
         assert "pdf-processor" in content
         assert "Read" in content
@@ -570,9 +563,7 @@ class TestTemplateManager:
 
         # Create a temporary template with malicious code attempt
         malicious_template = manager.templates_dir / "malicious.md"
-        malicious_template.write_text(
-            "{{ name.__class__.__bases__[0].__subclasses__() }}"
-        )
+        malicious_template.write_text("{{ name.__class__.__bases__[0].__subclasses__() }}")
 
         try:
             # This should fail due to sandboxing

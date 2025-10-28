@@ -12,14 +12,15 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional
 from uuid import UUID, uuid4
 
-from pydantic import BaseModel, Field, field_validator, model_validator
+from pydantic import BaseModel, Field, field_validator
 
 
 class ScopeType(str, Enum):
     """Scope types for skill installation."""
-    GLOBAL = "global"    # ~/.claude/skills/
+
+    GLOBAL = "global"  # ~/.claude/skills/
     PROJECT = "project"  # <project>/.claude/skills/ (committed)
-    LOCAL = "local"      # <project>/.claude/skills/ (not committed)
+    LOCAL = "local"  # <project>/.claude/skills/ (not committed)
 
 
 class SkillConfig(BaseModel):
@@ -44,7 +45,7 @@ class SkillConfig(BaseModel):
     content: Optional[str] = None
     frontmatter: Dict[str, Any] = Field(default_factory=dict)
 
-    @field_validator('name')
+    @field_validator("name")
     @classmethod
     def validate_name(cls, v: str) -> str:
         """
@@ -58,21 +59,19 @@ class SkillConfig(BaseModel):
         if not v or len(v) < 1:
             raise ValueError("Name cannot be empty")
 
-        pattern = re.compile(r'^[a-z0-9-]+$')
+        pattern = re.compile(r"^[a-z0-9-]+$")
         if not pattern.match(v):
-            raise ValueError(
-                "Name must contain only lowercase letters, numbers, and hyphens"
-            )
+            raise ValueError("Name must contain only lowercase letters, numbers, and hyphens")
 
-        if v.startswith('-') or v.endswith('-'):
+        if v.startswith("-") or v.endswith("-"):
             raise ValueError("Name cannot start or end with hyphen")
 
-        if '--' in v:
+        if "--" in v:
             raise ValueError("Name cannot contain consecutive hyphens")
 
         return v
 
-    @field_validator('description')
+    @field_validator("description")
     @classmethod
     def validate_description(cls, v: str) -> str:
         """
@@ -85,10 +84,8 @@ class SkillConfig(BaseModel):
             raise ValueError("Description must be 1024 characters or less")
 
         # Check for usage context keywords
-        usage_keywords = ['when', 'use', 'for', 'during', 'if']
-        has_usage_context = any(
-            keyword in v.lower() for keyword in usage_keywords
-        )
+        usage_keywords = ["when", "use", "for", "during", "if"]
+        has_usage_context = any(keyword in v.lower() for keyword in usage_keywords)
 
         if not has_usage_context:
             raise ValueError(
@@ -98,14 +95,14 @@ class SkillConfig(BaseModel):
 
         return v
 
-    @field_validator('template')
+    @field_validator("template")
     @classmethod
     def validate_template(cls, v: str) -> str:
         """Validates template name (alphanumeric and hyphens only)."""
         if not v:
             raise ValueError("Template name cannot be empty")
 
-        pattern = re.compile(r'^[a-z0-9_-]+$')
+        pattern = re.compile(r"^[a-z0-9_-]+$")
         if not pattern.match(v):
             raise ValueError(
                 "Template name must contain only lowercase letters, "
@@ -113,7 +110,7 @@ class SkillConfig(BaseModel):
             )
 
         # Security: Prevent path traversal
-        if '..' in v or '/' in v or '\\' in v:
+        if ".." in v or "/" in v or "\\" in v:
             raise ValueError("Template name cannot contain path separators")
 
         return v
@@ -126,7 +123,7 @@ class SkillConfig(BaseModel):
                     "description": "Extract text from PDFs. Use when working with PDF files.",
                     "scope": "project",
                     "template": "basic",
-                    "allowed_tools": ["Read", "Bash"]
+                    "allowed_tools": ["Read", "Bash"],
                 }
             ]
         }
@@ -157,7 +154,7 @@ class SkillCatalogEntry(BaseModel):
     updated_at: datetime = Field(default_factory=datetime.now)
     metadata: Dict[str, Any] = Field(default_factory=dict)
 
-    @field_validator('path')
+    @field_validator("path")
     @classmethod
     def validate_path(cls, v: Path) -> Path:
         """Ensures path is absolute."""
@@ -165,13 +162,7 @@ class SkillCatalogEntry(BaseModel):
             raise ValueError("Path must be absolute")
         return v
 
-    model_config = {
-        "json_encoders": {
-            Path: str,
-            UUID: str,
-            datetime: lambda v: v.isoformat()
-        }
-    }
+    model_config = {"json_encoders": {Path: str, UUID: str, datetime: lambda v: v.isoformat()}}
 
 
 class SkillCatalog(BaseModel):
@@ -205,9 +196,7 @@ class SkillCatalog(BaseModel):
         return None
 
     def get_by_name(
-        self,
-        name: str,
-        scope: Optional[ScopeType] = None
+        self, name: str, scope: Optional[ScopeType] = None
     ) -> Optional[SkillCatalogEntry]:
         """
         Retrieves a skill by name and optional scope.
@@ -225,11 +214,7 @@ class SkillCatalog(BaseModel):
                     return skill
         return None
 
-    def search(
-        self,
-        query: str,
-        scope: Optional[ScopeType] = None
-    ) -> List[SkillCatalogEntry]:
+    def search(self, query: str, scope: Optional[ScopeType] = None) -> List[SkillCatalogEntry]:
         """
         Searches skills by name and description.
 
@@ -247,8 +232,7 @@ class SkillCatalog(BaseModel):
             if scope and skill.scope != scope:
                 continue
 
-            if (query_lower in skill.name.lower() or
-                query_lower in skill.description.lower()):
+            if query_lower in skill.name.lower() or query_lower in skill.description.lower():
                 results.append(skill)
 
         return results
@@ -277,9 +261,7 @@ class SkillCatalog(BaseModel):
         """
         existing = self.get_by_name(entry.name, entry.scope)
         if existing:
-            raise ValueError(
-                f"Skill '{entry.name}' already exists in {entry.scope} scope"
-            )
+            raise ValueError(f"Skill '{entry.name}' already exists in {entry.scope} scope")
 
         self.skills.append(entry)
 
@@ -297,7 +279,7 @@ class SkillCatalog(BaseModel):
         self.skills = [s for s in self.skills if s.id != skill_id]
         return len(self.skills) < initial_count
 
-    def update_skill(self, skill_id: UUID, **updates) -> bool:
+    def update_skill(self, skill_id: UUID, **updates: Any) -> bool:
         """
         Updates a skill's fields.
 

@@ -28,17 +28,30 @@ class SkillValidator:
     # Claude Code available tools (whitelist)
     # Source: Claude Code documentation
     ALLOWED_TOOLS = {
-        'Read', 'Write', 'Edit', 'Bash', 'Grep', 'Glob',
-        'Task', 'WebFetch', 'WebSearch', 'TodoWrite',
-        'Skill', 'SlashCommand', 'NotebookEdit', 'BashOutput',
-        'KillShell', 'ListMcpResourcesTool', 'ReadMcpResourceTool'
+        "Read",
+        "Write",
+        "Edit",
+        "Bash",
+        "Grep",
+        "Glob",
+        "Task",
+        "WebFetch",
+        "WebSearch",
+        "TodoWrite",
+        "Skill",
+        "SlashCommand",
+        "NotebookEdit",
+        "BashOutput",
+        "KillShell",
+        "ListMcpResourcesTool",
+        "ReadMcpResourceTool",
     }
 
     # Skill name pattern: lowercase, numbers, hyphens only
-    SKILL_NAME_PATTERN = re.compile(r'^[a-z0-9-]+$')
+    SKILL_NAME_PATTERN = re.compile(r"^[a-z0-9-]+$")
 
     # Template name pattern: lowercase, numbers, underscores, hyphens
-    TEMPLATE_NAME_PATTERN = re.compile(r'^[a-z0-9_-]+$')
+    TEMPLATE_NAME_PATTERN = re.compile(r"^[a-z0-9_-]+$")
 
     @staticmethod
     def validate_skill_name(name: str) -> Tuple[bool, str]:
@@ -71,20 +84,18 @@ class SkillValidator:
 
         # Check pattern
         if not SkillValidator.SKILL_NAME_PATTERN.match(name):
-            return False, (
-                "Name must contain only lowercase letters, numbers, and hyphens"
-            )
+            return False, ("Name must contain only lowercase letters, numbers, and hyphens")
 
         # Security: Check for leading/trailing hyphens
-        if name.startswith('-') or name.endswith('-'):
+        if name.startswith("-") or name.endswith("-"):
             return False, "Name cannot start or end with hyphen"
 
         # Security: Check for consecutive hyphens
-        if '--' in name:
+        if "--" in name:
             return False, "Name cannot contain consecutive hyphens"
 
         # Security: Explicit path traversal check
-        if '..' in name or '/' in name or '\\' in name:
+        if ".." in name or "/" in name or "\\" in name:
             return False, "Name cannot contain path separators or '..')"
 
         return True, "Valid skill name"
@@ -118,10 +129,8 @@ class SkillValidator:
             return False, "Description must be 1024 characters or less"
 
         # Check for usage context keywords
-        usage_keywords = ['when', 'use', 'for', 'during', 'if', 'while']
-        has_usage_context = any(
-            keyword in description.lower() for keyword in usage_keywords
-        )
+        usage_keywords = ["when", "use", "for", "during", "if", "while"]
+        has_usage_context = any(keyword in description.lower() for keyword in usage_keywords)
 
         if not has_usage_context:
             return False, (
@@ -132,9 +141,7 @@ class SkillValidator:
         return True, "Valid description"
 
     @staticmethod
-    def validate_allowed_tools(
-        tools: Optional[List[str]]
-    ) -> Tuple[bool, str]:
+    def validate_allowed_tools(tools: Optional[List[str]]) -> Tuple[bool, str]:
         """
         Validates allowed-tools against whitelist.
 
@@ -163,9 +170,7 @@ class SkillValidator:
             return True, "Empty tools list (all allowed)"
 
         # Check for invalid tools
-        invalid_tools = [
-            t for t in tools if t not in SkillValidator.ALLOWED_TOOLS
-        ]
+        invalid_tools = [t for t in tools if t not in SkillValidator.ALLOWED_TOOLS]
 
         if invalid_tools:
             return False, f"Invalid tools: {', '.join(invalid_tools)}"
@@ -203,16 +208,13 @@ class SkillValidator:
             )
 
         # Security: Prevent path traversal
-        if '..' in name or '/' in name or '\\' in name:
+        if ".." in name or "/" in name or "\\" in name:
             return False, "Template name cannot contain path separators"
 
         return True, "Valid template name"
 
     @staticmethod
-    def validate_path_security(
-        path: Path,
-        base_dir: Path
-    ) -> Tuple[bool, str]:
+    def validate_path_security(path: Path, base_dir: Path) -> Tuple[bool, str]:
         """
         Ensures path is within base directory.
 
@@ -247,9 +249,7 @@ class SkillValidator:
             return False, f"Path validation error: {str(e)}"
 
     @staticmethod
-    def validate_frontmatter_keys(
-        frontmatter: dict
-    ) -> Tuple[bool, str]:
+    def validate_frontmatter_keys(frontmatter: dict) -> Tuple[bool, str]:
         """
         Validates frontmatter keys are safe.
 
@@ -266,12 +266,9 @@ class SkillValidator:
             return True, "No frontmatter to validate"
 
         # Pattern for safe keys: alphanumeric, underscores, hyphens
-        safe_key_pattern = re.compile(r'^[a-zA-Z0-9_-]+$')
+        safe_key_pattern = re.compile(r"^[a-zA-Z0-9_-]+$")
 
-        invalid_keys = [
-            key for key in frontmatter.keys()
-            if not safe_key_pattern.match(str(key))
-        ]
+        invalid_keys = [key for key in frontmatter.keys() if not safe_key_pattern.match(str(key))]
 
         if invalid_keys:
             return False, f"Invalid frontmatter keys: {', '.join(invalid_keys)}"
@@ -298,13 +295,10 @@ class SkillValidator:
             return ""
 
         # Remove control characters except whitespace
-        sanitized = ''.join(
-            char if char.isprintable() or char.isspace() else ''
-            for char in value
-        )
+        sanitized = "".join(char if char.isprintable() or char.isspace() else "" for char in value)
 
         # Normalize whitespace
-        sanitized = ' '.join(sanitized.split())
+        sanitized = " ".join(sanitized.split())
 
         # Trim to max length if specified
         if max_length and len(sanitized) > max_length:
@@ -335,22 +329,41 @@ class SkillValidator:
             return False, "Filename cannot be empty"
 
         # Check for path traversal
-        if '..' in filename or '/' in filename or '\\' in filename:
+        if ".." in filename or "/" in filename or "\\" in filename:
             return False, "Filename contains path traversal"
 
         # Check for reserved names (Windows)
         reserved_names = {
-            'CON', 'PRN', 'AUX', 'NUL',
-            'COM1', 'COM2', 'COM3', 'COM4', 'COM5', 'COM6', 'COM7', 'COM8', 'COM9',
-            'LPT1', 'LPT2', 'LPT3', 'LPT4', 'LPT5', 'LPT6', 'LPT7', 'LPT8', 'LPT9'
+            "CON",
+            "PRN",
+            "AUX",
+            "NUL",
+            "COM1",
+            "COM2",
+            "COM3",
+            "COM4",
+            "COM5",
+            "COM6",
+            "COM7",
+            "COM8",
+            "COM9",
+            "LPT1",
+            "LPT2",
+            "LPT3",
+            "LPT4",
+            "LPT5",
+            "LPT6",
+            "LPT7",
+            "LPT8",
+            "LPT9",
         }
 
-        name_without_ext = filename.split('.')[0].upper()
+        name_without_ext = filename.split(".")[0].upper()
         if name_without_ext in reserved_names:
             return False, f"Filename '{filename}' is a reserved name"
 
         # Check for special characters (allow alphanumeric, hyphen, underscore, dot)
-        if not re.match(r'^[a-zA-Z0-9._-]+$', filename):
+        if not re.match(r"^[a-zA-Z0-9._-]+$", filename):
             return False, "Filename contains invalid characters"
 
         return True, "Safe filename"
