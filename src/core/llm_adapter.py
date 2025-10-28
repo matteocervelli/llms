@@ -43,7 +43,7 @@ from typing import Dict, Optional
 
 from .adapter_exceptions import CreationError, InvalidNameError, UnsupportedScopeError
 from .adapter_models import AdapterMetadata, CreationResult, ElementType
-from .scope_manager import ScopeConfig, ScopeType
+from .scope_manager import ScopeConfig
 
 
 class LLMAdapter(ABC):
@@ -85,8 +85,7 @@ class LLMAdapter(ABC):
         # Validate scope is supported
         if not self.metadata.supports_scope(scope_config.type.value):
             raise UnsupportedScopeError(
-                f"{self.metadata.name} adapter does not support "
-                f"{scope_config.type.value} scope"
+                f"{self.metadata.name} adapter does not support " f"{scope_config.type.value} scope"
             )
 
     @abstractmethod
@@ -100,7 +99,7 @@ class LLMAdapter(ABC):
 
     @abstractmethod
     def create_skill(
-        self, name: str, description: str, content: str, **kwargs: Dict
+        self, name: str, description: str, content: str, overwrite: bool = False, **kwargs: Dict
     ) -> CreationResult:
         """Create a new skill.
 
@@ -108,6 +107,7 @@ class LLMAdapter(ABC):
             name: Skill name (alphanumeric, hyphens, underscores)
             description: Brief description of the skill
             content: Skill implementation content
+            overwrite: Whether to overwrite existing files
             **kwargs: Additional LLM-specific parameters
 
         Returns:
@@ -121,7 +121,7 @@ class LLMAdapter(ABC):
 
     @abstractmethod
     def create_command(
-        self, name: str, description: str, content: str, **kwargs: Dict
+        self, name: str, description: str, content: str, overwrite: bool = False, **kwargs: Dict
     ) -> CreationResult:
         """Create a new slash command.
 
@@ -129,6 +129,7 @@ class LLMAdapter(ABC):
             name: Command name (alphanumeric, hyphens, underscores)
             description: Brief description of the command
             content: Command implementation content
+            overwrite: Whether to overwrite existing files
             **kwargs: Additional LLM-specific parameters
 
         Returns:
@@ -142,7 +143,7 @@ class LLMAdapter(ABC):
 
     @abstractmethod
     def create_agent(
-        self, name: str, description: str, content: str, **kwargs: Dict
+        self, name: str, description: str, content: str, overwrite: bool = False, **kwargs: Dict
     ) -> CreationResult:
         """Create a new sub-agent.
 
@@ -150,6 +151,7 @@ class LLMAdapter(ABC):
             name: Agent name (alphanumeric, hyphens, underscores)
             description: Brief description of the agent
             content: Agent implementation content
+            overwrite: Whether to overwrite existing files
             **kwargs: Additional LLM-specific parameters
 
         Returns:
@@ -505,9 +507,7 @@ class ClaudeAdapter(LLMAdapter):
             },
         )
 
-    def _generate_skill_content(
-        self, name: str, description: str, content: str
-    ) -> str:
+    def _generate_skill_content(self, name: str, description: str, content: str) -> str:
         """Generate formatted content for a skill file.
 
         Args:
@@ -525,9 +525,7 @@ class ClaudeAdapter(LLMAdapter):
 {content}
 """
 
-    def _generate_command_content(
-        self, name: str, description: str, content: str
-    ) -> str:
+    def _generate_command_content(self, name: str, description: str, content: str) -> str:
         """Generate formatted content for a command file.
 
         Args:
@@ -545,9 +543,7 @@ class ClaudeAdapter(LLMAdapter):
 {content}
 """
 
-    def _generate_agent_content(
-        self, name: str, description: str, content: str
-    ) -> str:
+    def _generate_agent_content(self, name: str, description: str, content: str) -> str:
         """Generate formatted content for an agent file.
 
         Args:

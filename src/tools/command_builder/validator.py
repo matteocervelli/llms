@@ -8,7 +8,7 @@ and other vulnerabilities.
 
 import re
 from pathlib import Path
-from typing import List, Tuple
+from typing import Any, List, Optional, Tuple
 
 from .exceptions import SecurityError, ValidationError
 
@@ -215,7 +215,9 @@ class Validator:
 
         # If name has only 1 part
         if len(parts) == 1:
-            suggestions.append(f"Add an action verb. Example: '{name}-create' or '{name}-implement'")
+            suggestions.append(
+                f"Add an action verb. Example: '{name}-create' or '{name}-implement'"
+            )
             return suggestions
 
         # Check if it follows action-object instead of object-action
@@ -236,8 +238,7 @@ class Validator:
             # If first part is not a known context and not in common objects
             if first_part not in ALLOWED_CONTEXTS and first_part not in COMMON_OBJECTS:
                 suggestions.append(
-                    f"Consider using a standard context prefix: "
-                    f"{', '.join(ALLOWED_CONTEXTS)}"
+                    f"Consider using a standard context prefix: " f"{', '.join(ALLOWED_CONTEXTS)}"
                 )
 
         # Check for missing action verb
@@ -252,9 +253,7 @@ class Validator:
 
     @staticmethod
     def validate_naming_convention(
-        name: str,
-        strict: bool = False,
-        allowed_contexts: List[str] = None
+        name: str, strict: bool = False, allowed_contexts: Optional[List[str]] = None
     ) -> Tuple[bool, str, List[str]]:
         """
         Validate command name follows [context-]<object>-<action>[-modifier] pattern.
@@ -283,8 +282,7 @@ class Validator:
         # Check if we have minimum required parts (object and action)
         if not obj or not action:
             error_msg = (
-                f"Command name must follow [context-]<object>-<action> pattern. "
-                f"Found: '{name}'"
+                f"Command name must follow [context-]<object>-<action> pattern. " f"Found: '{name}'"
             )
             if strict:
                 return (False, error_msg, [])
@@ -375,8 +373,10 @@ class Validator:
 
         # Check if command starts with a safe command
         first_word = command.strip().split()[0] if command.strip().split() else ""
-        if first_word and first_word not in SAFE_COMMANDS and not any(
-            first_word.startswith(safe) for safe in SAFE_COMMANDS
+        if (
+            first_word
+            and first_word not in SAFE_COMMANDS
+            and not any(first_word.startswith(safe) for safe in SAFE_COMMANDS)
         ):
             warnings.append(
                 f"Command '{first_word}' is not in the safe commands list. Review carefully."
@@ -449,7 +449,7 @@ class Validator:
         return (True, "")
 
     @staticmethod
-    def sanitize_yaml_value(value: any) -> any:
+    def sanitize_yaml_value(value: Any) -> Any:
         """
         Sanitize YAML value for safe frontmatter generation.
 

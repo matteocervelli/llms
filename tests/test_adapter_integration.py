@@ -264,12 +264,8 @@ class TestRealFilesystemOperations:
         adapter = ClaudeAdapter(scope_config)
 
         # Create two skills
-        adapter.create_skill(
-            name="skill1", description="Skill 1", content="Content 1"
-        )
-        adapter.create_skill(
-            name="skill2", description="Skill 2", content="Content 2"
-        )
+        adapter.create_skill(name="skill1", description="Skill 1", content="Content 1")
+        adapter.create_skill(name="skill2", description="Skill 2", content="Content 2")
 
         # Overwrite first skill
         adapter.create_skill(

@@ -264,9 +264,7 @@ class TestSkillCreation:
         skills_dir = tmp_path / ".claude" / "skills"
         assert not skills_dir.exists()
 
-        adapter.create_skill(
-            name="test", description="Test", content="Content"
-        )
+        adapter.create_skill(name="test", description="Test", content="Content")
 
         assert skills_dir.exists()
         assert skills_dir.is_dir()
@@ -298,15 +296,11 @@ class TestSkillCreation:
         adapter.create_skill(name="test", description="Test", content="Content")
 
         with pytest.raises(CreationError, match="already exists"):
-            adapter.create_skill(
-                name="test", description="Test", content="Content"
-            )
+            adapter.create_skill(name="test", description="Test", content="Content")
 
     def test_create_skill_duplicate_succeeds_with_overwrite(self, adapter, tmp_path):
         """Test that duplicate skill creation succeeds with overwrite=True."""
-        adapter.create_skill(
-            name="test", description="Original", content="Original content"
-        )
+        adapter.create_skill(name="test", description="Original", content="Original content")
 
         result = adapter.create_skill(
             name="test",
@@ -322,9 +316,7 @@ class TestSkillCreation:
 
     def test_create_skill_metadata(self, adapter):
         """Test that skill creation includes metadata."""
-        result = adapter.create_skill(
-            name="test", description="Test skill", content="Content"
-        )
+        result = adapter.create_skill(name="test", description="Test skill", content="Content")
 
         assert "scope" in result.metadata
         assert result.metadata["scope"] == "global"
@@ -365,9 +357,7 @@ class TestCommandCreation:
         commands_dir = tmp_path / ".claude" / "commands"
         assert not commands_dir.exists()
 
-        adapter.create_command(
-            name="test", description="Test", content="Content"
-        )
+        adapter.create_command(name="test", description="Test", content="Content")
 
         assert commands_dir.exists()
         assert commands_dir.is_dir()
@@ -478,9 +468,7 @@ class TestErrorHandling:
 
         try:
             with pytest.raises(CreationError, match="Failed to create directory"):
-                adapter.create_skill(
-                    name="test", description="Test", content="Content"
-                )
+                adapter.create_skill(name="test", description="Test", content="Content")
         finally:
             # Restore permissions for cleanup
             scope_path.chmod(0o755)
@@ -494,9 +482,7 @@ class TestErrorHandling:
 
         try:
             with pytest.raises(CreationError, match="Failed to write"):
-                adapter.create_skill(
-                    name="test", description="Test", content="Content"
-                )
+                adapter.create_skill(name="test", description="Test", content="Content")
         finally:
             # Restore permissions for cleanup
             skills_dir.chmod(0o755)
@@ -538,9 +524,7 @@ class TestHelperMethods:
 
     def test_generate_skill_content(self, adapter):
         """Test skill content generation."""
-        content = adapter._generate_skill_content(
-            "test-skill", "Description", "Implementation"
-        )
+        content = adapter._generate_skill_content("test-skill", "Description", "Implementation")
 
         assert "# test-skill" in content
         assert "Description" in content
@@ -548,9 +532,7 @@ class TestHelperMethods:
 
     def test_generate_command_content(self, adapter):
         """Test command content generation."""
-        content = adapter._generate_command_content(
-            "test-command", "Description", "Implementation"
-        )
+        content = adapter._generate_command_content("test-command", "Description", "Implementation")
 
         assert "# /test-command" in content
         assert "Description" in content
@@ -558,9 +540,7 @@ class TestHelperMethods:
 
     def test_generate_agent_content(self, adapter):
         """Test agent content generation."""
-        content = adapter._generate_agent_content(
-            "test-agent", "Description", "Implementation"
-        )
+        content = adapter._generate_agent_content("test-agent", "Description", "Implementation")
 
         assert "# test-agent Agent" in content
         assert "Description" in content

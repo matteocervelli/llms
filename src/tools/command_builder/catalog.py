@@ -9,7 +9,7 @@ import json
 import shutil
 import tempfile
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 from uuid import UUID, uuid4
 from datetime import datetime
 
@@ -272,38 +272,20 @@ class CatalogManager:
         stats = {
             "total_commands": len(catalog.commands),
             "by_scope": {
-                "global": len(
-                    [c for c in catalog.commands
-                     if c.scope == ScopeType.GLOBAL]
-                ),
-                "project": len(
-                    [c for c in catalog.commands
-                     if c.scope == ScopeType.PROJECT]
-                ),
-                "local": len(
-                    [c for c in catalog.commands
-                     if c.scope == ScopeType.LOCAL]
-                ),
+                "global": len([c for c in catalog.commands if c.scope == ScopeType.GLOBAL]),
+                "project": len([c for c in catalog.commands if c.scope == ScopeType.PROJECT]),
+                "local": len([c for c in catalog.commands if c.scope == ScopeType.LOCAL]),
             },
-            "with_parameters": len([
-                c for c in catalog.commands
-                if c.metadata.get("has_parameters", False)
-            ]),
-            "with_bash": len([
-                c for c in catalog.commands
-                if c.metadata.get("has_bash", False)
-            ]),
-            "with_files": len([
-                c for c in catalog.commands
-                if c.metadata.get("has_files", False)
-            ]),
+            "with_parameters": len(
+                [c for c in catalog.commands if c.metadata.get("has_parameters", False)]
+            ),
+            "with_bash": len([c for c in catalog.commands if c.metadata.get("has_bash", False)]),
+            "with_files": len([c for c in catalog.commands if c.metadata.get("has_files", False)]),
         }
 
         return stats
 
-    def sync_catalog(
-        self, project_root: Optional[Path] = None
-    ) -> Dict[str, List[str]]:
+    def sync_catalog(self, project_root: Optional[Path] = None) -> Dict[str, Any]:
         """
         Sync catalog with actual command files.
 
@@ -373,7 +355,7 @@ class CatalogManager:
                 continue  # Already in catalog
 
             # Read file to get description
-            file_path = file_info["path"]
+            file_path = Path(file_info["path"])  # type: ignore[arg-type]
             try:
                 content = file_path.read_text(encoding="utf-8")
 
@@ -397,7 +379,7 @@ class CatalogManager:
                     id=uuid4(),
                     name=name,
                     description=description,
-                    scope=file_info["scope"],
+                    scope=ScopeType(file_info["scope"]),  # type: ignore[arg-type]
                     path=str(file_path.resolve()),
                     created_at=datetime.now(),
                     updated_at=datetime.now(),

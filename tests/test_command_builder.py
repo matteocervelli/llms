@@ -362,9 +362,7 @@ class TestValidator:
 
     def test_validate_naming_convention_non_compliant_strict(self):
         """Test non-compliant naming in strict mode."""
-        is_valid, error, warnings = Validator.validate_naming_convention(
-            "command", strict=True
-        )
+        is_valid, error, warnings = Validator.validate_naming_convention("command", strict=True)
         assert is_valid is False  # Strict blocks it
         assert "must follow" in error.lower()
 
@@ -383,9 +381,7 @@ class TestValidator:
     def test_validate_naming_convention_invalid_context_strict(self):
         """Test a name that would fail strict validation."""
         # A name with only one part should fail in strict mode
-        is_valid, error, warnings = Validator.validate_naming_convention(
-            "command", strict=True
-        )
+        is_valid, error, warnings = Validator.validate_naming_convention("command", strict=True)
         assert is_valid is False  # Strict blocks it
         assert "must follow" in error.lower()
 
@@ -403,17 +399,13 @@ class TestValidator:
         ]
 
         for name in good_names:
-            is_valid, error, warnings = Validator.validate_naming_convention(
-                name, strict=False
-            )
+            is_valid, error, warnings = Validator.validate_naming_convention(name, strict=False)
             assert is_valid is True, f"{name} should be valid"
 
     def test_validate_naming_convention_with_custom_contexts(self):
         """Test validation with custom allowed contexts."""
         is_valid, error, warnings = Validator.validate_naming_convention(
-            "custom-tool-run",
-            strict=False,
-            allowed_contexts=["cc", "gh", "custom"]
+            "custom-tool-run", strict=False, allowed_contexts=["cc", "gh", "custom"]
         )
         assert is_valid is True
 

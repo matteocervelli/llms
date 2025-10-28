@@ -50,11 +50,7 @@ class TemplateManager:
         if not self.templates_dir.exists():
             return []
 
-        return [
-            p.stem
-            for p in self.templates_dir.glob("*.md")
-            if p.is_file()
-        ]
+        return [p.stem for p in self.templates_dir.glob("*.md") if p.is_file()]
 
     def template_exists(self, template_name: str) -> bool:
         """

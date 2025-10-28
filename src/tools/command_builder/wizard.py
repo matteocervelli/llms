@@ -20,18 +20,20 @@ from .templates import TemplateManager
 from .validator import Validator
 
 # Custom style for questionary prompts
-CUSTOM_STYLE = Style([
-    ("qmark", "fg:#673ab7 bold"),
-    ("question", "bold"),
-    ("answer", "fg:#2196f3 bold"),
-    ("pointer", "fg:#673ab7 bold"),
-    ("highlighted", "fg:#673ab7 bold"),
-    ("selected", "fg:#2196f3"),
-    ("separator", "fg:#cc5454"),
-    ("instruction", "fg:#858585"),
-    ("text", ""),
-    ("disabled", "fg:#858585 italic"),
-])
+CUSTOM_STYLE = Style(
+    [
+        ("qmark", "fg:#673ab7 bold"),
+        ("question", "bold"),
+        ("answer", "fg:#2196f3 bold"),
+        ("pointer", "fg:#673ab7 bold"),
+        ("highlighted", "fg:#673ab7 bold"),
+        ("selected", "fg:#2196f3"),
+        ("separator", "fg:#cc5454"),
+        ("instruction", "fg:#858585"),
+        ("text", ""),
+        ("disabled", "fg:#858585 italic"),
+    ]
+)
 
 
 class CommandWizard:

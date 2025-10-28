@@ -154,9 +154,7 @@ class TestSkillCatalog:
     def test_update_skill(self, sample_catalog_entry):
         """Test updating existing skill."""
         catalog = SkillCatalog(skills=[sample_catalog_entry])
-        result = catalog.update_skill(
-            sample_catalog_entry.id, description="Updated description"
-        )
+        result = catalog.update_skill(sample_catalog_entry.id, description="Updated description")
         assert result is True
 
         found = catalog.get_by_name("test-skill")

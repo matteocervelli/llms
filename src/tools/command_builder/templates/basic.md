@@ -5,6 +5,8 @@ description: {{ description }}
 {% endfor %}
 ---
 
+# {{ name }}
+
 {{ description }}
 {% if has_parameters %}
 

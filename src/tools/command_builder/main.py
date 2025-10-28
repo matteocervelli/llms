@@ -380,9 +380,7 @@ def sync(project_root: Optional[str]):
                 click.echo(f"   + {name}")
 
         if result["unchanged"]:
-            click.echo(
-                f"\n📝 {result['unchanged']} commands unchanged"
-            )
+            click.echo(f"\n📝 {result['unchanged']} commands unchanged")
 
         if not result["removed"] and not result["added"]:
             click.echo("\n✨ Catalog is already in sync!")
