@@ -508,3 +508,210 @@ class TestIntegration:
 
         # Cleanup
         shutil.rmtree(skill_path)
+
+
+# ============================================================================
+# Wizard Integration Tests (Phase 5)
+# ============================================================================
+
+
+class TestWizardIntegration:
+    """Test SkillWizard integration with other components."""
+
+    def test_wizard_end_to_end_creation(self, temp_dir, monkeypatch):
+        """Test end-to-end skill creation workflow through wizard."""
+        from src.tools.skill_builder.wizard import SkillWizard
+
+        # Mock questionary inputs
+        inputs = [
+            "pdf-processor",  # name
+            "Extract text from PDFs. Use when working with PDF files.",  # description
+            "project",  # scope
+            "basic",  # template
+            False,  # add tools?
+            False,  # add scripts?
+            True,  # confirm
+        ]
+        input_iter = iter(inputs)
+
+        def mock_ask(*args, **kwargs):
+            return next(input_iter)
+
+        # Patch all questionary methods
+        monkeypatch.setattr("questionary.text", lambda *a, **k: type("", (), {"ask": mock_ask})())
+        monkeypatch.setattr(
+            "questionary.select", lambda *a, **k: type("", (), {"ask": mock_ask})()
+        )
+        monkeypatch.setattr(
+            "questionary.confirm", lambda *a, **k: type("", (), {"ask": mock_ask})()
+        )
+
+        wizard = SkillWizard()
+        config = wizard.run(temp_dir)
+
+        assert config is not None
+        assert config.name == "pdf-processor"
+        assert "Use when" in config.description
+        assert config.scope == ScopeType.PROJECT
+        assert config.template == "basic"
+
+    def test_wizard_validation_feedback(self, temp_dir, monkeypatch):
+        """Test wizard provides real-time validation feedback."""
+        from src.tools.skill_builder.validator import SkillValidator
+
+        # Test invalid name (uppercase) - We test the validator directly
+        is_valid, error = SkillValidator.validate_skill_name("Invalid Name")
+        assert not is_valid
+        assert "lowercase" in error
+
+        # Test invalid description (no usage context)
+        is_valid, error = SkillValidator.validate_description("Just a description")
+        assert not is_valid
+        assert "when to use" in error.lower()
+
+        # Test valid inputs
+        is_valid, _ = SkillValidator.validate_skill_name("pdf-processor")
+        assert is_valid
+
+        is_valid, _ = SkillValidator.validate_description(
+            "Extract text from PDFs. Use when working with PDF files."
+        )
+        assert is_valid
+
+    def test_wizard_catalog_integration(self, temp_dir, monkeypatch):
+        """Test wizard integrates with catalog manager."""
+        from src.tools.skill_builder.catalog import CatalogManager
+        from src.tools.skill_builder.wizard import SkillWizard
+
+        catalog_manager = CatalogManager(catalog_path=temp_dir / "skills.json")
+        builder = SkillBuilder()
+        builder.catalog_manager = catalog_manager
+        wizard = SkillWizard(builder=builder, catalog_manager=catalog_manager)
+
+        # Mock questionary inputs
+        inputs = [
+            "catalog-test",  # name
+            "Test catalog integration. Use when testing catalog.",  # description
+            "project",  # scope
+            "basic",  # template
+            False,  # add tools?
+            False,  # add scripts?
+            True,  # confirm
+        ]
+        input_iter = iter(inputs)
+
+        def mock_ask(*args, **kwargs):
+            return next(input_iter)
+
+        # Patch questionary
+        monkeypatch.setattr("questionary.text", lambda *a, **k: type("", (), {"ask": mock_ask})())
+        monkeypatch.setattr(
+            "questionary.select", lambda *a, **k: type("", (), {"ask": mock_ask})()
+        )
+        monkeypatch.setattr(
+            "questionary.confirm", lambda *a, **k: type("", (), {"ask": mock_ask})()
+        )
+
+        config = wizard.run(temp_dir)
+        assert config is not None
+
+        # Build the skill to trigger catalog update
+        skill_path, _ = builder.build_skill(config, temp_dir)
+
+        # Verify catalog was updated
+        catalog_manager.sync_catalog(temp_dir)
+        skills = catalog_manager.list_skills()
+        assert len(skills) == 1
+        assert skills[0].name == "catalog-test"
+        assert skills[0].scope == ScopeType.PROJECT
+        # Template is stored in metadata
+        assert skills[0].metadata["template"] == "basic"
+
+        # Cleanup
+        shutil.rmtree(skill_path)
+
+    def test_wizard_error_handling(self, temp_dir, monkeypatch):
+        """Test wizard handles errors gracefully."""
+        from src.tools.skill_builder.wizard import SkillWizard
+
+        wizard = SkillWizard()
+
+        # Test KeyboardInterrupt handling
+        def mock_keyboard_interrupt(*args, **kwargs):
+            raise KeyboardInterrupt()
+
+        monkeypatch.setattr("questionary.text", lambda *a, **k: type("", (), {"ask": mock_keyboard_interrupt})())
+
+        config = wizard.run(temp_dir)
+        assert config is None  # Should return None on KeyboardInterrupt
+
+    def test_wizard_cancel_operation(self, temp_dir, monkeypatch):
+        """Test wizard can be cancelled at various steps."""
+        from src.tools.skill_builder.wizard import SkillWizard
+
+        wizard = SkillWizard()
+
+        # Test cancel at name prompt
+        monkeypatch.setattr("questionary.text", lambda *a, **k: type("", (), {"ask": lambda: None})())
+        config = wizard.run(temp_dir)
+        assert config is None
+
+        # Test cancel at confirm prompt
+        inputs = [
+            "test-skill",  # name
+            "Test skill. Use when testing.",  # description
+            "project",  # scope
+            "basic",  # template
+            False,  # add tools?
+            False,  # add scripts?
+            False,  # confirm (cancel here)
+        ]
+        input_iter = iter(inputs)
+
+        def mock_ask(*args, **kwargs):
+            return next(input_iter)
+
+        monkeypatch.setattr("questionary.text", lambda *a, **k: type("", (), {"ask": mock_ask})())
+        monkeypatch.setattr(
+            "questionary.select", lambda *a, **k: type("", (), {"ask": mock_ask})()
+        )
+        monkeypatch.setattr(
+            "questionary.confirm", lambda *a, **k: type("", (), {"ask": mock_ask})()
+        )
+
+        config = wizard.run(temp_dir)
+        assert config is None  # Should return None when user declines confirmation
+
+    def test_wizard_scope_detection(self, temp_dir, monkeypatch):
+        """Test wizard correctly handles scope selection."""
+        from src.tools.skill_builder.wizard import SkillWizard
+
+        wizard = SkillWizard()
+
+        # Test all three scopes
+        for scope_value in ["global", "project", "local"]:
+            inputs = [
+                f"test-{scope_value}",  # name
+                f"Test {scope_value} scope. Use when testing {scope_value}.",  # description
+                scope_value,  # scope
+                "basic",  # template
+                False,  # add tools?
+                False,  # add scripts?
+                True,  # confirm
+            ]
+            input_iter = iter(inputs)
+
+            def mock_ask(*args, **kwargs):
+                return next(input_iter)
+
+            monkeypatch.setattr("questionary.text", lambda *a, **k: type("", (), {"ask": mock_ask})())
+            monkeypatch.setattr(
+                "questionary.select", lambda *a, **k: type("", (), {"ask": mock_ask})()
+            )
+            monkeypatch.setattr(
+                "questionary.confirm", lambda *a, **k: type("", (), {"ask": mock_ask})()
+            )
+
+            config = wizard.run(temp_dir)
+            assert config is not None
+            assert config.scope == ScopeType(scope_value)

@@ -127,7 +127,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Tested manually: All scenarios validated (normal execution, wrong directory, log rotation)
 
 ### Sprint 2 - Core Builders (In Progress)
-- [ ] **Skill Builder Tool** - Phase 2-4 completed, Phase 5-6 pending
+- [ ] **Skill Builder Tool** - Phase 2-5 completed, Phase 6 pending
   - [x] Phase 1: Models, Exceptions, Validator (#8)
   - [x] **Phase 2: Templates and Template Manager** (#21) - Jinja2-based template system
     - `src/tools/skill_builder/templates.py` - TemplateManager with SandboxedEnvironment (220 lines)
@@ -165,7 +165,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Performance: All operations < 100ms (tested), catalog stored at project_root/skills.json
     - Integration: Optional CatalogManager in SkillBuilder (dependency injection pattern)
     - Builder auto-updates catalog on build/update/delete operations
-  - [ ] Phase 5: Interactive Wizard (#24)
+  - [x] **Phase 5: Interactive Wizard** (#24) - SkillWizard for beautiful CLI skill creation
+    - `src/tools/skill_builder/wizard.py` - SkillWizard class (368 lines)
+    - `tests/test_skill_builder.py` - Added 6 integration tests (all passing, 80% coverage)
+    - `docs/implementation/issue-24-wizard.md` - Implementation documentation
+    - Custom questionary style matching Claude Code aesthetics
+    - 9-step interactive flow: name, description, scope, template, tools, files, preview, confirm
+    - Real-time validation with helpful error messages and usage tips
+    - Multi-select checkbox for allowed tools (18 Claude Code tools)
+    - Preview configuration before creation
+    - Cancel at any step (Ctrl+C or decline confirmation)
+    - Security: Input validation, path traversal prevention, whitelist validation
+    - Performance: < 50ms skill creation, 80% test coverage (122 stmts, 25 missed)
   - [ ] Phase 6: CLI Interface (#25)
 - [x] **Command Builder Tool** (#9) - Generate Claude Code slash commands with interactive wizard
   - `src/tools/command_builder/models.py` - Pydantic models (331 lines): CommandConfig, CommandParameter, CommandCatalogEntry, CommandCatalog
