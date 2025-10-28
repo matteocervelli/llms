@@ -111,14 +111,14 @@ def format_skill_entry(entry: SkillCatalogEntry, show_path: bool = False) -> str
 
 @click.group()
 @click.version_option(version="0.1.0")
-def cli():
+def cli() -> None:
     """Skill Builder - Create Claude Code skills."""
     pass
 
 
 @cli.command()
 @click.option("--project-root", type=click.Path(exists=True), help="Project root directory")
-def create(project_root: Optional[str]):
+def create(project_root: Optional[str]) -> None:
     """Create a new skill using interactive wizard."""
     project_path = Path(project_root) if project_root else Path.cwd()
 
@@ -187,7 +187,7 @@ def generate(
     allowed_tools: Optional[str],
     dry_run: bool,
     project_root: Optional[str],
-):
+) -> None:
     """Create a new skill non-interactively using CLI options."""
     project_path = Path(project_root) if project_root else Path.cwd()
 
@@ -261,7 +261,7 @@ def list_skills(
     template: Optional[str],
     has_scripts: bool,
     project_root: Optional[str],
-):
+) -> None:
     """List all skills with optional filtering."""
     project_path = Path(project_root) if project_root else Path.cwd()
 
@@ -324,7 +324,7 @@ def list_skills(
 )
 @click.option("--yes", is_flag=True, help="Skip confirmation prompt")
 @click.option("--project-root", type=click.Path(exists=True), help="Project root directory")
-def delete(skill_name: str, scope: Optional[str], yes: bool, project_root: Optional[str]):
+def delete(skill_name: str, scope: Optional[str], yes: bool, project_root: Optional[str]) -> None:
     """Delete a skill by name."""
     project_path = Path(project_root) if project_root else Path.cwd()
 
@@ -374,7 +374,7 @@ def delete(skill_name: str, scope: Optional[str], yes: bool, project_root: Optio
 
 @cli.command()
 @click.argument("skill_path", type=click.Path(exists=True))
-def validate(skill_path: str):
+def validate(skill_path: str) -> None:
     """Validate a skill directory or SKILL.md file."""
     path = Path(skill_path)
 
@@ -407,7 +407,7 @@ def validate(skill_path: str):
 
 
 @cli.command()
-def templates():
+def templates() -> None:
     """List available skill templates."""
     try:
         template_mgr = get_template_manager()
@@ -441,7 +441,7 @@ def templates():
 
 @cli.command()
 @click.option("--project-root", type=click.Path(exists=True), help="Project root directory")
-def stats(project_root: Optional[str]):
+def stats(project_root: Optional[str]) -> None:
     """Show catalog statistics."""
     project_path = Path(project_root) if project_root else Path.cwd()
 
@@ -485,7 +485,7 @@ def stats(project_root: Optional[str]):
 
 @cli.command()
 @click.option("--project-root", type=click.Path(exists=True), help="Project root directory")
-def sync(project_root: Optional[str]):
+def sync(project_root: Optional[str]) -> None:
     """Synchronize catalog with filesystem."""
     project_path = Path(project_root) if project_root else Path.cwd()
 

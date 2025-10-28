@@ -54,7 +54,9 @@ class SkillWizard:
             catalog_manager: Catalog manager
         """
         self.template_manager = template_manager or TemplateManager()
-        self.builder = builder or SkillBuilder(self.template_manager)
+        self.builder = (
+            builder or SkillBuilder()
+        )  # SkillBuilder creates its own ScopeManager internally
         self.catalog_manager = catalog_manager or CatalogManager()
 
     def run(self, project_root: Optional[Path] = None) -> Optional[SkillConfig]:
@@ -211,10 +213,10 @@ class SkillWizard:
         scope_str = questionary.select(
             "Skill scope:",
             choices=[
+                questionary.Choice("Project (.claude/skills/) - Team-shared, committed", "project"),
                 questionary.Choice(
-                    "Project (.claude/skills/) - Team-shared, committed", "project"
+                    "Global (~/.claude/skills/) - User-wide, all projects", "global"
                 ),
-                questionary.Choice("Global (~/.claude/skills/) - User-wide, all projects", "global"),
                 questionary.Choice(
                     "Local (.claude/skills/) - Project-local, not committed", "local"
                 ),

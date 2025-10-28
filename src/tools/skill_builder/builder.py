@@ -82,9 +82,7 @@ class SkillBuilder:
         self.template_manager = template_manager or TemplateManager()
         self.catalog_manager = catalog_manager
 
-    def get_scope_path(
-        self, scope: ScopeType, project_root: Optional[Path] = None
-    ) -> Path:
+    def get_scope_path(self, scope: ScopeType, project_root: Optional[Path] = None) -> Path:
         """
         Get the skills directory path for a given scope.
 
@@ -268,6 +266,7 @@ class SkillBuilder:
                 # Log warning but don't fail the skill creation
                 # The skill was created successfully, catalog update is optional
                 import warnings
+
                 warnings.warn(f"Failed to add skill to catalog: {str(e)}")
 
         return (skill_dir, skill_content)
@@ -366,6 +365,7 @@ class SkillBuilder:
             except Exception as e:
                 # Log warning but don't fail the update
                 import warnings
+
                 warnings.warn(f"Failed to update skill in catalog: {str(e)}")
 
         return (skill_path, skill_content)
@@ -428,6 +428,7 @@ class SkillBuilder:
             except Exception as e:
                 # Log warning but don't fail the deletion
                 import warnings
+
                 warnings.warn(f"Failed to remove skill from catalog: {str(e)}")
 
         # Delete directory tree

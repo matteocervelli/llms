@@ -265,9 +265,7 @@ class CatalogManager:
 
         return None
 
-    def list_skills(
-        self, scope: Optional[ScopeType] = None
-    ) -> List[SkillCatalogEntry]:
+    def list_skills(self, scope: Optional[ScopeType] = None) -> List[SkillCatalogEntry]:
         """
         List all skills, optionally filtered by scope.
 
@@ -322,9 +320,7 @@ class CatalogManager:
             results = [s for s in results if s.scope == scope]
 
         if has_scripts is not None:
-            results = [
-                s for s in results if s.metadata.get("has_scripts") == has_scripts
-            ]
+            results = [s for s in results if s.metadata.get("has_scripts") == has_scripts]
 
         if template:
             results = [s for s in results if s.metadata.get("template") == template]
@@ -346,20 +342,12 @@ class CatalogManager:
         stats = {
             "total": len(catalog.skills),
             "by_scope": {
-                "global": len(
-                    [s for s in catalog.skills if s.scope == ScopeType.GLOBAL]
-                ),
-                "project": len(
-                    [s for s in catalog.skills if s.scope == ScopeType.PROJECT]
-                ),
-                "local": len(
-                    [s for s in catalog.skills if s.scope == ScopeType.LOCAL]
-                ),
+                "global": len([s for s in catalog.skills if s.scope == ScopeType.GLOBAL]),
+                "project": len([s for s in catalog.skills if s.scope == ScopeType.PROJECT]),
+                "local": len([s for s in catalog.skills if s.scope == ScopeType.LOCAL]),
             },
             "by_template": {},
-            "with_scripts": len(
-                [s for s in catalog.skills if s.metadata.get("has_scripts")]
-            ),
+            "with_scripts": len([s for s in catalog.skills if s.metadata.get("has_scripts")]),
         }
 
         # Count by template
@@ -389,7 +377,7 @@ class CatalogManager:
             project_root = Path.cwd()
 
         catalog = self._read_catalog()
-        report = {"added": [], "removed": [], "errors": []}
+        report: dict[str, list[str]] = {"added": [], "removed": [], "errors": []}
 
         # Initialize scope manager
         scope_manager = ScopeManager()
