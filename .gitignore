@@ -67,6 +67,10 @@ logs/*.log
 .claude/settings.local.json
 **/settings.local.json
 
+# Skill builder catalog (user-generated, rebuild with sync)
+skills.json
+skills.json.bak
+
 # Temporary files
 *.tmp
 *.temp

@@ -127,11 +127,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Tested manually: All scenarios validated (normal execution, wrong directory, log rotation)
 
 ### Sprint 2 - Core Builders (In Progress)
-- [ ] **Skill Builder Tool** - Phase 2 completed, Phase 3-4 in progress
+- [x] **Skill Builder Tool** - Complete 6-phase implementation (#8, #21, #22, #23, #24, #25)
   - [x] Phase 1: Models, Exceptions, Validator (#8)
-  - [x] **Phase 2: Templates and Template Manager** (#21) - Jinja2-based template system
-    - `src/tools/skill_builder/templates.py` - TemplateManager with SandboxedEnvironment (220 lines)
-    - `src/tools/skill_builder/templates/basic.md` - Simple skill template (80 lines)
+  - [x] Phase 2: Templates and Template Manager (#21)
+  - [x] Phase 3: Builder and Catalog Integration (#22)
+  - [x] Phase 4: Catalog Management System (#23)
+  - [x] Phase 5: Interactive Wizard (#24)
+  - [x] **Phase 6: CLI Interface** (#25) - Click-based command-line interface
+    - `src/tools/skill_builder/main.py` - CLI with 8 commands (521 lines)
+    - `tests/test_skill_builder.py` - Added 7 tests (4 CLI + 3 performance), 41 total tests passing
+    - `docs/implementation/issue-25-cli.md` - Implementation documentation
+    - **8 CLI commands**: create (interactive wizard), generate (non-interactive), list (filtering), delete (confirmation), validate, templates, stats, sync
+    - **Interactive mode**: Full wizard integration for guided skill creation
+    - **Non-interactive mode**: Command-line flags for automation and scripting
+    - **Filtering**: List skills by scope, template, search query, has-scripts
+    - **Visual feedback**: Emojis for status (✅/❌/💡/📋/📊) and scope badges (🌐/📁/🔒)
+    - **Error handling**: Clear user-friendly messages, graceful failure handling
+    - **Performance**: All targets met (< 50ms creation, < 100ms catalog ops, < 10ms validation/rendering)
+    - **Testing**: 68% package coverage, all performance targets achieved
+    - **Security**: Input validation, path traversal prevention, scope boundaries enforced
+    - **UX consistency**: Follows command_builder patterns for familiar interface
     - `src/tools/skill_builder/templates/with_tools.md` - Skill with allowed-tools (90 lines)
     - `src/tools/skill_builder/templates/with_scripts.md` - Skill with scripts/ directory (100 lines)
     - `src/tools/skill_builder/templates/advanced.md` - Full-featured multi-file skill (120 lines)
@@ -141,8 +156,53 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Performance: < 10ms template rendering, < 5ms loading
     - Template variables: name, description, allowed_tools, content, frontmatter
     - 4 templates with progressive complexity (basic → with_tools → with_scripts → advanced)
-  - [ ] Phase 3: Builder and Catalog Integration (#22)
-  - [ ] Phase 4: Wizard and CLI (#23)
+  - [x] **Phase 3: Builder and Catalog Integration** (#22) - SkillBuilder core logic
+    - `src/tools/skill_builder/builder.py` - SkillBuilder class (429 lines)
+    - `tests/test_skill_builder.py` - Comprehensive test suite (28 tests, all passing, 77% coverage)
+    - `docs/implementation/issue-22-builder.md` - Implementation documentation
+    - Core methods: get_scope_path(), build_skill(), update_skill(), delete_skill(), validate_skill_directory()
+    - Creates skill **directories** (not single files) with SKILL.md inside
+    - Security: Path traversal prevention, file permissions (755 dirs, 644 files), input validation
+    - Performance: < 50ms skill creation (5-15ms average in tests)
+    - Dry-run mode: Validate without filesystem changes
+    - Integration: ScopeManager, TemplateManager, SkillValidator, SkillConfig
+  - [x] **Phase 4: Catalog Management System** (#23) - CatalogManager for tracking skills
+    - `src/tools/skill_builder/catalog.py` - CatalogManager class (420 lines)
+    - `tests/skill_builder/test_catalog_manager.py` - Comprehensive test suite (27 tests, all passing, 82% coverage)
+    - `docs/implementation/issue-23-catalog.md` - Implementation documentation
+    - Core methods: add_skill(), update_skill(), remove_skill(), get_skill(), list_skills(), search_skills(), sync_catalog(), get_catalog_stats()
+    - Atomic write operations (backup + temp + rename) for corruption prevention
+    - CRUD operations with duplicate detection and UUID-based identification
+    - Query operations: list by scope, search with filters (query, scope, has_scripts, template)
+    - Filesystem sync: adds untracked skills, removes orphaned entries, parses YAML frontmatter
+    - Catalog stats: total count, by-scope breakdown, by-template counts, scripts count
+    - Security: JSON validation, path validation, duplicate prevention, atomic writes
+    - Performance: All operations < 100ms (tested), catalog stored at project_root/skills.json
+    - Integration: Optional CatalogManager in SkillBuilder (dependency injection pattern)
+    - Builder auto-updates catalog on build/update/delete operations
+  - [x] **Phase 5: Interactive Wizard** (#24) - SkillWizard for beautiful CLI skill creation
+    - `src/tools/skill_builder/wizard.py` - SkillWizard class (382 lines)
+    - `tests/test_skill_builder.py` - Added 6 integration tests (all passing, 80% coverage)
+    - `docs/implementation/issue-24-wizard.md` - Implementation documentation
+    - Custom questionary style matching Claude Code aesthetics
+    - 9-step interactive flow: name, description, scope, template, tools, files, preview, confirm
+    - Real-time validation with helpful error messages and usage tips
+    - Multi-select checkbox for allowed tools (18 Claude Code tools)
+    - Preview configuration before creation
+    - Cancel at any step (Ctrl+C or decline confirmation)
+    - Security: Input validation, path traversal prevention, whitelist validation
+    - Performance: < 50ms skill creation, 80% test coverage (122 stmts, 25 missed)
+  - [x] **Phase 7: Documentation and Final Polish** (#26) - Comprehensive documentation
+    - `src/tools/skill_builder/README.md` - Complete API documentation (474 lines)
+    - `docs/implementation/issue-8-skill-builder.md` - Master implementation doc (776 lines)
+    - **README sections**: Overview, Installation, Quick Start, CLI Reference (8 commands), Templates Guide (4 templates), Programmatic API, Security, Performance, Troubleshooting, Examples
+    - **Implementation doc**: Executive summary, 6-phase development, architecture, complete file inventory, security architecture, performance analysis, testing strategy, integration points, API reference, lessons learned, future enhancements
+    - **Package metrics**: 2,881 lines source code (9 files) + 588 lines templates (4 files) + 954 lines tests (41 tests) = 4,423 total lines
+    - **Coverage**: 68% overall (1055 statements, 340 missed), all 41 tests passing
+    - **Performance**: All targets exceeded by 1.5-10x (creation < 50ms, catalog < 100ms, rendering < 10ms)
+    - **Security**: 6 defense layers (input validation, path traversal prevention, sandboxed templates, scope boundaries, tool whitelisting, atomic catalog)
+    - **Documentation**: User-facing README + developer implementation doc + inline docstrings
+    - Updated CHANGELOG.md and TASK.md with completion status
 - [x] **Command Builder Tool** (#9) - Generate Claude Code slash commands with interactive wizard
   - `src/tools/command_builder/models.py` - Pydantic models (331 lines): CommandConfig, CommandParameter, CommandCatalogEntry, CommandCatalog
   - `src/tools/command_builder/exceptions.py` - Custom exceptions (45 lines): CommandBuilderError hierarchy
