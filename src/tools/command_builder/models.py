@@ -30,6 +30,26 @@ class ScopeType(str, Enum):
     LOCAL = "local"
 
 
+class ValidationConfig(BaseModel):
+    """
+    Configuration for command validation settings.
+
+    Attributes:
+        strict_naming: Enforce strict naming convention validation
+        allowed_contexts: List of allowed context prefixes for command names
+        check_naming_convention: Whether to check naming convention at all
+    """
+
+    strict_naming: bool = False
+    allowed_contexts: List[str] = Field(
+        default_factory=lambda: [
+            "cc", "gh", "project", "pr", "code",
+            "feature", "issue", "ui", "infrastructure"
+        ]
+    )
+    check_naming_convention: bool = True
+
+
 class CommandParameter(BaseModel):
     """
     Configuration for a command parameter.

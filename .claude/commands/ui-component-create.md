@@ -24,6 +24,8 @@ Create a production-ready UI component with TypeScript, variants, comprehensive 
 /ui-component Input "Text input field with validation"
 ```
 
+**💡 Tip:** For safer planning, activate Plan Mode (press Shift+Tab twice) before running this command to review the component structure before creation.
+
 ## Context
 
 Parse $ARGUMENTS to extract:

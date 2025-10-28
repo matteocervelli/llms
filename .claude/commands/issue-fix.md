@@ -1,9 +1,11 @@
 ---
-description: Fix GitHub issue with security and performance validation
+description: Fix bugs and resolve problems from GitHub issues with security and performance validation
 allowed-tools: [gh, git, sequential-thinking-mcp]
 ---
 
-# Fix Issue: $ARGUMENTS
+# Fix Bug from Issue: $ARGUMENTS
+
+**💡 Tip:** For safer planning, activate Plan Mode (press Shift+Tab twice) before running this command to review the fix strategy before implementation.
 
 ## Analysis Phase
 

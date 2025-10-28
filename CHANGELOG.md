@@ -7,7 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- **BREAKING**: Renamed commands for consistent `<object>-<action>` naming pattern
+  - `/feature` → `/feature-implement`: "Implement new feature from GitHub issue with security-by-design and performance optimization"
+  - `/issue` → `/issue-fix`: "Fix bugs and resolve problems from GitHub issues with security and performance validation"
+  - Clearer distinction between feature implementation and bug fixing workflows
+  - No backward compatibility - old command names removed
+
 ### Added
+- **Plan Mode documentation** across command builder commands
+  - Added comprehensive Plan Mode guidance to `/cc-improve-command`
+  - Added Plan Mode best practices to `/cc-create-command`
+  - Added Plan Mode tips to complex workflow commands: `/setup-infrastructure`, `/ui-component`, `/new-project`, `/issue-fix`, `/feature-implement`
+  - Documented Plan Mode limitations (user-controlled, cannot be forced programmatically)
+  - Explained activation methods (Shift+Tab twice) and benefits
 - Initial project structure
 - GitHub repository and issue tracking
 - Sprint-based task management (4 sprints planned)

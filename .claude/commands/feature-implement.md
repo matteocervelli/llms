@@ -1,15 +1,36 @@
 ---
-description: Develop new feature with security-by-design and performance optimization
+description: Implement new feature from GitHub issue with security-by-design and performance optimization
 allowed-tools: [gh, git, sequential-thinking-mcp, context7-mcp]
+argument-hint: <issue-number> [create-branch:true|false]
 ---
 
-# Develop Feature: $ARGUMENTS
+# Implement Feature from Issue #$1
+
+## Parameter Validation
+
+```bash
+# Validate required parameters
+if [ -z "$1" ]; then
+  echo "Error: Issue number is required"
+  echo "Usage: /feature <issue-number> [create-branch:true|false]"
+  exit 1
+fi
+
+ISSUE_NUMBER="$1"
+CREATE_BRANCH="${2:-true}"
+```
 
 ## Analysis Phase
 
 ```bash
-!gh issue view $ARGUMENTS
-!git checkout -b feature/$ARGUMENTS
+!gh issue view $1
+
+# Conditionally create feature branch
+if [ "$CREATE_BRANCH" = "true" ]; then
+  !git checkout -b feature/$1
+else
+  echo "Skipping branch creation (CREATE_BRANCH=$CREATE_BRANCH)"
+fi
 ```
 
 Use sequential-thinking-mcp to:
@@ -20,9 +41,15 @@ Use sequential-thinking-mcp to:
 4. Define layered architecture (interfaces → core → implementations)
 
 When understood the implementation plan, get the tech stack from @docs/TECH-STACK.md.
-Then, use context7-mcp to fetch latest documentation for required tools for the specific feature, also considering the tech stack from @docs/TECH-STACK.md
+Then, use context7 to fetch latest documentation for required tools for the specific feature, also considering the tech stack from @docs/TECH-STACK.md
 
 ## Design Phase
+
+**⚠️ IMPORTANT: Create a complete design plan before implementation. Do NOT start coding until this plan is reviewed and approved by the user.**
+
+**💡 Tip**: For safer planning, users can activate Plan Mode (press Shift+Tab twice) before running this command.
+
+Use sequential-thinking-mcp with extended thinking to create a comprehensive design:
 
 Create component design following:
 
@@ -30,7 +57,26 @@ Create component design following:
 - **Performance-first**: Caching strategy, query optimization, resource management
 - **Modularity**: Keep components under 500 lines, clear separation of concerns
 
+Your design document should include:
+
+1. **Architecture Overview**: Components, layers, and their dependencies
+2. **Data Flow**: How data moves through the system
+3. **Security Measures**: Authentication, authorization, input validation strategies
+4. **Performance Strategy**: Caching mechanisms, optimization approaches, scaling considerations
+5. **Testing Approach**: Unit test strategy, integration test coverage, security test scenarios
+6. **Implementation Steps**: Ordered list of concrete development tasks
+
 Document architecture decision in `docs/architecture/ADR/` for architectural decisions
+
+### User Confirmation Required
+
+After presenting the complete design, explicitly ask the user: "Should I proceed with implementation based on this design?"
+
+## Model Switch
+
+**Switching to Haiku model for efficient implementation.**
+
+Use the faster Haiku model for the implementation phase to optimize for speed and cost while maintaining quality for code generation tasks.
 
 ## Implementation Phase
 
@@ -91,7 +137,14 @@ Update documentation:
 ## Deploy Phase
 
 ```bash
-!git add . && git commit -m "feat: implement $ARGUMENTS && git push origin feature/$ARGUMENTS
+# Commit and push changes
+if [ "$CREATE_BRANCH" = "true" ]; then
+  BRANCH_NAME="feature/$1"
+else
+  BRANCH_NAME=$(git branch --show-current)
+fi
+
+!git add . && git commit -m "feat: implement issue #$1
 
 - Implementation: [brief description of solution]
 - Security: [auth requirements, input validation, data protection]
@@ -101,9 +154,11 @@ Update documentation:
 Features:
 - [list key capabilities]
 
-Closes #$ARGUMENTS"
+Closes #$1"
 
-!gh pr create --title "feat: $ARGUMENTS" --body "
+!git push origin $BRANCH_NAME
+
+!gh pr create --title "feat: implement issue #$1" --body "
 ## Feature Summary
 [Brief description]
 
@@ -118,7 +173,7 @@ Closes #$ARGUMENTS"
 - Security tests: Auth, validation, no data exposure
 - Performance tests: Within SLA
 
-Closes #$ARGUMENTS"
+Closes #$1"
 ```
 
 ## Final Steps

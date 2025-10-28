@@ -5,6 +5,8 @@ allowed-tools: [git, filesystem, sequential-thinking-mcp, context7-mcp]
 
 # Infrastructure Setup: $ARGUMENTS
 
+**💡 Tip:** For safer planning, activate Plan Mode (press Shift+Tab twice) before running this command to review the infrastructure strategy before execution.
+
 ## Architecture Implementation
 
 ```bash

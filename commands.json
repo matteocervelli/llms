@@ -2,38 +2,6 @@
   "schema_version": "1.0",
   "commands": [
     {
-      "id": "cbef4b40-ff64-43a4-a9fb-6caba8253554",
-      "name": "pr-creation",
-      "description": "Create a pull request with title, description, and branch management",
-      "scope": "project",
-      "path": "/Users/matteocervelli/dev/projects/llms/.claude/commands/pr-creation.md",
-      "created_at": "2025-10-26 17:31:22.913628",
-      "updated_at": "2025-10-26 17:31:22.913632",
-      "metadata": {
-        "template": "with_bash",
-        "has_parameters": false,
-        "has_bash": false,
-        "has_files": false,
-        "thinking_mode": false
-      }
-    },
-    {
-      "id": "5e846484-17b5-4018-89ef-6be86d48af0e",
-      "name": "code-quality",
-      "description": "Run comprehensive code quality checks including linting, type checking, and formatting",
-      "scope": "project",
-      "path": "/Users/matteocervelli/dev/projects/llms/.claude/commands/code-quality.md",
-      "created_at": "2025-10-26 17:46:33.785619",
-      "updated_at": "2025-10-26 17:46:33.785624",
-      "metadata": {
-        "template": "with_bash",
-        "has_parameters": false,
-        "has_bash": false,
-        "has_files": false,
-        "thinking_mode": false
-      }
-    },
-    {
       "id": "3f68fd59-13d9-44d4-8145-5f77ec201bcb",
       "name": "gh-milestone-create",
       "description": "Create a GitHub milestone with title, description, and due date",
@@ -152,29 +120,64 @@
       }
     },
     {
-      "id": "e2f51f83-1bae-416a-b816-9d7e5871b8fa",
-      "name": "cc-create-command",
+      "id": "84532785-1b4c-4bca-b1b6-b7b6522235cf",
+      "name": "feature-implement",
+      "description": "Implement new feature from GitHub issue with security-by-design and performance optimization",
+      "scope": "project",
+      "path": "/Users/matteocervelli/dev/projects/llms/.claude/commands/feature-implement.md",
+      "created_at": "2025-10-28 11:36:10.680431",
+      "updated_at": "2025-10-28 11:36:10.680436",
+      "metadata": {
+        "template": "unknown",
+        "has_parameters": false,
+        "has_bash": true,
+        "has_files": true,
+        "thinking_mode": false,
+        "synced": true
+      }
+    },
+    {
+      "id": "5bc28378-e673-4a1b-8c78-8a643ca01769",
+      "name": "issue-fix",
+      "description": "Fix bugs and resolve problems from GitHub issues with security and performance validation",
+      "scope": "project",
+      "path": "/Users/matteocervelli/dev/projects/llms/.claude/commands/issue-fix.md",
+      "created_at": "2025-10-28 11:36:10.680500",
+      "updated_at": "2025-10-28 11:36:10.680501",
+      "metadata": {
+        "template": "unknown",
+        "has_parameters": false,
+        "has_bash": true,
+        "has_files": true,
+        "thinking_mode": false,
+        "synced": true
+      }
+    },
+    {
+      "id": "413a26d6-4111-4856-8a03-bd2772d65b63",
+      "name": "cc-command-improve",
+      "description": "Improve an existing Claude Code command based on user feedback or requirements",
+      "scope": "project",
+      "path": "/Users/matteocervelli/dev/projects/llms/.claude/commands/cc-command-improve.md",
+      "created_at": "2025-10-28 12:01:53.538373",
+      "updated_at": "2025-10-28 12:01:53.538377",
+      "metadata": {
+        "template": "unknown",
+        "has_parameters": false,
+        "has_bash": true,
+        "has_files": false,
+        "thinking_mode": false,
+        "synced": true
+      }
+    },
+    {
+      "id": "386be67c-acb2-4aa4-ab05-cf5c8f1fd9d9",
+      "name": "cc-command-create",
       "description": "Create a new Claude Code command using the command builder tool",
       "scope": "project",
-      "path": "/Users/matteocervelli/dev/projects/llms/.claude/commands/cc-create-command.md",
-      "created_at": "2025-10-26 17:52:50.498300",
-      "updated_at": "2025-10-26 17:52:50.498305",
-      "metadata": {
-        "template": "with_bash",
-        "has_parameters": false,
-        "has_bash": false,
-        "has_files": false,
-        "thinking_mode": false
-      }
-    },
-    {
-      "id": "65d1cba4-f1c7-4819-8f96-eddcde322b67",
-      "name": "ui-component",
-      "description": "Create a UI Component in /components/ui argument-hint: Component name | Component summary",
-      "scope": "project",
-      "path": "/Users/matteocervelli/dev/projects/llms/.claude/commands/ui-component.md",
-      "created_at": "2025-10-26 18:03:00.335363",
-      "updated_at": "2025-10-26 18:03:00.335367",
+      "path": "/Users/matteocervelli/dev/projects/llms/.claude/commands/cc-command-create.md",
+      "created_at": "2025-10-28 12:01:53.538536",
+      "updated_at": "2025-10-28 12:01:53.538537",
       "metadata": {
         "template": "unknown",
         "has_parameters": false,
@@ -185,13 +188,13 @@
       }
     },
     {
-      "id": "6e3e4537-8ad4-45f0-8c2d-a3949c6e1f91",
-      "name": "issue",
-      "description": "Fix GitHub issue with security and performance validation",
+      "id": "3dedeade-5d79-47c0-aaf1-653746ca75ad",
+      "name": "ui-component-create",
+      "description": "Create a UI Component in /components/ui with variants, tests, and preview",
       "scope": "project",
-      "path": "/Users/matteocervelli/dev/projects/llms/.claude/commands/issue.md",
-      "created_at": "2025-10-26 18:03:00.335423",
-      "updated_at": "2025-10-26 18:03:00.335424",
+      "path": "/Users/matteocervelli/dev/projects/llms/.claude/commands/ui-component-create.md",
+      "created_at": "2025-10-28 12:01:53.538747",
+      "updated_at": "2025-10-28 12:01:53.538748",
       "metadata": {
         "template": "unknown",
         "has_parameters": false,
@@ -202,64 +205,81 @@
       }
     },
     {
-      "id": "54e9ac84-4d2c-4780-9d03-ee953d597b69",
-      "name": "new-project",
-      "description": "Initialize new project with complete setup and documentation",
-      "scope": "project",
-      "path": "/Users/matteocervelli/dev/projects/llms/.claude/commands/new-project.md",
-      "created_at": "2025-10-26 18:03:00.335475",
-      "updated_at": "2025-10-26 18:03:00.335476",
-      "metadata": {
-        "template": "unknown",
-        "has_parameters": false,
-        "has_bash": true,
-        "has_files": false,
-        "thinking_mode": false,
-        "synced": true
-      }
-    },
-    {
-      "id": "6f0b8fc4-fe39-4d12-9ad1-7fe953f0787b",
-      "name": "setup-infrastructure",
-      "description": "Implement production-ready infrastructure with security and performance",
-      "scope": "project",
-      "path": "/Users/matteocervelli/dev/projects/llms/.claude/commands/setup-infrastructure.md",
-      "created_at": "2025-10-26 18:03:00.335525",
-      "updated_at": "2025-10-26 18:03:00.335526",
-      "metadata": {
-        "template": "unknown",
-        "has_parameters": false,
-        "has_bash": true,
-        "has_files": true,
-        "thinking_mode": false,
-        "synced": true
-      }
-    },
-    {
-      "id": "6bc28571-24bf-4de2-af3c-2c96119d4c37",
-      "name": "feature",
-      "description": "Develop new feature with security-by-design and performance optimization",
-      "scope": "project",
-      "path": "/Users/matteocervelli/dev/projects/llms/.claude/commands/feature.md",
-      "created_at": "2025-10-26 18:03:00.335574",
-      "updated_at": "2025-10-26 18:03:00.335575",
-      "metadata": {
-        "template": "unknown",
-        "has_parameters": false,
-        "has_bash": true,
-        "has_files": true,
-        "thinking_mode": false,
-        "synced": true
-      }
-    },
-    {
-      "id": "541c62f0-d3b5-430e-972e-827ec81208f0",
-      "name": "pr-failure",
+      "id": "9278c953-4571-4c82-883b-1374bba511c7",
+      "name": "pr-analyze-failure",
       "description": "Fix PR failures from CI/CD bots and automated tests",
       "scope": "project",
-      "path": "/Users/matteocervelli/dev/projects/llms/.claude/commands/pr-failure.md",
-      "created_at": "2025-10-26 18:03:00.335622",
-      "updated_at": "2025-10-26 18:03:00.335622",
+      "path": "/Users/matteocervelli/dev/projects/llms/.claude/commands/pr-analyze-failure.md",
+      "created_at": "2025-10-28 12:01:53.538929",
+      "updated_at": "2025-10-28 12:01:53.538930",
+      "metadata": {
+        "template": "unknown",
+        "has_parameters": false,
+        "has_bash": true,
+        "has_files": false,
+        "thinking_mode": false,
+        "synced": true
+      }
+    },
+    {
+      "id": "8c7df8e9-ef69-4b2b-9f17-a0134b9ec855",
+      "name": "infrastructure-setup",
+      "description": "Implement production-ready infrastructure with security and performance",
+      "scope": "project",
+      "path": "/Users/matteocervelli/dev/projects/llms/.claude/commands/infrastructure-setup.md",
+      "created_at": "2025-10-28 12:01:53.539081",
+      "updated_at": "2025-10-28 12:01:53.539082",
+      "metadata": {
+        "template": "unknown",
+        "has_parameters": false,
+        "has_bash": true,
+        "has_files": true,
+        "thinking_mode": false,
+        "synced": true
+      }
+    },
+    {
+      "id": "1e22d8bb-0686-409c-aa48-00f98460bf9b",
+      "name": "pr-create",
+      "description": "Create a pull request with title, description, and branch management",
+      "scope": "project",
+      "path": "/Users/matteocervelli/dev/projects/llms/.claude/commands/pr-create.md",
+      "created_at": "2025-10-28 12:01:53.539262",
+      "updated_at": "2025-10-28 12:01:53.539262",
+      "metadata": {
+        "template": "unknown",
+        "has_parameters": false,
+        "has_bash": true,
+        "has_files": false,
+        "thinking_mode": false,
+        "synced": true
+      }
+    },
+    {
+      "id": "70e96739-20c7-43c5-8053-f8054a2899b4",
+      "name": "code-analyze-quality",
+      "description": "Run comprehensive code quality checks including linting, type checking, and formatting",
+      "scope": "project",
+      "path": "/Users/matteocervelli/dev/projects/llms/.claude/commands/code-analyze-quality.md",
+      "created_at": "2025-10-28 12:01:53.539461",
+      "updated_at": "2025-10-28 12:01:53.539462",
+      "metadata": {
+        "template": "unknown",
+        "has_parameters": false,
+        "has_bash": true,
+        "has_files": false,
+        "thinking_mode": false,
+        "synced": true
+      }
+    },
+    {
+      "id": "d099925b-fdc5-486a-a85c-98b6acfd436c",
+      "name": "project-create",
+      "description": "Initialize new project with complete setup and documentation",
+      "scope": "project",
+      "path": "/Users/matteocervelli/dev/projects/llms/.claude/commands/project-create.md",
+      "created_at": "2025-10-28 12:01:53.539669",
+      "updated_at": "2025-10-28 12:01:53.539671",
       "metadata": {
         "template": "unknown",
         "has_parameters": false,

@@ -5,6 +5,8 @@ allowed-tools: [gh, git, filesystem]
 
 # Project Kickoff: $ARGUMENTS
 
+**💡 Tip:** For safer planning, activate Plan Mode (press Shift+Tab twice) before running this command to review the project structure before creation.
+
 ## Repository Setup
 
 ```bash
