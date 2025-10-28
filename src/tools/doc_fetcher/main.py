@@ -101,9 +101,7 @@ class DocFetcherCLI:
 
         return [p.stem for p in self.PROVIDERS_DIR.glob("*.yaml") if p.is_file()]
 
-    async def fetch_document(
-        self, source: DocumentSource, provider_config: ProviderConfig
-    ) -> bool:
+    async def fetch_document(self, source: DocumentSource, provider_config: ProviderConfig) -> bool:
         """
         Fetch and save a single document using Crawl4AI.
 
@@ -132,9 +130,7 @@ class DocFetcherCLI:
 
             # Check if content changed
             if existing_entry and content_hash == existing_entry.hash:
-                click.secho(
-                    f"  ✓ No changes (hash: {content_hash[:8]}...)", fg="yellow"
-                )
+                click.secho(f"  ✓ No changes (hash: {content_hash[:8]}...)", fg="yellow")
                 return True
 
             # Determine local path
@@ -164,13 +160,9 @@ class DocFetcherCLI:
             self.manifest_manager.add_entry(entry)
 
             if existing_entry:
-                click.secho(
-                    f"  ✓ Updated: {local_path} ({len(markdown)} chars)", fg="green"
-                )
+                click.secho(f"  ✓ Updated: {local_path} ({len(markdown)} chars)", fg="green")
             else:
-                click.secho(
-                    f"  ✓ Saved: {local_path} ({len(markdown)} chars)", fg="green"
-                )
+                click.secho(f"  ✓ Saved: {local_path} ({len(markdown)} chars)", fg="green")
 
             return True
 

@@ -104,10 +104,7 @@ class DocumentationCrawler:
         return hashlib.sha256(content.encode("utf-8")).hexdigest()
 
     async def crawl_url(
-        self,
-        url: str,
-        use_fit_markdown: bool = True,
-        remove_overlay: bool = True
+        self, url: str, use_fit_markdown: bool = True, remove_overlay: bool = True
     ) -> tuple[str, dict, str]:
         """
         Crawl single URL and extract LLM-optimized markdown.
@@ -159,7 +156,9 @@ class DocumentationCrawler:
                 if use_fit_markdown and result.markdown.fit_markdown:
                     markdown = result.markdown.fit_markdown
                 else:
-                    markdown = result.markdown.raw_markdown or result.markdown.markdown_v2.raw_markdown
+                    markdown = (
+                        result.markdown.raw_markdown or result.markdown.markdown_v2.raw_markdown
+                    )
 
                 if not markdown:
                     raise CrawlError(f"No markdown content extracted from {url}")
@@ -183,9 +182,7 @@ class DocumentationCrawler:
             raise CrawlError(f"Unexpected error crawling {url}: {e}")
 
     async def crawl_urls(
-        self,
-        urls: list[str],
-        max_concurrent: int = 3
+        self, urls: list[str], max_concurrent: int = 3
     ) -> list[tuple[str, str, dict, str]]:
         """
         Crawl multiple URLs with controlled concurrency.

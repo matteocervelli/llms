@@ -10,7 +10,7 @@ from enum import Enum
 from typing import Any, Dict, List, Literal, Optional
 from uuid import UUID, uuid4
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 
 class ParameterType(str, Enum):
@@ -28,6 +28,33 @@ class ScopeType(str, Enum):
     GLOBAL = "global"
     PROJECT = "project"
     LOCAL = "local"
+
+
+class ValidationConfig(BaseModel):
+    """
+    Configuration for command validation settings.
+
+    Attributes:
+        strict_naming: Enforce strict naming convention validation
+        allowed_contexts: List of allowed context prefixes for command names
+        check_naming_convention: Whether to check naming convention at all
+    """
+
+    strict_naming: bool = False
+    allowed_contexts: List[str] = Field(
+        default_factory=lambda: [
+            "cc",
+            "gh",
+            "project",
+            "pr",
+            "code",
+            "feature",
+            "issue",
+            "ui",
+            "infrastructure",
+        ]
+    )
+    check_naming_convention: bool = True
 
 
 class CommandParameter(BaseModel):
@@ -50,25 +77,20 @@ class CommandParameter(BaseModel):
     default: Optional[Any] = None
     choices: Optional[List[str]] = None
 
-    @field_validator("choices")
-    @classmethod
-    def validate_choices(cls, v: Optional[List[str]], info) -> Optional[List[str]]:
-        """Validate that choices are provided only for choice type."""
-        param_type = info.data.get("type")
-        if param_type == ParameterType.CHOICE and not v:
+    @model_validator(mode="after")
+    def validate_parameter(self) -> "CommandParameter":
+        """Validate parameter constraints."""
+        # Validate choices for CHOICE type
+        if self.type == ParameterType.CHOICE and not self.choices:
             raise ValueError("choices must be provided for choice type")
-        if param_type != ParameterType.CHOICE and v:
-            raise ValueError(f"choices not allowed for {param_type} type")
-        return v
+        if self.type != ParameterType.CHOICE and self.choices:
+            raise ValueError(f"choices not allowed for {self.type.value} type")
 
-    @field_validator("default")
-    @classmethod
-    def validate_default(cls, v: Optional[Any], info) -> Optional[Any]:
-        """Validate that required parameters don't have defaults."""
-        required = info.data.get("required", False)
-        if required and v is not None:
+        # Validate required parameters don't have defaults
+        if self.required and self.default is not None:
             raise ValueError("required parameters cannot have default values")
-        return v
+
+        return self
 
 
 class CommandConfig(BaseModel):
@@ -160,13 +182,12 @@ class CommandCatalogEntry(BaseModel):
         """Update the updated_at timestamp to current time."""
         self.updated_at = datetime.now()
 
-    class Config:
-        """Pydantic model configuration."""
-
-        json_encoders = {
+    model_config = ConfigDict(
+        json_encoders={
             datetime: lambda v: v.isoformat(),
             UUID: str,
         }
+    )
 
 
 class CommandCatalog(BaseModel):
@@ -181,7 +202,9 @@ class CommandCatalog(BaseModel):
     schema_version: str = "1.0"
     commands: List[CommandCatalogEntry] = Field(default_factory=list)
 
-    def get_by_name(self, name: str, scope: Optional[ScopeType] = None) -> Optional[CommandCatalogEntry]:
+    def get_by_name(
+        self, name: str, scope: Optional[ScopeType] = None
+    ) -> Optional[CommandCatalogEntry]:
         """
         Get command entry by name and optional scope.
 
@@ -272,7 +295,9 @@ class CommandCatalog(BaseModel):
 
         if has_parameters is not None:
             results = [
-                cmd for cmd in results if cmd.metadata.get("has_parameters", False) == has_parameters
+                cmd
+                for cmd in results
+                if cmd.metadata.get("has_parameters", False) == has_parameters
             ]
 
         if has_bash is not None:
@@ -280,10 +305,9 @@ class CommandCatalog(BaseModel):
 
         return results
 
-    class Config:
-        """Pydantic model configuration."""
-
-        json_encoders = {
+    model_config = ConfigDict(
+        json_encoders={
             datetime: lambda v: v.isoformat(),
             UUID: str,
         }
+    )

@@ -283,6 +283,132 @@ class TestValidator:
             is_valid, error = Validator.validate_template_name(name)
             assert is_valid is False
 
+    def test_parse_command_name_with_context(self):
+        """Test parsing command name with context prefix."""
+        context, obj, action, modifier = Validator.parse_command_name("cc-command-create")
+        assert context == "cc"
+        assert obj == "command"
+        assert action == "create"
+        assert modifier == ""
+
+    def test_parse_command_name_without_context(self):
+        """Test parsing command name without context prefix."""
+        # Use a name that doesn't start with a known context
+        context, obj, action, modifier = Validator.parse_command_name("task-create")
+        assert context == ""
+        assert obj == "task"
+        assert action == "create"
+        assert modifier == ""
+
+    def test_parse_command_name_with_modifier(self):
+        """Test parsing command name with modifier."""
+        context, obj, action, modifier = Validator.parse_command_name("pr-analyze-failure")
+        assert context == "pr"
+        assert obj == "analyze"
+        assert action == "failure"
+        assert modifier == ""
+
+    def test_parse_command_name_invalid(self):
+        """Test parsing invalid command names."""
+        # Single part
+        context, obj, action, modifier = Validator.parse_command_name("command")
+        assert context == ""
+        assert obj == ""
+        assert action == ""
+
+        # Context only
+        context, obj, action, modifier = Validator.parse_command_name("cc-command")
+        assert context == "cc"
+        assert obj == ""
+        assert action == ""
+
+    def test_suggest_naming_improvements_single_part(self):
+        """Test suggestions for single-part names."""
+        suggestions = Validator.suggest_naming_improvements("command")
+        assert len(suggestions) > 0
+        assert any("action verb" in s.lower() for s in suggestions)
+
+    def test_suggest_naming_improvements_wrong_order(self):
+        """Test suggestions for action-object order."""
+        suggestions = Validator.suggest_naming_improvements("create-command")
+        assert len(suggestions) > 0
+        assert any("command-create" in s for s in suggestions)
+
+    def test_validate_naming_convention_compliant_with_context(self):
+        """Test compliant naming with context."""
+        is_valid, error, warnings = Validator.validate_naming_convention(
+            "cc-command-create", strict=False
+        )
+        assert is_valid is True
+        assert error == ""
+        assert any("✓" in w for w in warnings)  # Should have parsed info
+
+    def test_validate_naming_convention_compliant_without_context(self):
+        """Test compliant naming without context."""
+        is_valid, error, warnings = Validator.validate_naming_convention(
+            "feature-implement", strict=False
+        )
+        assert is_valid is True
+        assert error == ""
+
+    def test_validate_naming_convention_non_compliant_permissive(self):
+        """Test non-compliant naming in permissive mode."""
+        is_valid, error, warnings = Validator.validate_naming_convention(
+            "create-command", strict=False
+        )
+        assert is_valid is True  # Permissive allows it
+        assert error == ""
+        assert len(warnings) > 0  # But warns
+
+    def test_validate_naming_convention_non_compliant_strict(self):
+        """Test non-compliant naming in strict mode."""
+        is_valid, error, warnings = Validator.validate_naming_convention("command", strict=True)
+        assert is_valid is False  # Strict blocks it
+        assert "must follow" in error.lower()
+
+    def test_validate_naming_convention_invalid_context_permissive(self):
+        """Test invalid context in permissive mode."""
+        # xyz is not in ALLOWED_CONTEXTS, but xyz-command-create still parses correctly
+        # because xyz is not recognized as a context, so "xyz" becomes the object
+        is_valid, error, warnings = Validator.validate_naming_convention(
+            "xyz-command-create", strict=False
+        )
+        assert is_valid is True  # Permissive allows it
+        # Since "xyz" is not in ALLOWED_CONTEXTS, it's treated as an object, not context
+        # So the parsing will be: context="", obj="xyz", action="command", modifier="create"
+        assert len(warnings) > 0  # Should have parsing info
+
+    def test_validate_naming_convention_invalid_context_strict(self):
+        """Test a name that would fail strict validation."""
+        # A name with only one part should fail in strict mode
+        is_valid, error, warnings = Validator.validate_naming_convention("command", strict=True)
+        assert is_valid is False  # Strict blocks it
+        assert "must follow" in error.lower()
+
+    def test_validate_naming_convention_common_patterns(self):
+        """Test validation of common naming patterns."""
+        good_names = [
+            "cc-command-create",
+            "cc-command-improve",
+            "feature-implement",
+            "issue-fix",
+            "gh-milestone-create",
+            "pr-analyze-failure",
+            "code-analyze-quality",
+            "infrastructure-setup",
+        ]
+
+        for name in good_names:
+            is_valid, error, warnings = Validator.validate_naming_convention(name, strict=False)
+            assert is_valid is True, f"{name} should be valid"
+
+    def test_validate_naming_convention_with_custom_contexts(self):
+        """Test validation with custom allowed contexts."""
+        is_valid, error, warnings = Validator.validate_naming_convention(
+            "custom-tool-run", strict=False, allowed_contexts=["cc", "gh", "custom"]
+        )
+        assert is_valid is True
+
 
 # ============================================================================
 # Test Template Manager

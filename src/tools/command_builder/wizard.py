@@ -20,18 +20,20 @@ from .templates import TemplateManager
 from .validator import Validator
 
 # Custom style for questionary prompts
-CUSTOM_STYLE = Style([
-    ("qmark", "fg:#673ab7 bold"),
-    ("question", "bold"),
-    ("answer", "fg:#2196f3 bold"),
-    ("pointer", "fg:#673ab7 bold"),
-    ("highlighted", "fg:#673ab7 bold"),
-    ("selected", "fg:#2196f3"),
-    ("separator", "fg:#cc5454"),
-    ("instruction", "fg:#858585"),
-    ("text", ""),
-    ("disabled", "fg:#858585 italic"),
-])
+CUSTOM_STYLE = Style(
+    [
+        ("qmark", "fg:#673ab7 bold"),
+        ("question", "bold"),
+        ("answer", "fg:#2196f3 bold"),
+        ("pointer", "fg:#673ab7 bold"),
+        ("highlighted", "fg:#673ab7 bold"),
+        ("selected", "fg:#2196f3"),
+        ("separator", "fg:#cc5454"),
+        ("instruction", "fg:#858585"),
+        ("text", ""),
+        ("disabled", "fg:#858585 italic"),
+    ]
+)
 
 
 class CommandWizard:
@@ -131,6 +133,10 @@ class CommandWizard:
 
     def _prompt_command_name(self) -> Optional[str]:
         """Prompt for command name with validation."""
+        # Show naming convention hint
+        click.echo("\n💡 Naming convention: [context-]object-action[-modifier]")
+        click.echo("   Examples: cc-command-create, feature-implement, gh-milestone-create\n")
+
         while True:
             name = questionary.text(
                 "Command name (slug format: lowercase-with-hyphens):",
@@ -142,11 +148,36 @@ class CommandWizard:
             if name is None:  # User cancelled
                 return None
 
+            # First check basic format
             is_valid, error = Validator.validate_command_name(name)
-            if is_valid:
-                return name
+            if not is_valid:
+                click.echo(f"❌ {error}", err=True)
+                continue
 
-            click.echo(f"❌ {error}", err=True)
+            # Then check naming convention (permissive by default)
+            is_compliant, convention_error, warnings = Validator.validate_naming_convention(
+                name, strict=False
+            )
+
+            if warnings:
+                click.echo("\n⚠️  Naming convention notes:")
+                for warning in warnings:
+                    if warning.startswith("✓"):
+                        click.echo(f"   {warning}")
+                    else:
+                        click.echo(f"   ⚠️  {warning}")
+
+                # Ask if user wants to proceed
+                proceed = questionary.confirm(
+                    "\nProceed with this name?",
+                    default=True,
+                    style=CUSTOM_STYLE,
+                ).ask()
+
+                if not proceed:
+                    continue
+
+            return name
 
     def _prompt_description(self) -> Optional[str]:
         """Prompt for command description."""

@@ -86,6 +86,30 @@ python -m src.tools.command_builder.main delete my-command --yes
 python -m src.tools.command_builder.main delete my-command --scope project
 ```
 
+### Sync Catalog
+
+When you manually add or delete command files, use sync to update the catalog:
+
+```bash
+# Sync catalog with actual files
+python -m src.tools.command_builder.main sync
+
+# Sync with specific project root
+python -m src.tools.command_builder.main sync --project-root /path/to/project
+```
+
+**What sync does:**
+- Scans `.claude/commands/` (project and global)
+- Removes catalog entries for missing files
+- Adds catalog entries for untracked files
+- Shows detailed sync report (added, removed, unchanged)
+
+**When to use sync:**
+- After manually deleting command files
+- After manually creating command files
+- When catalog seems out of sync
+- After moving files between scopes
+
 ### Other Commands
 
 ```bash

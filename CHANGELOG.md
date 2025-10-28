@@ -7,7 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- **BREAKING**: Renamed commands for consistent `<object>-<action>` naming pattern
+  - `/feature` → `/feature-implement`: "Implement new feature from GitHub issue with security-by-design and performance optimization"
+  - `/issue` → `/issue-fix`: "Fix bugs and resolve problems from GitHub issues with security and performance validation"
+  - Clearer distinction between feature implementation and bug fixing workflows
+  - No backward compatibility - old command names removed
+
 ### Added
+- **Plan Mode documentation** across command builder commands
+  - Added comprehensive Plan Mode guidance to `/cc-improve-command`
+  - Added Plan Mode best practices to `/cc-create-command`
+  - Added Plan Mode tips to complex workflow commands: `/setup-infrastructure`, `/ui-component`, `/new-project`, `/issue-fix`, `/feature-implement`
+  - Documented Plan Mode limitations (user-controlled, cannot be forced programmatically)
+  - Explained activation methods (Shift+Tab twice) and benefits
 - Initial project structure
 - GitHub repository and issue tracking
 - Sprint-based task management (4 sprints planned)
@@ -114,7 +127,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Tested manually: All scenarios validated (normal execution, wrong directory, log rotation)
 
 ### Sprint 2 - Core Builders (In Progress)
-- [ ] Skill builder tool
+- [ ] **Skill Builder Tool** - Phase 2 completed, Phase 3-4 in progress
+  - [x] Phase 1: Models, Exceptions, Validator (#8)
+  - [x] **Phase 2: Templates and Template Manager** (#21) - Jinja2-based template system
+    - `src/tools/skill_builder/templates.py` - TemplateManager with SandboxedEnvironment (220 lines)
+    - `src/tools/skill_builder/templates/basic.md` - Simple skill template (80 lines)
+    - `src/tools/skill_builder/templates/with_tools.md` - Skill with allowed-tools (90 lines)
+    - `src/tools/skill_builder/templates/with_scripts.md` - Skill with scripts/ directory (100 lines)
+    - `src/tools/skill_builder/templates/advanced.md` - Full-featured multi-file skill (120 lines)
+    - `tests/test_skill_builder.py` - Added 23 tests (15 validator + 8 template), 48 total passing
+    - `docs/implementation/issue-21-templates.md` - Implementation documentation
+    - Security: Jinja2 SandboxedEnvironment prevents code execution
+    - Performance: < 10ms template rendering, < 5ms loading
+    - Template variables: name, description, allowed_tools, content, frontmatter
+    - 4 templates with progressive complexity (basic → with_tools → with_scripts → advanced)
+  - [ ] Phase 3: Builder and Catalog Integration (#22)
+  - [ ] Phase 4: Wizard and CLI (#23)
 - [x] **Command Builder Tool** (#9) - Generate Claude Code slash commands with interactive wizard
   - `src/tools/command_builder/models.py` - Pydantic models (331 lines): CommandConfig, CommandParameter, CommandCatalogEntry, CommandCatalog
   - `src/tools/command_builder/exceptions.py` - Custom exceptions (45 lines): CommandBuilderError hierarchy

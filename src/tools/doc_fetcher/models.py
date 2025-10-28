@@ -14,7 +14,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Optional
 
-from pydantic import BaseModel, Field, HttpUrl, field_validator
+from pydantic import BaseModel, ConfigDict, Field, HttpUrl, field_validator
 
 
 class DocumentSource(BaseModel):
@@ -148,13 +148,12 @@ class ManifestEntry(BaseModel):
 
         return validated_topics
 
-    class Config:
-        """Pydantic configuration."""
-
-        json_encoders = {
+    model_config = ConfigDict(
+        json_encoders={
             Path: str,
             datetime: lambda v: v.isoformat(),
         }
+    )
 
 
 class ProviderConfig(BaseModel):

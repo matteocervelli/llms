@@ -414,8 +414,14 @@ class ManifestManager:
 
             # Update fields
             allowed_fields = {
-                "provider", "category", "title", "description", "topics",
-                "url", "local_path", "hash"
+                "provider",
+                "category",
+                "title",
+                "description",
+                "topics",
+                "url",
+                "local_path",
+                "hash",
             }
             for field, value in fields.items():
                 if field not in allowed_fields:
@@ -591,6 +597,7 @@ class ManifestManager:
 
                 # Add id field to all documents
                 import uuid as uuid_module
+
                 for doc in data["documents"]:
                     if "id" not in doc:
                         doc["id"] = str(uuid_module.uuid4())
@@ -612,8 +619,7 @@ class ManifestManager:
 
             else:
                 raise ManifestError(
-                    "migrate_schema",
-                    f"Unsupported migration: {from_version} -> {to_version}"
+                    "migrate_schema", f"Unsupported migration: {from_version} -> {to_version}"
                 )
 
         except Exception as e:
