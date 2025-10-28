@@ -22,7 +22,7 @@ import os
 import shutil
 from datetime import datetime
 from pathlib import Path
-from typing import Optional, Tuple
+from typing import TYPE_CHECKING, Optional, Tuple
 from uuid import uuid4
 
 from src.core.scope_manager import ScopeManager
@@ -34,9 +34,6 @@ from src.tools.skill_builder.exceptions import (
 from src.tools.skill_builder.models import SkillCatalogEntry, SkillConfig, ScopeType
 from src.tools.skill_builder.templates import TemplateManager
 from src.tools.skill_builder.validator import SkillValidator
-
-# Import TYPE_CHECKING to avoid circular imports
-from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from src.tools.skill_builder.catalog import CatalogManager

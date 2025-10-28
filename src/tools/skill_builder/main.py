@@ -11,14 +11,13 @@ Usage:
 """
 
 from pathlib import Path
-from typing import List, Optional
+from typing import Optional
 
 import click
 from pydantic import ValidationError as PydanticValidationError
 
-from src.core.scope_manager import ScopeManager
-from .builder import SkillBuilder
-from .catalog import CatalogManager
+from .cli_formatters import format_scope_badge, format_skill_entry
+from .cli_helpers import get_builder, get_catalog_manager, get_template_manager
 from .exceptions import (
     CatalogError,
     SkillBuilderError,
@@ -26,87 +25,8 @@ from .exceptions import (
     SkillNotFoundError,
     TemplateError,
 )
-from .models import SkillCatalogEntry, SkillConfig, ScopeType
-from .templates import TemplateManager
+from .models import SkillConfig, ScopeType
 from .wizard import SkillWizard
-
-
-# Helper functions for manager instantiation
-def get_scope_manager() -> ScopeManager:
-    """Get ScopeManager instance."""
-    return ScopeManager()
-
-
-def get_template_manager() -> TemplateManager:
-    """Get TemplateManager instance."""
-    return TemplateManager()
-
-
-def get_catalog_manager(project_root: Optional[Path] = None) -> CatalogManager:
-    """Get CatalogManager instance."""
-    if project_root:
-        catalog_path = project_root / "skills.json"
-        return CatalogManager(catalog_path=catalog_path)
-    return CatalogManager()
-
-
-def get_builder(
-    scope_manager: Optional[ScopeManager] = None,
-    template_manager: Optional[TemplateManager] = None,
-    catalog_manager: Optional[CatalogManager] = None,
-) -> SkillBuilder:
-    """Get SkillBuilder instance with dependencies."""
-    scope_mgr = scope_manager or get_scope_manager()
-    template_mgr = template_manager or get_template_manager()
-    catalog_mgr = catalog_manager
-    return SkillBuilder(
-        scope_manager=scope_mgr,
-        template_manager=template_mgr,
-        catalog_manager=catalog_mgr,
-    )
-
-
-def format_scope_badge(scope: ScopeType) -> str:
-    """Format scope with emoji badge."""
-    badges = {
-        ScopeType.GLOBAL: "🌐",
-        ScopeType.PROJECT: "📁",
-        ScopeType.LOCAL: "🔒",
-    }
-    return f"{badges.get(scope, '❓')} {scope.value}"
-
-
-def format_skill_entry(entry: SkillCatalogEntry, show_path: bool = False) -> str:
-    """Format skill catalog entry for display."""
-    lines = []
-
-    # Name and scope
-    scope_badge = format_scope_badge(entry.scope)
-    lines.append(f"  {entry.name} ({scope_badge})")
-
-    # Description
-    if entry.description:
-        lines.append(f"    {entry.description}")
-
-    # Metadata
-    meta_parts = []
-    if entry.metadata:
-        if entry.metadata.get("template"):
-            meta_parts.append(f"template:{entry.metadata['template']}")
-        if entry.metadata.get("has_scripts"):
-            meta_parts.append("scripts")
-        if entry.metadata.get("allowed_tools"):
-            tool_count = len(entry.metadata["allowed_tools"])
-            meta_parts.append(f"{tool_count} tools")
-
-    if meta_parts:
-        lines.append(f"    💡 {', '.join(meta_parts)}")
-
-    # Path (optional)
-    if show_path and entry.path:
-        lines.append(f"    📂 {entry.path}")
-
-    return "\n".join(lines)
 
 
 @click.group()
