@@ -258,9 +258,7 @@ class TestCatalogQuery:
 
     def test_search_skills_multiple_filters(self, populated_catalog):
         """Test searching with multiple filters."""
-        results = populated_catalog.search_skills(
-            scope=ScopeType.PROJECT, has_scripts=True
-        )
+        results = populated_catalog.search_skills(scope=ScopeType.PROJECT, has_scripts=True)
         assert len(results) == 1
         assert results[0].name == "skill-three"
 
@@ -398,9 +396,7 @@ class TestCatalogResilience:
 
         assert len(temp_files) == 0, "Found .tmp files after write"
         # Allow .bak files but not other temp files
-        assert all(
-            f.suffix == ".bak" for f in json_temp_files
-        ), "Found unexpected temp files"
+        assert all(f.suffix == ".bak" for f in json_temp_files), "Found unexpected temp files"
 
     def test_corrupted_json_recovery(self, tmp_path):
         """Test handling of corrupted JSON file."""
