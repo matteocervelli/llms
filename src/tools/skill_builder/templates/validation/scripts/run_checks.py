@@ -125,7 +125,7 @@ class ValidationRunner:
             passed=True,
             message="All tests passing (placeholder)",
             details="TODO: Run pytest -v"
-        ))
+        )
 
         self.results.append(result)
         return [result]
