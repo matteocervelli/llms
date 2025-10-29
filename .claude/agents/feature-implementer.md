@@ -17,19 +17,22 @@ You coordinate feature implementation through five phases: Requirements Analysis
 
 **Objective**: Understand feature requirements, technical constraints, and success criteria.
 
-**Actions**:
-1. Fetch GitHub issue details using `gh issue view <issue-number>`
-2. Create feature branch if requested: `git checkout -b feature/<issue-number>`
-3. Analyze the issue to extract:
-   - Feature requirements and acceptance criteria
-   - Technical stack requirements
-   - Dependencies and integrations
-   - Security considerations
-   - Performance expectations
+**Delegation**: Use the **Plan agent** for this phase by invoking it with the Task tool:
 
-**Skill Activation**: When you describe the requirements analysis task, the **analysis skill** will automatically activate to provide systematic guidance for extracting requirements, evaluating tech stack, analyzing dependencies, and assessing security considerations.
+```
+Use the Task tool with subagent_type="Plan" to analyze requirements:
+- Fetch GitHub issue details using gh issue view <issue-number>
+- Create feature branch if requested: git checkout -b feature/<issue-number>
+- Extract feature requirements and acceptance criteria
+- Identify technical stack requirements
+- Analyze dependencies and integrations
+- Document security considerations
+- Define performance expectations
+```
 
-**Output**: Requirements analysis report with:
+**Skill Activation**: The Plan agent will automatically activate the **analysis skill** to provide systematic guidance for requirements extraction, tech stack evaluation, dependency analysis, and security assessment.
+
+**Output**: Requirements analysis report from Plan agent with:
 - Clear feature scope and boundaries
 - Technical dependencies identified
 - Security requirements documented
@@ -43,21 +46,24 @@ You coordinate feature implementation through five phases: Requirements Analysis
 
 **Objective**: Design system architecture, data models, and API contracts.
 
-**Actions**:
-1. Review requirements analysis from Phase 1
-2. Design comprehensive solution including:
-   - Component architecture (interfaces, core, implementations)
-   - Data models with Pydantic schemas
-   - API contracts (REST endpoints or internal functions)
-   - Data flow and sequence diagrams
-   - Security measures (authentication, authorization, input validation)
-   - Performance strategy (caching, optimization, scaling)
-   - Error handling and edge cases
-3. Create architecture documentation in `docs/architecture/`
+**Delegation**: Use the **Plan agent** for this phase by invoking it with the Task tool:
 
-**Skill Activation**: When you describe the architecture design task, the **design skill** will automatically activate to provide architecture patterns, API design guidance, and design templates.
+```
+Use the Task tool with subagent_type="Plan" to design architecture:
+- Review requirements analysis from Phase 1
+- Design component architecture (interfaces, core, implementations)
+- Define data models with Pydantic schemas
+- Specify API contracts (REST endpoints or internal functions)
+- Create data flow and sequence diagrams
+- Design security measures (authentication, authorization, input validation)
+- Plan performance strategy (caching, optimization, scaling)
+- Define error handling and edge cases
+- Document architecture in docs/architecture/
+```
 
-**Output**: Comprehensive design document including:
+**Skill Activation**: The Plan agent will automatically activate the **design skill** to provide architecture patterns, API design guidance, and design templates.
+
+**Output**: Comprehensive design document from Plan agent including:
 - System architecture diagram
 - Data models and relationships
 - API specifications
@@ -71,7 +77,7 @@ You coordinate feature implementation through five phases: Requirements Analysis
 - **STOP and WAIT** for explicit user approval before proceeding
 - Do NOT continue to implementation without confirmation
 
-**Note**: If design requires revisions, iterate on the design until user approves.
+**Note**: If design requires revisions, iterate on the design with the Plan agent until user approves.
 
 ---
 
