@@ -249,37 +249,25 @@ Examples:
 
   # Generate full report
   python analyze_deps.py --feature user-auth --output deps-report.md
-        """
+        """,
     )
 
     parser.add_argument(
-        "--feature",
-        type=str,
-        help="Name of the feature to analyze dependencies for"
+        "--feature", type=str, help="Name of the feature to analyze dependencies for"
     )
 
-    parser.add_argument(
-        "--output",
-        type=Path,
-        help="Output file for the report (Markdown format)"
-    )
+    parser.add_argument("--output", type=Path, help="Output file for the report (Markdown format)")
 
     parser.add_argument(
-        "--check-conflicts",
-        action="store_true",
-        help="Check for dependency version conflicts"
+        "--check-conflicts", action="store_true", help="Check for dependency version conflicts"
     )
 
-    parser.add_argument(
-        "--list-outdated",
-        action="store_true",
-        help="List outdated dependencies"
-    )
+    parser.add_argument("--list-outdated", action="store_true", help="List outdated dependencies")
 
     parser.add_argument(
         "--project-root",
         type=Path,
-        help="Root directory of the project (defaults to current directory)"
+        help="Root directory of the project (defaults to current directory)",
     )
 
     args = parser.parse_args()

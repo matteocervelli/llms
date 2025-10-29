@@ -29,6 +29,7 @@ from dataclasses import dataclass
 @dataclass
 class FunctionInfo:
     """Information about a function."""
+
     name: str
     args: List[str]
     has_return: bool
@@ -39,6 +40,7 @@ class FunctionInfo:
 @dataclass
 class ClassInfo:
     """Information about a class."""
+
     name: str
     methods: List[FunctionInfo]
     docstring: Optional[str] = None
@@ -93,7 +95,7 @@ class ModuleAnalyzer:
                 args=["param1", "param2"],
                 has_return=True,
                 is_async=False,
-                docstring="Example function docstring"
+                docstring="Example function docstring",
             )
         ]
 
@@ -108,7 +110,7 @@ class ModuleAnalyzer:
                     FunctionInfo("method1", ["self", "arg"], True, False),
                     FunctionInfo("method2", ["self"], False, False),
                 ],
-                docstring="Example class docstring"
+                docstring="Example class docstring",
             )
         ]
 
@@ -233,11 +235,7 @@ class TestScaffolder:
         self.project_root = project_root
         self.tests_dir = project_root / "tests"
 
-    def scaffold_for_module(
-        self,
-        module_path: Path,
-        output_dir: Optional[Path] = None
-    ) -> Path:
+    def scaffold_for_module(self, module_path: Path, output_dir: Optional[Path] = None) -> Path:
         """
         Generate test scaffold for a module.
 
@@ -273,12 +271,7 @@ class TestScaffolder:
 
         return test_path
 
-    def scaffold_for_class(
-        self,
-        class_name: str,
-        methods: List[str],
-        output_path: Path
-    ) -> None:
+    def scaffold_for_class(self, class_name: str, methods: List[str], output_path: Path) -> None:
         """
         Generate test scaffold for a specific class.
 
@@ -352,45 +345,30 @@ Examples:
 
   # Generate integration test structure
   python generate_tests.py --module src/service.py --integration
-        """
+        """,
+    )
+
+    parser.add_argument("--module", type=Path, help="Path to Python module to generate tests for")
+
+    parser.add_argument(
+        "--output", type=Path, help="Output directory for test files (default: tests/unit/)"
     )
 
     parser.add_argument(
-        "--module",
-        type=Path,
-        help="Path to Python module to generate tests for"
+        "--class", dest="class_name", type=str, help="Generate tests for specific class"
     )
 
-    parser.add_argument(
-        "--output",
-        type=Path,
-        help="Output directory for test files (default: tests/unit/)"
-    )
+    parser.add_argument("--methods", type=str, help="Comma-separated list of methods to test")
 
     parser.add_argument(
-        "--class",
-        dest="class_name",
-        type=str,
-        help="Generate tests for specific class"
-    )
-
-    parser.add_argument(
-        "--methods",
-        type=str,
-        help="Comma-separated list of methods to test"
-    )
-
-    parser.add_argument(
-        "--integration",
-        action="store_true",
-        help="Generate integration test structure"
+        "--integration", action="store_true", help="Generate integration test structure"
     )
 
     parser.add_argument(
         "--project-root",
         type=Path,
         default=Path.cwd(),
-        help="Root directory of project (default: current directory)"
+        help="Root directory of project (default: current directory)",
     )
 
     args = parser.parse_args()

@@ -7,6 +7,43 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Agent Builder Tool** (#10) - Complete tool for creating Claude Code agents
+  - 7-phase implementation: Models, Templates, Builder, Catalog, Wizard, CLI, Documentation
+  - 2,695 lines source code across 10 modules
+  - 3 new templates: with_model, orchestrator, specialist (852 lines)
+  - 148 tests (100% passing), 82%+ coverage
+  - 8 CLI commands: create, generate, list, delete, search, stats, sync, validate
+  - Interactive wizard with questionary for guided agent creation
+  - JSON catalog management with atomic operations
+  - Complete README with usage examples and API documentation
+  - Production ready with security validation and performance targets met
+
+- **Commands→Agents→Skills Architecture Validation** (#35) - Proven architecture effectiveness
+  - Validated by implementing Issue #10 using new `/feature-implement` workflow
+  - 92% reduction in command complexity (187→15 lines)
+  - 95% reduction in upfront token cost (124,000→300 tokens)
+  - 4 skills automatically invoked (analysis, design, implementation, validation)
+  - Complete feature delivered in ~2 hours with 148 passing tests
+  - Comprehensive validation report in `docs/implementation/issue-35-validation.md`
+  - Architecture recommended for all future development
+
+- **Global Sync Enhancement** - Updated `scripts/sync-to-global.sh`
+  - Now symlinks entire directories (commands/, agents/, skills/, hooks/, prompts/)
+  - Automatic backup before replacing existing directories
+  - Simplified sync workflow with clear status reporting
+  - Enables development in project while changes apply globally
+
+- **Commands→Agents→Skills Architecture Simplification** (#34) - Ultra-concise `/feature-implement` command
+  - Simplified `/feature-implement` command from 48 lines to 15 lines (69% reduction)
+  - 92% total reduction from original 183-line monolithic command
+  - Created `feature-implement-legacy.md` backup (187 lines) for comparison
+  - Token efficiency: 99.76% reduction via progressive disclosure (300 vs 124,000 tokens)
+  - Clean delegation pattern: Command → Agent → Skills
+  - Complete implementation documentation in `docs/implementation/issue-34-command-simplification.md`
+  - Updated architecture documentation with Phase 2.3 results
+
 ### Changed
 - **BREAKING**: Renamed commands for consistent `<object>-<action>` naming pattern
   - `/feature` → `/feature-implement`: "Implement new feature from GitHub issue with security-by-design and performance optimization"
@@ -259,6 +296,67 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - **Quality-driven**: 80%+ coverage targets, Black/mypy/flake8 integration
     - **Performance-aware**: Response time, throughput, memory benchmarks
     - **Architecture**: Demonstrates Commands→Agents→Skills progressive disclosure pattern
+  - [x] **Phase 2.1: Generate Feature Implementation Skills** (#32) - 4 production-ready skills deployed from templates
+    - `.claude/skills/analysis/` - Analysis skill with working dependency analyzer (4 files)
+      - `SKILL.md` - Requirements analysis workflow (204 lines)
+      - `requirements-checklist.md` - Requirements validation checklist (211 lines)
+      - `security-checklist.md` - Security analysis checklist (441 lines)
+      - `scripts/analyze_deps.py` - **IMPLEMENTED**: Full dependency analyzer (580 lines)
+        - Parses requirements.txt and pyproject.toml
+        - Detects installed packages via importlib.metadata
+        - Checks version conflicts and outdated dependencies
+        - Queries PyPI API for latest versions
+        - Generates Markdown reports with recommendations
+    - `.claude/skills/design/` - Design skill with architecture guidance (4 files)
+      - `SKILL.md` - Architecture and API design workflow (415 lines)
+      - `architecture-patterns.md` - Architecture pattern guide (468 lines)
+      - `api-design-guide.md` - API design best practices (531 lines)
+      - `templates/architecture-doc.md` - Architecture document template (194 lines)
+    - `.claude/skills/implementation/` - Implementation skill with test generator (4 files)
+      - `SKILL.md` - TDD implementation workflow (725 lines)
+      - `code-style-guide.md` - Code style guide (826 lines)
+      - `testing-checklist.md` - Testing checklist (580 lines)
+      - `scripts/generate_tests.py` - **IMPLEMENTED**: AST-based test scaffolding (617 lines)
+        - Parses Python files using AST module
+        - Extracts functions, classes, and methods
+        - Generates pytest test stubs with fixtures
+        - Supports async functions and error handling tests
+        - Creates test files with proper import paths
+    - `.claude/skills/validation/` - Validation skill with automation runner (4 files)
+      - `SKILL.md` - Quality validation workflow (565 lines)
+      - `quality-checklist.md` - Quality standards checklist (340 lines)
+      - `performance-benchmarks.md` - Performance benchmarks (506 lines)
+      - `scripts/run_checks.py` - **IMPLEMENTED**: Validation automation runner (644 lines)
+        - Runs Black, mypy, flake8 quality checks
+        - Executes pytest test suite with coverage
+        - Performs security scanning with pip-audit
+        - Runs performance tests
+        - Generates comprehensive Markdown reports
+    - **Script implementations**: 1,841 lines of production-ready automation (analyze_deps: 580, generate_tests: 617, run_checks: 644)
+    - **All scripts working**: Basic functionality tested, all executable (chmod +x)
+    - **Black formatted**: All code formatted to project standards
+    - **Ready for use**: Skills deployable immediately for /feature-implement workflow
+  - [x] **Phase 2.2: Refactor feature-implementer agent** (#33) - Commands→Agents→Skills architecture implementation
+    - `.claude/agents/feature-implementer.md` - Workflow orchestration agent (196 lines)
+      - **5 phases**: Requirements Analysis, Architecture Design, Implementation, Validation, Deployment
+      - **Context-based skill activation**: Skills automatically invoked when agent describes tasks
+      - **Orchestration focus**: Coordinates workflow, delegates expertise to skills
+      - **Quality checkpoints**: User approval before implementation, validation before deployment
+      - **Quality standards**: Security-by-design, performance-first, 80%+ test coverage
+    - `.claude/commands/feature-implement.md` - Simplified from 184 to 48 lines (74% reduction)
+      - **Parameter validation**: Issue number and branch creation flag
+      - **Agent delegation**: Invokes feature-implementer agent for workflow
+      - **Transparency**: High-level phase overview for user awareness
+      - **Plan Mode tip**: Suggests safer planning mode for design review
+    - **Architecture validation**: Successful Commands→Agents→Skills pattern implementation
+      - Command (48 lines) → Agent (196 lines) → Skills (4 × ~1,500 lines each, loaded on-demand)
+      - Progressive disclosure reduces token usage (estimated 85% upfront savings)
+      - Context-based activation enables natural workflow transitions
+      - Skills reusable across other workflows
+    - **Documentation**:
+      - `docs/implementation/issue-33-agent-refactor.md` - Complete implementation log
+      - `docs/implementation/commands-agents-skills-architecture.md` - Updated with results
+    - **Quality metrics**: All targets met (agent < 200 lines, command < 50 lines, checkpoints preserved)
 - [x] **Command Builder Tool** (#9) - Generate Claude Code slash commands with interactive wizard
   - `src/tools/command_builder/models.py` - Pydantic models (331 lines): CommandConfig, CommandParameter, CommandCatalogEntry, CommandCatalog
   - `src/tools/command_builder/exceptions.py` - Custom exceptions (45 lines): CommandBuilderError hierarchy
