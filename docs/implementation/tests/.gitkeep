@@ -1,0 +1,6 @@
+# Test execution and coverage reports directory
+#
+# This directory contains:
+# - Test execution reports (JUnit XML, HTML)
+# - Coverage reports (XML, HTML)
+# - Test summaries and analysis
