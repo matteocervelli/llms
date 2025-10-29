@@ -6,8 +6,8 @@ allowed-tools: [gh, git]
 
 # Implement Feature from GitHub Issue
 
-Implement feature from GitHub issue #$1 using the @feature-implementer agent.
+Implement feature from GitHub issue #$1 using the @feature-implementer-main prompt.
 
-The agent orchestrates five phases: Requirements Analysis → Architecture Design → Implementation → Validation → Deployment.
+The main orchestrator guides six phases: Requirements Analysis → Design & Planning → User Approval → Implementation → Validation → Deployment.
 
 Branch creation: ${2:-true}
