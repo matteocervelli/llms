@@ -1,13 +1,10 @@
-# design-synthesizer
-
-**Description:** Auto-activates when synthesizing outputs from multiple parallel sub-agents to create cohesive, integrated design with consistency checking and conflict resolution.
-
-**Activation:** Automatically when the design orchestrator integrates outputs from Architecture Designer, Documentation Researcher, and Dependency Manager sub-agents.
-
-**Tools:** Read, Write, Edit
-
-**MCPs:** None
-
+---
+name: design-synthesizer
+description: Auto-activates when synthesizing outputs from multiple parallel sub-agents to create cohesive, integrated design with consistency checking and conflict resolution.
+allowed-tools:
+  - Read
+  - Write
+  - Edit
 ---
 
 ## Purpose

@@ -1,13 +1,8 @@
-# doc-fetcher
-
-**Description:** Fetch library and framework documentation via context7-mcp and fetch-mcp for comprehensive documentation research with version-specific content
-
-**Activation:** Automatically when agent describes fetching documentation, retrieving API references, accessing library resources, or discovering documentation sources
-
-**Tools:** Read
-
-**MCPs:** context7-mcp, fetch-mcp
-
+---
+name: doc-fetcher
+description: Fetch library and framework documentation via context7-mcp and fetch-mcp for comprehensive documentation research with version-specific content.
+allowed-tools:
+  - Read
 ---
 
 ## Purpose

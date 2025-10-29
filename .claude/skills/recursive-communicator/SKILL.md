@@ -1,13 +1,9 @@
-# recursive-communicator
-
-**Description:** Auto-activates when managing agent-to-agent communication for validation failures and recursive fix cycles between validation specialists and main agent.
-
-**Activation:** Automatically when managing recursive communication between validation specialists and main agent for handling validation failures, requesting fixes, and triggering re-validation.
-
-**Tools:** Read, Write
-
-**MCPs:** None
-
+---
+name: recursive-communicator
+description: Auto-activates when managing agent-to-agent communication for validation failures and recursive fix cycles between validation specialists and main agent.
+allowed-tools:
+  - Read
+  - Write
 ---
 
 ## Purpose

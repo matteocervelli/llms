@@ -1,13 +1,10 @@
-# tech-stack-evaluator
-
-**Description:** Auto-activates during requirements analysis to evaluate technical stack compatibility, recommend appropriate technologies, and assess performance implications.
-
-**Activation:** Automatically when the agent describes evaluating tech stack, assessing technology compatibility, or recommending frameworks/libraries.
-
-**Tools:** Read, Bash, Grep
-
-**MCPs:** None
-
+---
+name: tech-stack-evaluator
+description: Auto-activates during requirements analysis to evaluate technical stack compatibility, recommend appropriate technologies, and assess performance implications.
+allowed-tools:
+  - Read
+  - Bash
+  - Grep
 ---
 
 ## Purpose

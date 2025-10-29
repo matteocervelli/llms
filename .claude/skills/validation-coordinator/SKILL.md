@@ -1,13 +1,9 @@
-# validation-coordinator
-
-**Description:** Auto-activates when coordinating sequential validation specialists with workflow management, dependency tracking, and overall validation status monitoring.
-
-**Activation:** Automatically when the validation orchestrator coordinates validation workflow across unit tests, integration tests, test execution, code quality, security, and E2E specialists.
-
-**Tools:** Read, Bash
-
-**MCPs:** None
-
+---
+name: validation-coordinator
+description: Auto-activates when coordinating sequential validation specialists with workflow management, dependency tracking, and overall validation status monitoring.
+allowed-tools:
+  - Read
+  - Bash
 ---
 
 ## Purpose

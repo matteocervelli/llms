@@ -1,13 +1,8 @@
-# architecture-designer
-
-**Description:** Sub-agent for designing component architecture, data models, and API contracts using deep reasoning with ultrathink mode
-
-**Model:** Opus
-
-**Tools:** Read, Write, Edit
-
-**MCPs:** sequential-thinking-mcp
-
+---
+name: architecture-designer
+description: Sub-agent for designing component architecture, data models, and API contracts using deep reasoning with ultrathink mode.
+tools: Read, Write, Edit
+model: opus
 ---
 
 ## Role

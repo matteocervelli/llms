@@ -1,13 +1,8 @@
-# documentation-researcher
-
-**Description:** Sub-agent for fetching and analyzing library/framework documentation using context7 and fetch MCPs for comprehensive documentation research
-
-**Model:** Haiku
-
-**Tools:** Read, Grep
-
-**MCPs:** context7-mcp, fetch-mcp, github-mcp, sequential-thinking-mcp
-
+---
+name: documentation-researcher
+description: Sub-agent for fetching and analyzing library/framework documentation using context7 and fetch MCPs for comprehensive documentation research.
+tools: Read, Grep
+model: haiku
 ---
 
 ## Role

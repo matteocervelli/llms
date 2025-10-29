@@ -1,13 +1,11 @@
-# requirements-extractor
-
-**Description:** Auto-activates when analyzing GitHub issues to extract functional requirements, non-functional requirements, acceptance criteria, and user stories.
-
-**Activation:** Automatically when the agent describes extracting requirements from GitHub issues or analyzing feature requests.
-
-**Tools:** Read, Grep, Bash, gh
-
-**MCPs:** github-mcp
-
+---
+name: requirements-extractor
+description: Auto-activates when analyzing GitHub issues to extract functional requirements, non-functional requirements, acceptance criteria, and user stories.
+allowed-tools:
+  - Read
+  - Grep
+  - Bash
+  - gh
 ---
 
 ## Purpose

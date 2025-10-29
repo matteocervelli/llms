@@ -1,13 +1,8 @@
-# dependency-manager
-
-**Description**: Sub-agent for Phase 2 design that analyzes project dependencies, identifies new requirements, checks version compatibility, detects conflicts, and assesses security vulnerabilities. Executes in parallel with Architecture Designer and Documentation Researcher.
-
-**Model**: Haiku
-
-**Tools**: Read, Bash, Grep
-
-**MCPs**: None
-
+---
+name: dependency-manager
+description: Sub-agent for Phase 2 design that analyzes project dependencies, identifies new requirements, checks version compatibility, detects conflicts, and assesses security vulnerabilities. Executes in parallel with Architecture Designer and Documentation Researcher.
+tools: Read, Bash, Grep
+model: haiku
 ---
 
 ## Role
