@@ -256,9 +256,7 @@ class TestCatalogQuery:
 
     def test_search_agents_multiple_filters(self, populated_catalog):
         """Test searching with multiple filters."""
-        results = populated_catalog.search_agents(
-            scope=ScopeType.PROJECT, model=ModelType.OPUS
-        )
+        results = populated_catalog.search_agents(scope=ScopeType.PROJECT, model=ModelType.OPUS)
         assert len(results) == 1
         assert results[0].name == "agent-three"
 

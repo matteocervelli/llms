@@ -26,6 +26,7 @@ from datetime import datetime
 @dataclass
 class CheckResult:
     """Result of a validation check."""
+
     name: str
     passed: bool
     message: str
@@ -78,26 +79,32 @@ class ValidationRunner:
         # ))
 
         # Placeholder
-        results.append(CheckResult(
-            name="Black Format Check",
-            passed=True,
-            message="Code formatting check (placeholder)",
-            details="TODO: Run black --check src/ tests/"
-        ))
+        results.append(
+            CheckResult(
+                name="Black Format Check",
+                passed=True,
+                message="Code formatting check (placeholder)",
+                details="TODO: Run black --check src/ tests/",
+            )
+        )
 
-        results.append(CheckResult(
-            name="Mypy Type Check",
-            passed=True,
-            message="Type checking (placeholder)",
-            details="TODO: Run mypy src/"
-        ))
+        results.append(
+            CheckResult(
+                name="Mypy Type Check",
+                passed=True,
+                message="Type checking (placeholder)",
+                details="TODO: Run mypy src/",
+            )
+        )
 
-        results.append(CheckResult(
-            name="Flake8 Lint",
-            passed=True,
-            message="Linting (placeholder)",
-            details="TODO: Run flake8 src/ tests/"
-        ))
+        results.append(
+            CheckResult(
+                name="Flake8 Lint",
+                passed=True,
+                message="Linting (placeholder)",
+                details="TODO: Run flake8 src/ tests/",
+            )
+        )
 
         self.results.extend(results)
         return results
@@ -124,7 +131,7 @@ class ValidationRunner:
             name="Test Suite",
             passed=True,
             message="All tests passing (placeholder)",
-            details="TODO: Run pytest -v"
+            details="TODO: Run pytest -v",
         )
 
         self.results.append(result)
@@ -160,7 +167,7 @@ class ValidationRunner:
             name="Test Coverage",
             passed=True,
             message=f"Coverage placeholder (target: {min_coverage}%)",
-            details="TODO: Run pytest --cov=src --cov-report=term"
+            details="TODO: Run pytest --cov=src --cov-report=term",
         )
 
         self.results.append(result)
@@ -188,7 +195,7 @@ class ValidationRunner:
             name="Dependency Security",
             passed=True,
             message="No known vulnerabilities (placeholder)",
-            details="TODO: Run pip-audit"
+            details="TODO: Run pip-audit",
         )
 
         self.results.append(result)
@@ -216,16 +223,14 @@ class ValidationRunner:
             name="Performance Tests",
             passed=True,
             message="Performance benchmarks met (placeholder)",
-            details="TODO: Run pytest tests/performance/ -v"
+            details="TODO: Run pytest tests/performance/ -v",
         )
 
         self.results.append(result)
         return [result]
 
     def _run_command(
-        self,
-        command: List[str],
-        cwd: Optional[Path] = None
+        self, command: List[str], cwd: Optional[Path] = None
     ) -> subprocess.CompletedProcess:
         """
         Run command and capture output.
@@ -299,12 +304,16 @@ class ValidationRunner:
             "Testing": [],
             "Coverage": [],
             "Security": [],
-            "Performance": []
+            "Performance": [],
         }
 
         for result in self.results:
             # Categorize result
-            if "format" in result.name.lower() or "type" in result.name.lower() or "lint" in result.name.lower():
+            if (
+                "format" in result.name.lower()
+                or "type" in result.name.lower()
+                or "lint" in result.name.lower()
+            ):
                 category = "Quality Checks"
             elif "coverage" in result.name.lower():
                 category = "Coverage"
@@ -368,63 +377,36 @@ Examples:
 
   # Set minimum coverage
   python run_checks.py --coverage --min-coverage 85
-        """
+        """,
     )
 
-    parser.add_argument(
-        "--all",
-        action="store_true",
-        help="Run all validation checks"
-    )
+    parser.add_argument("--all", action="store_true", help="Run all validation checks")
 
     parser.add_argument(
-        "--quality",
-        action="store_true",
-        help="Run quality checks (Black, mypy, flake8)"
+        "--quality", action="store_true", help="Run quality checks (Black, mypy, flake8)"
     )
 
-    parser.add_argument(
-        "--tests",
-        action="store_true",
-        help="Run test suite"
-    )
+    parser.add_argument("--tests", action="store_true", help="Run test suite")
+
+    parser.add_argument("--coverage", action="store_true", help="Run coverage analysis")
 
     parser.add_argument(
-        "--coverage",
-        action="store_true",
-        help="Run coverage analysis"
+        "--security", action="store_true", help="Run security checks (dependency scanning)"
     )
 
-    parser.add_argument(
-        "--security",
-        action="store_true",
-        help="Run security checks (dependency scanning)"
-    )
+    parser.add_argument("--performance", action="store_true", help="Run performance tests")
 
     parser.add_argument(
-        "--performance",
-        action="store_true",
-        help="Run performance tests"
+        "--min-coverage", type=int, default=80, help="Minimum coverage percentage (default: 80)"
     )
 
-    parser.add_argument(
-        "--min-coverage",
-        type=int,
-        default=80,
-        help="Minimum coverage percentage (default: 80)"
-    )
-
-    parser.add_argument(
-        "--report",
-        type=Path,
-        help="Output file for validation report (Markdown)"
-    )
+    parser.add_argument("--report", type=Path, help="Output file for validation report (Markdown)")
 
     parser.add_argument(
         "--project-root",
         type=Path,
         default=Path.cwd(),
-        help="Root directory of project (default: current directory)"
+        help="Root directory of project (default: current directory)",
     )
 
     args = parser.parse_args()
@@ -433,13 +415,9 @@ Examples:
     runner = ValidationRunner(project_root=args.project_root)
 
     # Determine which checks to run
-    run_all = args.all or not any([
-        args.quality,
-        args.tests,
-        args.coverage,
-        args.security,
-        args.performance
-    ])
+    run_all = args.all or not any(
+        [args.quality, args.tests, args.coverage, args.security, args.performance]
+    )
 
     # Run checks
     try:

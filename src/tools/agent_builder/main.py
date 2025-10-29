@@ -421,17 +421,17 @@ def stats(project_root: Optional[str]) -> None:
         click.echo(f"    💻 Local:   {stats_data['by_scope']['local']}")
 
         # By model
-        if stats_data['by_model']:
+        if stats_data["by_model"]:
             click.echo(f"\n  By model:")
-            for model, count in stats_data['by_model'].items():
+            for model, count in stats_data["by_model"].items():
                 model_type = ModelType(model)
                 badge = format_model_badge(model_type)
                 click.echo(f"    {badge}: {count}")
 
         # By template
-        if stats_data['by_template']:
+        if stats_data["by_template"]:
             click.echo(f"\n  By template:")
-            for template, count in stats_data['by_template'].items():
+            for template, count in stats_data["by_template"].items():
                 click.echo(f"    {template}: {count}")
 
         click.echo("\n" + "=" * 60)

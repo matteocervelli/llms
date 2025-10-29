@@ -74,7 +74,9 @@ class TestAgentCreation:
         assert agent_file.is_file()
         assert agent_file.suffix == ".md"
 
-    def test_create_agent_with_custom_content(self, temp_agent_dir, sample_agent_config_with_content):
+    def test_create_agent_with_custom_content(
+        self, temp_agent_dir, sample_agent_config_with_content
+    ):
         """Test creating agent with custom content."""
         builder = AgentBuilder(base_dir=temp_agent_dir)
         result = builder.create_agent(sample_agent_config_with_content)
@@ -84,7 +86,9 @@ class TestAgentCreation:
         assert "# Custom Agent" in content
         assert "This is custom content." in content
 
-    def test_create_agent_with_frontmatter(self, temp_agent_dir, sample_agent_config_with_frontmatter):
+    def test_create_agent_with_frontmatter(
+        self, temp_agent_dir, sample_agent_config_with_frontmatter
+    ):
         """Test creating agent with custom frontmatter."""
         builder = AgentBuilder(base_dir=temp_agent_dir)
         result = builder.create_agent(sample_agent_config_with_frontmatter)
@@ -268,6 +272,7 @@ class TestAgentDeletion:
         builder = AgentBuilder(base_dir=temp_agent_dir)
 
         from uuid import uuid4
+
         fake_id = uuid4()
 
         success = builder.delete_agent(fake_id)
