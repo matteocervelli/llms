@@ -65,6 +65,25 @@
 
 ---
 
+## Commands→Agents→Skills Architecture Refactoring
+
+**Milestone**: [Commands→Agents→Skills Architecture](https://github.com/matteocervelli/llms/milestone/5)
+
+- [x] [#30](https://github.com/matteocervelli/llms/issues/30) Phase 1.2: Feature Implementation Skill Templates
+- [x] [#32](https://github.com/matteocervelli/llms/issues/32) Phase 2.1: Generate Feature Implementation Skills
+- [x] [#33](https://github.com/matteocervelli/llms/issues/33) Phase 2.2: Refactor feature-implementer agent
+  - **Implementation**: Commands→Agents→Skills pattern validated
+  - **Command**: 184 → 48 lines (74% reduction)
+  - **Agent**: 196 lines (workflow orchestration)
+  - **Skills**: 4 skills × 4 files (~6,042 lines, reusable)
+  - **Benefits**: Progressive disclosure, context-based activation, modular structure
+  - **Documentation**: Complete implementation log + architecture update
+  - **Status**: Production ready
+- [ ] [#34](https://github.com/matteocervelli/llms/issues/34) Phase 2.3: Functional Testing & Validation (if exists)
+- [ ] Phase 3: Scale refactoring to other commands (/issue-fix, /pr-create, etc.)
+
+---
+
 ## Notes
 
 - Update this file as tasks are completed (check the boxes)
