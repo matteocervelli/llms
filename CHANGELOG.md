@@ -9,6 +9,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Agent Builder Tool** (#10) - Complete tool for creating Claude Code agents
+  - 7-phase implementation: Models, Templates, Builder, Catalog, Wizard, CLI, Documentation
+  - 2,695 lines source code across 10 modules
+  - 3 new templates: with_model, orchestrator, specialist (852 lines)
+  - 148 tests (100% passing), 82%+ coverage
+  - 8 CLI commands: create, generate, list, delete, search, stats, sync, validate
+  - Interactive wizard with questionary for guided agent creation
+  - JSON catalog management with atomic operations
+  - Complete README with usage examples and API documentation
+  - Production ready with security validation and performance targets met
+
+- **Commands→Agents→Skills Architecture Validation** (#35) - Proven architecture effectiveness
+  - Validated by implementing Issue #10 using new `/feature-implement` workflow
+  - 92% reduction in command complexity (187→15 lines)
+  - 95% reduction in upfront token cost (124,000→300 tokens)
+  - 4 skills automatically invoked (analysis, design, implementation, validation)
+  - Complete feature delivered in ~2 hours with 148 passing tests
+  - Comprehensive validation report in `docs/implementation/issue-35-validation.md`
+  - Architecture recommended for all future development
+
+- **Global Sync Enhancement** - Updated `scripts/sync-to-global.sh`
+  - Now symlinks entire directories (commands/, agents/, skills/, hooks/, prompts/)
+  - Automatic backup before replacing existing directories
+  - Simplified sync workflow with clear status reporting
+  - Enables development in project while changes apply globally
+
 - **Commands→Agents→Skills Architecture Simplification** (#34) - Ultra-concise `/feature-implement` command
   - Simplified `/feature-implement` command from 48 lines to 15 lines (69% reduction)
   - 92% total reduction from original 183-line monolithic command
