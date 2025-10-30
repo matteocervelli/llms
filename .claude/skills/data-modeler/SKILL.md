@@ -1,13 +1,10 @@
-# data-modeler
-
-**Description:** Design data models with Pydantic schemas, comprehensive validation rules, type annotations, and relationship mappings
-
-**Activation:** Automatically when agent describes designing data models, creating schemas, defining data structures, or specifying validation rules
-
-**Tools:** Read, Write, Edit
-
-**MCPs:** None
-
+---
+name: data-modeler
+description: Design data models with Pydantic schemas, comprehensive validation rules, type annotations, and relationship mappings.
+allowed-tools:
+  - Read
+  - Write
+  - Edit
 ---
 
 ## Purpose

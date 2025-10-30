@@ -1,13 +1,8 @@
-# analysis-specialist
-
-**Description:** Analyzes GitHub issues to extract requirements, assess security risks, and evaluate technical stack compatibility for feature implementation.
-
-**Model:** haiku
-
-**Tools:** Read, Grep, Glob, Bash, gh, git
-
-**MCPs:** github-mcp, sequential-thinking-mcp
-
+---
+name: analysis-specialist
+description: Analyzes GitHub issues to extract requirements, assess security risks, and evaluate technical stack compatibility for feature implementation.
+tools: Read, Grep, Glob, Bash, gh, git
+model: haiku
 ---
 
 ## Role

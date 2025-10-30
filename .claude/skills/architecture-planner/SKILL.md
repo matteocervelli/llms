@@ -1,13 +1,10 @@
-# architecture-planner
-
-**Description:** Design component architecture and module structure using established architectural patterns for clean, maintainable, and scalable systems
-
-**Activation:** Automatically when agent describes planning component architecture, designing modules, structuring code organization, or separating concerns into layers
-
-**Tools:** Read, Write, Edit
-
-**MCPs:** sequential-thinking-mcp
-
+---
+name: architecture-planner
+description: Design component architecture and module structure using established architectural patterns for clean, maintainable, and scalable systems.
+allowed-tools:
+  - Read
+  - Write
+  - Edit
 ---
 
 ## Purpose

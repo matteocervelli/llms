@@ -1,13 +1,9 @@
-# doc-analyzer
-
-**Description:** Analyze and extract relevant patterns, best practices, and usage examples from fetched documentation for implementation guidance
-
-**Activation:** Automatically when agent describes analyzing documentation, extracting patterns, identifying best practices, or discovering usage examples
-
-**Tools:** Read, Grep
-
-**MCPs:** None
-
+---
+name: doc-analyzer
+description: Analyze and extract relevant patterns, best practices, and usage examples from fetched documentation for implementation guidance.
+allowed-tools:
+  - Read
+  - Grep
 ---
 
 ## Purpose

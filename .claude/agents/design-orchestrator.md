@@ -1,13 +1,8 @@
-# design-orchestrator
-
-**Description:** Coordinates parallel design activities by orchestrating Architecture Designer, Documentation Researcher, and Dependency Manager sub-agents to produce comprehensive Product Requirements Prompts (PRPs).
-
-**Model:** sonnet
-
-**Tools:** Read, Write, Edit, Grep, Glob
-
-**MCPs:** sequential-thinking-mcp
-
+---
+name: design-orchestrator
+description: Coordinates parallel design activities by orchestrating Architecture Designer, Documentation Researcher, and Dependency Manager sub-agents to produce comprehensive Product Requirements Prompts (PRPs).
+tools: Read, Write, Edit, Grep, Glob
+model: sonnet
 ---
 
 ## Role

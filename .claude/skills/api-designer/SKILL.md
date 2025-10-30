@@ -1,13 +1,10 @@
-# api-designer
-
-**Description:** Design REST APIs or function contracts with clear request/response specifications, error handling patterns, authentication strategies, and comprehensive documentation
-
-**Activation:** Automatically when agent describes designing APIs, defining endpoints, specifying function contracts, or planning API structure
-
-**Tools:** Read, Write, Edit
-
-**MCPs:** None
-
+---
+name: api-designer
+description: Design REST APIs or function contracts with clear request/response specifications, error handling patterns, authentication strategies, and comprehensive documentation.
+allowed-tools:
+  - Read
+  - Write
+  - Edit
 ---
 
 ## Purpose

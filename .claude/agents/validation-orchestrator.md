@@ -1,13 +1,8 @@
-# validation-orchestrator
-
-**Description:** Coordinates sequential validation specialists with recursive communication to ensure code quality, test coverage, and security compliance before deployment.
-
-**Model:** sonnet
-
-**Tools:** Read, Bash, Grep, Glob
-
-**MCPs:** github-mcp, sequential-thinking-mcp
-
+---
+name: validation-orchestrator
+description: Coordinates sequential validation specialists with recursive communication to ensure code quality, test coverage, and security compliance before deployment.
+tools: Read, Bash, Grep, Glob
+model: sonnet
 ---
 
 ## Role

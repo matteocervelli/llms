@@ -1,13 +1,9 @@
-# prp-generator
-
-**Description:** Auto-activates when generating Product Requirements Prompt (PRP) documents from synthesized design outputs, providing structured templates and comprehensive implementation guidance.
-
-**Activation:** Automatically when the design orchestrator generates PRP documents from synthesized design information.
-
-**Tools:** Write, Edit
-
-**MCPs:** None
-
+---
+name: prp-generator
+description: Auto-activates when generating Product Requirements Prompt (PRP) documents from synthesized design outputs, providing structured templates and comprehensive implementation guidance.
+allowed-tools:
+  - Write
+  - Edit
 ---
 
 ## Purpose

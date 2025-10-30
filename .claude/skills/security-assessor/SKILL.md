@@ -1,13 +1,9 @@
-# security-assessor
-
-**Description:** Auto-activates during requirements analysis to assess security risks using OWASP Top 10 framework, identify security requirements, and recommend mitigation strategies.
-
-**Activation:** Automatically when the agent describes assessing security risks, evaluating OWASP Top 10, or identifying security requirements.
-
-**Tools:** Read, Grep
-
-**MCPs:** None
-
+---
+name: security-assessor
+description: Auto-activates during requirements analysis to assess security risks using OWASP Top 10 framework, identify security requirements, and recommend mitigation strategies.
+allowed-tools:
+  - Read
+  - Grep
 ---
 
 ## Purpose
