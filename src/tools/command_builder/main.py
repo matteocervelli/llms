@@ -74,6 +74,16 @@ def create(project_root: Optional[str]):
         click.echo(f"\n✅ Command created successfully!")
         click.echo(f"📄 File: {command_path}")
         click.echo(f"🔍 Scope: {config.scope.value}")
+
+        # Auto-sync catalog
+        try:
+            from src.tools.catalog_system.catalog_manager import CatalogManager
+            manager = CatalogManager()
+            manager.sync("commands")
+            click.echo(f"📚 Catalog updated")
+        except Exception as e:
+            click.echo(f"⚠️  Catalog sync failed: {e}", err=True)
+
         click.echo(f"\n💡 Use: /{config.name}")
 
     except CommandExistsError as e:

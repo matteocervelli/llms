@@ -16,7 +16,7 @@ def cli() -> None:
     pass
 
 
-@click.command()
+@cli.command(name="list")
 @click.argument("element_type", type=click.Choice(["skills", "commands", "agents", "all"]))
 @click.option(
     "--scope",
