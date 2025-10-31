@@ -261,7 +261,7 @@ class Scanner:
         system_dirs = ["/etc", "/sys", "/proc", "/dev"]
         for sys_dir in system_dirs:
             if str(resolved).startswith(sys_dir):
-                raise ScanError(f"Invalid path: System directory access not allowed: {path}")
+                raise ScanError(f"Invalid path: System directory access not " f"allowed: {path}")
 
         return resolved
 

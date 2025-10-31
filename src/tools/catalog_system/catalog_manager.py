@@ -11,7 +11,12 @@ from typing import List, Optional, Dict, Any, cast
 from .scanner import Scanner
 from .searcher import Searcher
 from .syncer import Syncer
-from .models import CatalogEntry, SkillCatalogEntry, CommandCatalogEntry, AgentCatalogEntry
+from .models import (
+    CatalogEntry,
+    SkillCatalogEntry,
+    CommandCatalogEntry,
+    AgentCatalogEntry,
+)
 from src.core.scope_manager import ScopeManager
 
 
@@ -57,8 +62,10 @@ class CatalogManager:
         List catalog entries with optional auto-sync.
 
         Args:
-            element_type: Type of element ("skills", "commands", "agents", or "all")
-            scope: Scope filter ("global", "project", "local", or "all")
+            element_type: Type of element
+                         ("skills", "commands", "agents", or "all")
+            scope: Scope filter
+                  ("global", "project", "local", or "all")
             auto_sync: Whether to auto-sync before listing (default: True)
 
         Returns:
@@ -91,8 +98,10 @@ class CatalogManager:
 
         Args:
             query: Search query string
-            element_type: Type filter ("skills", "commands", "agents", or "all")
-            scope: Scope filter ("global", "project", "local", or "all")
+            element_type: Type filter
+                         ("skills", "commands", "agents", or "all")
+            scope: Scope filter
+                  ("global", "project", "local", or "all")
 
         Returns:
             List of matching catalog entries sorted by relevance
@@ -150,7 +159,8 @@ class CatalogManager:
         Synchronize catalogs with filesystem.
 
         Args:
-            element_type: Type to sync ("skills", "commands", "agents", or "all")
+            element_type: Type to sync
+                         ("skills", "commands", "agents", or "all")
 
         Example:
             >>> manager = CatalogManager()
@@ -220,7 +230,8 @@ class CatalogManager:
         Load entries from catalog file(s).
 
         Args:
-            element_type: Type to load ("skills", "commands", "agents", or "all")
+            element_type: Type to load
+                         ("skills", "commands", "agents", or "all")
 
         Returns:
             List of catalog entries

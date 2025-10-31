@@ -1,15 +1,17 @@
 """
-Catalog Manifest System - Unified catalog for skills, commands, and agents.
+Catalog Manifest System - Unified catalog for skills, commands, agents.
 
-This package provides a unified catalog system to track available skills, commands,
-and agents across global, project, and local scopes. It supports auto-discovery,
-search/filter capabilities, and CLI commands for element management.
+This package provides a unified catalog system to track available skills,
+commands, and agents across global, project, and local scopes.
+It supports auto-discovery, search/filter capabilities, and CLI commands
+for element management.
 
 Main Components:
 - CatalogManager: Main facade coordinating all catalog operations
 - Scanner: Auto-discovers elements by scanning filesystem
 - Searcher: Provides search and filter with scoring algorithm
-- Syncer: Synchronizes catalogs with filesystem (auto-sync with caching)
+- Syncer: Synchronizes catalogs with filesystem
+  (auto-sync with caching)
 
 Usage:
     from catalog_system import CatalogManager

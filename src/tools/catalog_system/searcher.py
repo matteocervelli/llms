@@ -131,7 +131,8 @@ class Searcher:
 
         Args:
             entries: List of catalog entries to filter
-            entry_type: Type to filter by ("skill", "command", "agent", or "all")
+            entry_type: Type to filter by
+                       ("skill", "command", "agent", or "all")
 
         Returns:
             List of entries matching the type
@@ -210,10 +211,12 @@ class Searcher:
 
     def _fuzzy_match(self, text: str, query: str) -> bool:
         """
-        Basic fuzzy matching - checks if most query characters appear in text.
+        Basic fuzzy matching - checks if most query characters
+        appear in text.
 
-        This is a simple implementation. For production, consider using a library
-        like python-Levenshtein or difflib for better fuzzy matching.
+        This is a simple implementation. For production, consider using
+        a library like python-Levenshtein or difflib for better fuzzy
+        matching.
 
         Args:
             text: Text to search in

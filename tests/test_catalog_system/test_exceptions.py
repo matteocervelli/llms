@@ -16,7 +16,10 @@ class TestExceptionHierarchy:
 
     def test_catalog_not_found_error_inherits_from_catalog_error(self):
         """Test that CatalogNotFoundError inherits from CatalogError."""
-        from src.tools.catalog_system.exceptions import CatalogError, CatalogNotFoundError
+        from src.tools.catalog_system.exceptions import (
+            CatalogError,
+            CatalogNotFoundError,
+        )
 
         error = CatalogNotFoundError("catalog not found")
         assert isinstance(error, CatalogError)
@@ -25,7 +28,10 @@ class TestExceptionHierarchy:
 
     def test_catalog_validation_error_inherits_from_catalog_error(self):
         """Test that CatalogValidationError inherits from CatalogError."""
-        from src.tools.catalog_system.exceptions import CatalogError, CatalogValidationError
+        from src.tools.catalog_system.exceptions import (
+            CatalogError,
+            CatalogValidationError,
+        )
 
         error = CatalogValidationError("validation failed")
         assert isinstance(error, CatalogError)

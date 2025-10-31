@@ -61,7 +61,11 @@ def search(query: str, element_type: str) -> None:
 
     # Format as table
     table_data = [
-        [entry.name, entry.scope, type(entry).__name__.replace("CatalogEntry", "")]
+        [
+            entry.name,
+            entry.scope,
+            type(entry).__name__.replace("CatalogEntry", ""),
+        ]
         for entry in results
     ]
     headers = ["Name", "Scope", "Type"]
@@ -98,7 +102,9 @@ def show(element_type: str, name: str) -> None:
 
 @cli.command()
 @click.argument(
-    "element_type", type=click.Choice(["skills", "commands", "agents", "all"]), default="all"
+    "element_type",
+    type=click.Choice(["skills", "commands", "agents", "all"]),
+    default="all",
 )
 def sync(element_type: str) -> None:
     """Synchronize catalogs with filesystem."""

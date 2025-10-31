@@ -13,7 +13,12 @@ from pathlib import Path
 from typing import List, Dict, Any
 from datetime import datetime
 
-from .models import CatalogEntry, SkillCatalogEntry, CommandCatalogEntry, AgentCatalogEntry
+from .models import (
+    CatalogEntry,
+    SkillCatalogEntry,
+    CommandCatalogEntry,
+    AgentCatalogEntry,
+)
 from .exceptions import SyncError
 
 
@@ -57,7 +62,9 @@ class Syncer:
             >>> syncer = Syncer()
             >>> from scanner import Scanner
             >>> scanner = Scanner()
-            >>> discovered = scanner.scan_skills([Path("~/.claude").expanduser()])
+            >>> discovered = scanner.scan_skills(
+            ...     [Path("~/.claude").expanduser()]
+            ... )
             >>> result = syncer.sync(Path("skills.json"), discovered)
         """
         try:

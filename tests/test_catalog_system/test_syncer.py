@@ -74,7 +74,10 @@ class TestSync:
         )
 
         # Write catalog
-        catalog_data = {"schema_version": "1.0", "entries": [existing.model_dump(mode="json")]}
+        catalog_data = {
+            "schema_version": "1.0",
+            "entries": [existing.model_dump(mode="json")],
+        }
         temp_catalog.write_text(json.dumps(catalog_data, indent=2))
 
         # Sync with empty discovered (should keep existing)
@@ -171,7 +174,10 @@ class TestErrorHandling:
     def test_read_catalog_handles_generic_error(self, syncer, temp_catalog):
         """Test _read_catalog handles non-JSON errors."""
         # Create catalog with valid JSON but invalid entry data
-        catalog_data = {"schema_version": "1.0", "entries": [{"invalid": "entry"}]}
+        catalog_data = {
+            "schema_version": "1.0",
+            "entries": [{"invalid": "entry"}],
+        }
         temp_catalog.write_text(json.dumps(catalog_data))
 
         # Should not crash, should return empty or partial list

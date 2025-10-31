@@ -76,7 +76,11 @@ class TestCatalogEntry:
 
         # Invalid scope
         with pytest.raises(ValidationError) as exc_info:
-            CatalogEntry(name="test", scope="invalid", file_path=Path("/path/to/file.md"))
+            CatalogEntry(
+                name="test",
+                scope="invalid",
+                file_path=Path("/path/to/file.md"),
+            )
 
         error = exc_info.value.errors()[0]
         assert "scope" in str(error["loc"])
