@@ -67,6 +67,16 @@ def create(project_root: Optional[str]) -> None:
         click.echo(f"\n✅ Skill created successfully!")
         click.echo(f"📄 Directory: {skill_path}")
         click.echo(f"🔍 Scope: {scope_badge}")
+
+        # Auto-sync catalog
+        try:
+            from src.tools.catalog_system.catalog_manager import CatalogManager
+            manager = CatalogManager()
+            manager.sync("skills")
+            click.echo(f"📚 Catalog updated")
+        except Exception as e:
+            click.echo(f"⚠️  Catalog sync failed: {e}", err=True)
+
         click.echo(f"\n💡 Skill is now available in Claude Code")
 
     except SkillExistsError as e:
@@ -147,6 +157,16 @@ def generate(
         click.echo(f"📝 Template: {template}")
         if tools_list:
             click.echo(f"🛠️  Allowed tools: {', '.join(tools_list)}")
+
+        # Auto-sync catalog
+        try:
+            from src.tools.catalog_system.catalog_manager import CatalogManager
+            manager = CatalogManager()
+            manager.sync("skills")
+            click.echo(f"📚 Catalog updated")
+        except Exception as e:
+            click.echo(f"⚠️  Catalog sync failed: {e}", err=True)
+
         click.echo(f"\n💡 Skill is now available in Claude Code")
 
     except SkillExistsError as e:

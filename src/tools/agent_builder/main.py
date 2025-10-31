@@ -206,6 +206,16 @@ def generate(
         click.echo(f"🔍 Scope: {scope_badge}")
         click.echo(f"🧠 Model: {model_badge}")
         click.echo(f"📝 Template: {template}")
+
+        # Auto-sync catalog
+        try:
+            from src.tools.catalog_system.catalog_manager import CatalogManager
+            manager = CatalogManager()
+            manager.sync("agents")
+            click.echo(f"📚 Catalog updated")
+        except Exception as e:
+            click.echo(f"⚠️  Catalog sync failed: {e}", err=True)
+
         click.echo(f"\n💡 Agent is now available in Claude Code")
 
     except AgentExistsError as e:
