@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Feature: Catalog Manifest System for tracking skills, commands, and agents (#12)
+  - Auto-discovery scanner for filesystem elements with YAML frontmatter parsing
+  - Search and filter with weighted scoring algorithm (exact=100, prefix=75, contains=50, fuzzy=25)
+  - Catalog synchronization with atomic writes (backup → temp → rename)
+  - CatalogManager facade API for unified catalog operations
+  - CLI commands: `llm list`, `llm search`, `llm show`, `llm sync`, `llm stats`
+  - Integration with ScopeManager for global/project/local scope support
+  - 103 tests passing with 79-100% coverage per module (scanner: 79%, models: 100%, searcher: 97%, syncer: 81%, exceptions: 100%)
+  - Security: OWASP-compliant with path validation, injection prevention, atomic writes
+  - All source files ≤500 lines (scanner: 447, searcher: 241, syncer: 254, catalog_manager: 279, cli: 127)
+
 ## [1.0.0] - 2025-10-29
 
 ### 🎉 Major Release: Feature-Implementer v2 Architecture

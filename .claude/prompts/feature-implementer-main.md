@@ -1,6 +1,6 @@
 ---
 name: feature-implementer-main
-description: Main orchestrator for Feature-Implementer v2. Coordinates 6 phases from GitHub issue analysis to deployment with user approval checkpoint.
+description: Prompt to orchestrate the /feature-implement command. Coordinates 6 phases from GitHub issue analysis to deployment with user approval checkpoint.
 model: sonnet
 allowed-tools:
   - Read
