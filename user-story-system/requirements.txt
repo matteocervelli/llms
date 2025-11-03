@@ -1,0 +1,32 @@
+# User Story System Requirements
+# Python 3.9+
+
+# Core dependencies
+PyYAML>=6.0.1
+Jinja2>=3.1.2
+pydantic>=2.5.0
+
+# CLI and progress
+click>=8.1.7
+tqdm>=4.66.1
+
+# Graph and visualization
+networkx>=3.2.1
+
+# Date handling
+python-dateutil>=2.8.2
+
+# GitHub API
+requests>=2.31.0
+PyGithub>=2.1.1
+
+# Testing dependencies
+pytest>=7.4.3
+pytest-cov>=4.1.0
+pytest-mock>=3.12.0
+
+# Code quality
+black>=23.12.1
+mypy>=1.7.1
+types-PyYAML>=6.0.12.12
+types-requests>=2.31.0.10

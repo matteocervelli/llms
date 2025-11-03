@@ -1,0 +1,172 @@
+# User Story System Configuration
+
+# File System Configuration
+paths:
+  stories_yaml: "stories/yaml-source"
+  stories_md: "stories/generated-docs"
+  backlog: "stories/backlog"
+  epics: "epics"
+  templates: "templates"
+  scripts: "scripts"
+
+# Story ID Configuration
+story_id:
+  prefix: "US"  # User Story prefix
+  format: "US-{counter:04d}"  # US-0001, US-0002, etc.
+  counter_file: ".story_counter"
+
+# Epic ID Configuration
+epic_id:
+  prefix: "EP"  # Epic prefix
+  format: "EP-{counter:03d}"  # EP-001, EP-002, etc.
+  counter_file: ".epic_counter"
+
+# Story Generation Settings
+generation:
+  min_stories_per_feature: 2
+  max_stories_per_feature: 8
+  default_story_points: 3
+  story_point_range: [1, 2, 3, 5, 8, 13]  # Fibonacci sequence
+
+# INVEST Validation Settings
+validation:
+  invest:
+    enabled: true
+    strict_mode: false  # If true, blocks story creation on validation failure
+    criteria:
+      independent:
+        enabled: true
+        check_dependencies: true
+      negotiable:
+        enabled: true
+        require_options: false
+      valuable:
+        enabled: true
+        require_business_value: true
+      estimable:
+        enabled: true
+        require_story_points: true
+      small:
+        enabled: true
+        max_story_points: 8
+      testable:
+        enabled: true
+        require_acceptance_criteria: true
+        min_acceptance_criteria: 1
+
+# Dependency Management
+dependencies:
+  check_circular: true
+  max_depth: 10
+  warn_on_long_chains: true
+  max_chain_length: 5
+
+# Sprint Planning
+sprint:
+  default_capacity: 40  # Story points
+  default_duration: 2  # Weeks
+  buffer_percentage: 20  # Reserve 20% capacity for unknowns
+  velocity_calculation: "average_last_3"  # Options: average_last_3, median_last_3, last_sprint
+
+# GitHub Integration
+github:
+  enabled: true
+  auto_sync: true  # Automatically sync on story creation/update
+
+  # Repository detection
+  repo:
+    auto_detect: true  # Try to detect from git remote
+    fallback: null  # Manual repo (format: "owner/repo")
+
+  # Issue creation
+  issues:
+    create_on_story_creation: true
+    update_on_story_update: true
+    close_on_story_done: true
+    reopen_on_story_backlog: false
+
+    # Issue template
+    title_format: "[{story_id}] {title}"
+    body_template: "github_issue_template.md"
+
+    # Labels
+    labels:
+      story_points:
+        enabled: true
+        format: "story-points-{points}"  # e.g., "story-points-3"
+      persona:
+        enabled: true
+        format: "persona-{persona_id}"  # e.g., "persona-ceo"
+      epic:
+        enabled: true
+        format: "epic-{epic_id}"  # e.g., "epic-EP-001"
+      status:
+        enabled: true
+        # Uses labels from story-statuses.yaml
+      custom:
+        - "user-story"  # Always add this label
+
+  # Milestones (for sprints)
+  milestones:
+    create_for_sprints: true
+    title_format: "Sprint {sprint_number}"
+    auto_close: false
+
+  # Projects (GitHub Projects v2)
+  projects:
+    enabled: false  # Set to true if using GitHub Projects
+    project_id: null  # GitHub Project ID
+
+  # Comments
+  comments:
+    sync_story_updates: true
+    add_on_status_change: true
+
+# Template Rendering
+templates:
+  engine: "jinja2"
+  markdown:
+    story_template: "story-template.md"
+    epic_template: "epic-template.md"
+  yaml:
+    story_template: "story-template.yaml"
+    epic_template: "epic-template.yaml"
+
+# Sub-Agent Configuration
+agents:
+  qa_validator:
+    enabled: true
+    silent: true  # No user interaction
+    retry_on_failure: false
+  technical_annotator:
+    enabled: true
+    silent: true
+    include_tech_stack: true
+    include_implementation_hints: true
+  story_orchestrator:
+    timeout: 300  # seconds
+    parallel_validation: true
+
+# Automation
+automation:
+  auto_generate_markdown: true
+  auto_validate_on_save: true
+  auto_check_dependencies: true
+  backup_on_update: false  # If true, creates .bak files
+
+# Logging
+logging:
+  enabled: true
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  file: "user-story-system.log"
+  format: "[{timestamp}] {level}: {message}"
+
+# Feature Flags
+features:
+  story_templates: true
+  epic_management: true
+  sprint_planning: true
+  dependency_graphs: true
+  github_integration: true
+  story_mapping: true
+  batch_operations: true

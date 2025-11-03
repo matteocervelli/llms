@@ -1,0 +1,69 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+ENV/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Logs
+*.log
+user-story-system.log
+
+# Counters
+.story_counter
+.epic_counter
+
+# Backups
+*.bak
+*.backup
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Generated docs (optional - remove if you want to commit them)
+# stories/generated-docs/
+# epics/*.md
+
+# Local configuration overrides
+config/local.yaml
+.env
+.env.local
+
+# Temporary files
+tmp/
+temp/
+*.tmp
