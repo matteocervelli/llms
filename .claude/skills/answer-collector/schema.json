@@ -1,0 +1,157 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Product Assessment Answers",
+  "description": "JSON schema for storing product assessment question responses",
+  "type": "object",
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "product_name": {
+          "type": "string",
+          "description": "Name of the product being assessed"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when assessment started"
+        },
+        "last_updated": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp of last update"
+        },
+        "version": {
+          "type": "string",
+          "description": "Assessment version (e.g., 1.0, 2.1)"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["draft", "in_progress", "completed", "archived"],
+          "description": "Current status of assessment"
+        }
+      },
+      "required": ["product_name", "created_at"]
+    },
+    "answers": {
+      "type": "object",
+      "properties": {
+        "why_section": {
+          "type": "object",
+          "properties": {
+            "q1_problem_evidence": {
+              "type": "string",
+              "description": "Answer to question 1: Problem & Evidence"
+            },
+            "q2_strategic_priority": {
+              "type": "string",
+              "description": "Answer to question 2: Strategic Priority"
+            },
+            "q3_resource_reality": {
+              "type": "string",
+              "description": "Answer to question 3: Resource Reality"
+            },
+            "q4_timing": {
+              "type": "string",
+              "description": "Answer to question 4: Timing"
+            }
+          }
+        },
+        "who_section": {
+          "type": "object",
+          "properties": {
+            "q5_primary_user": {
+              "type": "string",
+              "description": "Answer to question 5: Primary User"
+            },
+            "q6_access_volume": {
+              "type": "string",
+              "description": "Answer to question 6: Access & Volume"
+            },
+            "q7_decision_economics": {
+              "type": "string",
+              "description": "Answer to question 7: Decision Economics"
+            },
+            "q8_scale_reality": {
+              "type": "string",
+              "description": "Answer to question 8: Scale Reality"
+            }
+          }
+        },
+        "what_section": {
+          "type": "object",
+          "properties": {
+            "q9_measurable_outcome": {
+              "type": "string",
+              "description": "Answer to question 9: Measurable Outcome"
+            },
+            "q10_business_model": {
+              "type": "string",
+              "description": "Answer to question 10: Business Model"
+            },
+            "q11_minimum_success": {
+              "type": "string",
+              "description": "Answer to question 11: Minimum Success"
+            },
+            "q12_strategic_fit": {
+              "type": "string",
+              "description": "Answer to question 12: Strategic Fit"
+            },
+            "q13_risk_check": {
+              "type": "string",
+              "description": "Answer to question 13: Risk Check"
+            }
+          }
+        },
+        "checklist_section": {
+          "type": "object",
+          "properties": {
+            "q14_problem_validation": {
+              "type": "boolean",
+              "description": "Checklist item 14: Problem Validation"
+            },
+            "q15_mvp_feasibility": {
+              "type": "boolean",
+              "description": "Checklist item 15: MVP Feasibility"
+            },
+            "q16_business_model_clarity": {
+              "type": "boolean",
+              "description": "Checklist item 16: Business Model Clarity"
+            },
+            "q17_resource_commitment": {
+              "type": "boolean",
+              "description": "Checklist item 17: Resource Commitment"
+            }
+          }
+        }
+      }
+    },
+    "completion": {
+      "type": "object",
+      "properties": {
+        "total_questions": {
+          "type": "integer",
+          "default": 17,
+          "description": "Total number of assessment questions"
+        },
+        "answered_questions": {
+          "type": "integer",
+          "description": "Number of questions answered"
+        },
+        "completion_percentage": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Percentage of assessment completed"
+        },
+        "go_no_go_result": {
+          "type": "string",
+          "enum": ["go", "no_go", "pending"],
+          "description": "Final recommendation based on checklist"
+        }
+      }
+    }
+  },
+  "required": ["metadata", "answers"],
+  "additionalProperties": false
+}
