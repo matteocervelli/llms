@@ -1,3 +1,8 @@
+---
+name: design-patterns
+description: 'TODO: Brief description of what the Skill does and when to use it'
+---
+
 # Design Patterns Reference
 
 **Purpose**: Common design patterns and architectural structures for synthesizing cohesive designs from sub-agent outputs.

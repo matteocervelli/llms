@@ -1,13 +1,9 @@
 ---
 name: documentation-updater
-description: Update all project documentation including implementation docs, user guides, API docs, and architecture diagrams. Use when finalizing features to ensure comprehensive documentation.
-allowed-tools:
-  - Read
-  - Write
-  - Edit
-  - Grep
-  - Glob
-  - Bash
+description: Update all project documentation including implementation docs, user
+  guides, API docs, and architecture diagrams. Use when finalizing features to ensure
+  comprehensive documentation.
+allowed-tools: Read, Write, Edit, Grep, Glob, Bash
 ---
 
 # Documentation Updater Skill

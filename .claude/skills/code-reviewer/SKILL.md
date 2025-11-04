@@ -1,10 +1,8 @@
 ---
 name: code-reviewer
-description: Review code for quality, security, and performance with comprehensive feedback.
-allowed-tools:
-  - Read
-  - Bash
-  - Grep
+description: Review code for quality, security, and performance with comprehensive
+  feedback.
+allowed-tools: Read, Bash, Grep
 ---
 
 # Code Reviewer Skill

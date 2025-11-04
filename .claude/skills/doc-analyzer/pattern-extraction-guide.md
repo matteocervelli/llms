@@ -1,3 +1,8 @@
+---
+name: pattern-extraction-guide
+description: 'TODO: Brief description of what the Skill does and when to use it'
+---
+
 # Pattern Extraction Guide
 
 ## Overview

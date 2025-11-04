@@ -1,3 +1,8 @@
+---
+name: architecture-doc
+description: 'TODO: Brief description of what the Skill does and when to use it'
+---
+
 # Architecture Design: [Feature Name]
 
 > **Status:** Draft | In Review | Approved

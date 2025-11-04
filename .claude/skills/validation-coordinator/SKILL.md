@@ -1,9 +1,8 @@
 ---
 name: validation-coordinator
-description: Auto-activates when coordinating sequential validation specialists with workflow management, dependency tracking, and overall validation status monitoring.
-allowed-tools:
-  - Read
-  - Bash
+description: Auto-activates when coordinating sequential validation specialists with
+  workflow management, dependency tracking, and overall validation status monitoring.
+allowed-tools: Read, Bash
 ---
 
 ## Purpose

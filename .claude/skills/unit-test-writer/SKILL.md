@@ -1,13 +1,8 @@
 ---
 name: unit-test-writer
-description: Generate comprehensive unit tests with proper structure, mocking, and coverage. Use for general unit testing guidance across languages.
-allowed-tools:
-  - Read
-  - Write
-  - Edit
-  - Bash
-  - Grep
-  - Glob
+description: Generate comprehensive unit tests with proper structure, mocking, and
+  coverage. Use for general unit testing guidance across languages.
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
 # Unit Test Writer Skill

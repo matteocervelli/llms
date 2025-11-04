@@ -1,3 +1,8 @@
+---
+name: requirements-checklist
+description: 'TODO: Brief description of what the Skill does and when to use it'
+---
+
 # Requirements Validation Checklist
 
 This checklist ensures that all extracted requirements meet quality standards for clarity, completeness, consistency, and testability.

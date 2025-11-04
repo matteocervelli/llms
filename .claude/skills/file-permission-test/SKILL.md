@@ -1,6 +1,7 @@
 ---
 name: file-permission-test
-description: File permission test. Use for testing.---
+description: File permission test. Use for testing.
+---
 
 # file-permission-test
 

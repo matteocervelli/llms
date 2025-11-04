@@ -1,3 +1,8 @@
+---
+name: prp-examples
+description: 'TODO: Brief description of what the Skill does and when to use it'
+---
+
 # Product Requirements Prompt (PRP) Examples
 
 **Purpose**: Example PRP documents showing different feature types and complexity levels.

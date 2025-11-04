@@ -1,3 +1,8 @@
+---
+name: doc-sources
+description: 'TODO: Brief description of what the Skill does and when to use it'
+---
+
 # Documentation Sources
 
 ## Overview

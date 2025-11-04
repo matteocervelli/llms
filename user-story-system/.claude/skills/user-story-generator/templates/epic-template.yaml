@@ -1,0 +1,82 @@
+# Epic Template
+# Epics are large bodies of work that can be broken down into user stories
+
+id: ""  # Auto-generated (e.g., EP-001)
+title: ""  # Epic title
+description: ""  # Detailed description of the epic
+
+# Epic metadata
+metadata:
+  created_date: ""  # ISO format: YYYY-MM-DD
+  updated_date: ""  # ISO format: YYYY-MM-DD
+  author: ""  # Person who created the epic
+  status: "planning"  # planning, in_progress, done, cancelled
+  priority: "medium"  # low, medium, high, critical
+  target_date: null  # Target completion date (ISO format)
+  actual_completion_date: null  # Actual completion date
+
+# Business context
+business:
+  objective: ""  # Business objective this epic addresses
+  value_proposition: ""  # Value this epic delivers
+  success_metrics: []  # How success will be measured
+    # - metric: ""
+    #   target: ""
+    #   current: ""
+  stakeholders: []  # Key stakeholders
+  budget: null  # Budget allocated (optional)
+
+# Epic scope
+scope:
+  in_scope: []  # What's included
+  out_of_scope: []  # What's explicitly excluded
+  assumptions: []  # Assumptions made
+  constraints: []  # Constraints to consider
+
+# Stories
+stories:
+  total_count: 0  # Total number of stories
+  story_ids: []  # List of story IDs (e.g., ["US-0001", "US-0002"])
+  total_story_points: 0  # Sum of all story points
+  completed_story_points: 0  # Completed story points
+
+# Dependencies
+dependencies:
+  depends_on_epics: []  # Epic IDs this epic depends on
+  blocks_epics: []  # Epic IDs this epic blocks
+  external_dependencies: []  # Non-epic dependencies
+
+# Timeline
+timeline:
+  estimated_duration: ""  # e.g., "3 months"
+  start_date: null  # ISO format
+  end_date: null  # ISO format
+  milestones: []  # Key milestones
+    # - name: ""
+    #   date: ""
+    #   status: ""
+
+# GitHub integration
+github:
+  milestone_url: ""  # Link to GitHub milestone
+  milestone_number: null  # GitHub milestone number
+  project_url: ""  # Link to GitHub project
+  labels: []  # GitHub labels
+
+# Progress tracking
+progress:
+  percentage_complete: 0  # 0-100
+  stories_completed: 0
+  stories_in_progress: 0
+  stories_blocked: 0
+  stories_not_started: 0
+
+# Notes
+notes: ""  # Free-form notes
+updates: []  # Status updates
+  # - date: ""
+  #   author: ""
+  #   update: ""
+
+# Custom fields
+custom: {}

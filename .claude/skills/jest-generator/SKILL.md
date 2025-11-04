@@ -1,13 +1,9 @@
 ---
 name: jest-generator
-description: Generate Jest-based unit tests for JavaScript/TypeScript code. Creates test files following Jest conventions with proper mocking, describe blocks, and coverage.
-allowed-tools:
-  - Read
-  - Write
-  - Edit
-  - Bash
-  - Grep
-  - Glob
+description: Generate Jest-based unit tests for JavaScript/TypeScript code. Creates
+  test files following Jest conventions with proper mocking, describe blocks, and
+  coverage.
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
 # Jest Generator Skill

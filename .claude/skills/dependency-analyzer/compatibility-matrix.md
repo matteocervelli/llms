@@ -1,3 +1,8 @@
+---
+name: compatibility-matrix
+description: 'TODO: Brief description of what the Skill does and when to use it'
+---
+
 # Dependency Compatibility Matrix
 
 ## Overview

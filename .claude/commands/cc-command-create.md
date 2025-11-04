@@ -1,4 +1,8 @@
 ---
+{}
+---
+
+---
 description: Create a new Claude Code command using the command builder tool
 argument-hint: [name] [description] [--tech <library>] [--doc-url <url>] [--depth <n>]
 ---

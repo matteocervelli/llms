@@ -1,11 +1,9 @@
 ---
 name: coverage-analyzer
-description: Analyze test coverage with detailed metrics, identify gaps, and generate comprehensive reports. Use when measuring code coverage, finding untested code, or validating coverage thresholds.
-allowed-tools:
-  - Read
-  - Bash
-  - Grep
-  - Glob
+description: Analyze test coverage with detailed metrics, identify gaps, and generate
+  comprehensive reports. Use when measuring code coverage, finding untested code,
+  or validating coverage thresholds.
+allowed-tools: Read, Bash, Grep, Glob
 ---
 
 # Coverage Analyzer Skill

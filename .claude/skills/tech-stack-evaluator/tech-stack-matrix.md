@@ -1,3 +1,8 @@
+---
+name: tech-stack-matrix
+description: 'TODO: Brief description of what the Skill does and when to use it'
+---
+
 # Technology Stack Matrix
 
 Comprehensive reference for matching requirements to appropriate technologies across Python, TypeScript, and Rust ecosystems.

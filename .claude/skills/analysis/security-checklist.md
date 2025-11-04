@@ -1,3 +1,8 @@
+---
+name: security-checklist
+description: 'TODO: Brief description of what the Skill does and when to use it'
+---
+
 # Security Analysis Checklist
 
 ## OWASP Top 10 Assessment

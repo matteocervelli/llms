@@ -1,4 +1,8 @@
 ---
+{}
+---
+
+---
 description: Run comprehensive code quality checks including linting, type checking, and formatting
 argument-hint: [language] (auto-detect if not specified)
 ---

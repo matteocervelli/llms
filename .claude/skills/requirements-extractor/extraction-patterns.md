@@ -1,3 +1,8 @@
+---
+name: extraction-patterns
+description: 'TODO: Brief description of what the Skill does and when to use it'
+---
+
 # Requirements Extraction Patterns
 
 This document provides common patterns for identifying and extracting requirements from natural language in GitHub issues.

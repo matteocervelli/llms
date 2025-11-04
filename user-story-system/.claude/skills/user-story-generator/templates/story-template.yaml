@@ -1,0 +1,96 @@
+# User Story Template
+# This is the source-of-truth format for user stories
+# Markdown files are generated from this YAML
+
+id: ""  # Auto-generated (e.g., US-0001)
+title: ""  # Short, descriptive title
+epic_id: ""  # Link to epic (e.g., EP-001) - optional
+
+# Story metadata
+metadata:
+  created_date: ""  # ISO format: YYYY-MM-DD
+  updated_date: ""  # ISO format: YYYY-MM-DD
+  author: ""  # Person who created the story
+  status: "draft"  # draft, backlog, ready, in_progress, blocked, in_review, done, discarded
+  priority: "medium"  # low, medium, high, critical
+  story_points: null  # Fibonacci: 1, 2, 3, 5, 8, 13
+  sprint: null  # Sprint identifier (e.g., "Sprint 1")
+
+# User story components
+story:
+  persona: ""  # From personas.yaml (e.g., "ceo", "end_user")
+
+  # User story format: As a [persona], I want [goal], so that [benefit]
+  as_a: ""  # Role/persona description
+  i_want: ""  # What the user wants to do
+  so_that: ""  # Business value / reason / benefit
+
+  # Additional context
+  context: ""  # Background information, why this story exists
+  assumptions: []  # List of assumptions made
+  out_of_scope: []  # Explicitly what's NOT included
+
+# Acceptance criteria (Given/When/Then format)
+acceptance_criteria:
+  # Each criterion should be testable and specific
+  # - given: "Initial state or precondition"
+  #   when: "Action or event"
+  #   then: "Expected outcome"
+  - given: ""
+    when: ""
+    then: ""
+
+# Technical notes (added by technical-annotator agent)
+technical:
+  tech_stack: []  # Technologies involved (e.g., ["Python", "FastAPI", "PostgreSQL"])
+  implementation_hints: []  # Guidance for developers
+  affected_components: []  # System components impacted
+  estimated_effort: ""  # Time estimate (e.g., "2-3 days")
+  complexity: ""  # low, medium, high
+  risks: []  # Technical risks or concerns
+
+# Dependencies
+dependencies:
+  blocks: []  # Story IDs that this story blocks (e.g., ["US-0002", "US-0003"])
+  blocked_by: []  # Story IDs that block this story
+  related_to: []  # Related but not blocking stories
+  requires_data: []  # Data dependencies
+  requires_infrastructure: []  # Infrastructure dependencies
+
+# Testing
+testing:
+  unit_tests_required: true
+  integration_tests_required: false
+  e2e_tests_required: false
+  test_scenarios: []  # List of test scenarios
+  test_data_needed: []  # Required test data
+
+# GitHub integration
+github:
+  issue_url: ""  # Link to GitHub issue
+  issue_number: null  # GitHub issue number
+  pr_urls: []  # Links to related pull requests
+  labels: []  # Additional GitHub labels
+
+# Notes and comments
+notes: ""  # Free-form notes for the team
+comments: []  # Structured comments with timestamp and author
+  # - timestamp: "YYYY-MM-DDTHH:MM:SS"
+  #   author: ""
+  #   comment: ""
+
+# Validation results (added automatically)
+validation:
+  invest_score: null  # 0-100 score
+  invest_criteria:
+    independent: null
+    negotiable: null
+    valuable: null
+    estimable: null
+    small: null
+    testable: null
+  last_validated: null  # ISO timestamp
+  validation_issues: []  # List of issues found
+
+# Custom fields (extend as needed)
+custom: {}

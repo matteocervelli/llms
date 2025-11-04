@@ -1,11 +1,9 @@
 ---
 name: typescript-quality-checker
-description: Validate TypeScript/JavaScript code quality with ESLint, Prettier, type checking, and security analysis. Use for TypeScript/JS codebases to ensure code quality and standards.
-allowed-tools:
-  - Read
-  - Bash
-  - Grep
-  - Glob
+description: Validate TypeScript/JavaScript code quality with ESLint, Prettier, type
+  checking, and security analysis. Use for TypeScript/JS codebases to ensure code
+  quality and standards.
+allowed-tools: Read, Bash, Grep, Glob
 ---
 
 # TypeScript Quality Checker Skill

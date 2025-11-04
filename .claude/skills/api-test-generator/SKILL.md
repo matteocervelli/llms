@@ -1,13 +1,8 @@
 ---
 name: api-test-generator
-description: Generate comprehensive API endpoint tests for REST and GraphQL APIs. Creates tests for all HTTP methods, status codes, authentication, and validation.
-allowed-tools:
-  - Read
-  - Write
-  - Edit
-  - Bash
-  - Grep
-  - Glob
+description: Generate comprehensive API endpoint tests for REST and GraphQL APIs.
+  Creates tests for all HTTP methods, status codes, authentication, and validation.
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
 # API Test Generator Skill

@@ -1,3 +1,8 @@
+---
+name: api-design-guide
+description: 'TODO: Brief description of what the Skill does and when to use it'
+---
+
 # API Design Guide
 
 ## Overview

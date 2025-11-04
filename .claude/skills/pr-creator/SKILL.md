@@ -1,10 +1,8 @@
 ---
 name: pr-creator
-description: Create comprehensive pull requests with detailed descriptions, test plans, and proper git workflow. Use when finalizing features to ensure high-quality PRs.
-allowed-tools:
-  - Read
-  - Bash
-  - Grep
+description: Create comprehensive pull requests with detailed descriptions, test plans,
+  and proper git workflow. Use when finalizing features to ensure high-quality PRs.
+allowed-tools: Read, Bash, Grep
 ---
 
 # Pull Request Creator Skill

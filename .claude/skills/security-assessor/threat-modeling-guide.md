@@ -1,3 +1,8 @@
+---
+name: threat-modeling-guide
+description: 'TODO: Brief description of what the Skill does and when to use it'
+---
+
 # Threat Modeling Guide
 
 A systematic approach to identifying and prioritizing security threats using STRIDE methodology.

@@ -1,0 +1,141 @@
+# User Personas Configuration
+# Used for generating user stories with appropriate context
+
+personas:
+  ceo:
+    id: "ceo"
+    name: "CEO (Chief Executive Officer)"
+    description: "Top executive responsible for overall company strategy and vision"
+    context: "Italian SME leader facing critical turning points"
+    goals:
+      - "Ensure company growth and profitability"
+      - "Navigate strategic transitions successfully"
+      - "Make informed business decisions"
+    pain_points:
+      - "Limited visibility into key business metrics"
+      - "Difficulty in scaling operations"
+      - "Managing generational succession"
+    typical_scenarios:
+      - "Generational handover planning"
+      - "Crisis management"
+      - "Strategic shift execution"
+      - "Scaling leap preparation"
+
+  business_owner:
+    id: "business_owner"
+    name: "Business Owner"
+    description: "Owner of family-run SME, typically founder or family member"
+    context: "50-300 employees, €5M-100M turnover"
+    goals:
+      - "Preserve family legacy while modernizing"
+      - "Ensure sustainable business growth"
+      - "Prepare for succession or exit"
+    pain_points:
+      - "Balancing tradition with innovation"
+      - "Managing family dynamics in business"
+      - "Finding the right growth path"
+    typical_scenarios:
+      - "Succession planning"
+      - "Business transformation"
+      - "Professionalization of management"
+
+  general_manager:
+    id: "general_manager"
+    name: "General Manager"
+    description: "Senior manager overseeing day-to-day operations"
+    context: "Responsible for operational excellence and team management"
+    goals:
+      - "Improve operational efficiency"
+      - "Implement best practices"
+      - "Develop high-performing teams"
+    pain_points:
+      - "Resource constraints"
+      - "Process inefficiencies"
+      - "Change management resistance"
+    typical_scenarios:
+      - "Process improvement initiatives"
+      - "Team restructuring"
+      - "Technology adoption"
+
+  cfo:
+    id: "cfo"
+    name: "CFO (Chief Financial Officer)"
+    description: "Financial leader responsible for fiscal health"
+    context: "Managing financial planning, reporting, and analysis"
+    goals:
+      - "Ensure financial stability"
+      - "Optimize resource allocation"
+      - "Provide data-driven insights"
+    pain_points:
+      - "Lack of real-time financial data"
+      - "Manual reporting processes"
+      - "Limited forecasting capabilities"
+    typical_scenarios:
+      - "Budget planning and control"
+      - "Financial reporting automation"
+      - "Investment decision support"
+
+  sales_manager:
+    id: "sales_manager"
+    name: "Sales Manager"
+    description: "Leader of sales team responsible for revenue growth"
+    context: "Managing sales processes, team performance, and customer relationships"
+    goals:
+      - "Increase sales revenue"
+      - "Improve sales team productivity"
+      - "Enhance customer relationships"
+    pain_points:
+      - "Difficulty tracking sales pipeline"
+      - "Inconsistent sales processes"
+      - "Limited customer insights"
+    typical_scenarios:
+      - "Sales process optimization"
+      - "CRM implementation"
+      - "Sales team training"
+
+  new_owner_succession:
+    id: "new_owner_succession"
+    name: "New Owner (Succession Context)"
+    description: "Next generation taking over family business"
+    context: "Navigating the critical transition of generational handover"
+    goals:
+      - "Successfully take over business leadership"
+      - "Modernize while respecting tradition"
+      - "Prove capability to stakeholders"
+    pain_points:
+      - "Proving credibility to existing team"
+      - "Balancing old and new approaches"
+      - "Managing founder's expectations"
+    typical_scenarios:
+      - "Leadership transition"
+      - "Business modernization"
+      - "Stakeholder management"
+
+  end_user:
+    id: "end_user"
+    name: "End User"
+    description: "Generic end user of a specific feature or product"
+    context: "Adaptable persona for feature-specific stories"
+    goals:
+      - "Accomplish tasks efficiently"
+      - "Have intuitive user experience"
+      - "Get value from the product"
+    pain_points:
+      - "Complexity in workflows"
+      - "Lack of clear guidance"
+      - "Time-consuming processes"
+    typical_scenarios:
+      - "Daily task completion"
+      - "Problem-solving"
+      - "Learning new features"
+
+# Default persona for stories (can be overridden)
+default_persona: "end_user"
+
+# Persona selection guidance
+selection_guide:
+  strategic_features: ["ceo", "business_owner"]
+  operational_features: ["general_manager", "sales_manager"]
+  financial_features: ["cfo"]
+  succession_features: ["new_owner_succession"]
+  generic_features: ["end_user"]

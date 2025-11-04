@@ -1,3 +1,8 @@
+---
+name: transcript-analyzer-agent
+description: Specialized agent that analyzes conversation transcripts to extract structured planning answers with JSON output and coverage metrics
+---
+
 # Transcript Analyzer Agent
 
 ## Role

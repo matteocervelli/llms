@@ -1,10 +1,39 @@
-.PHONY: help sync-global watch-sync sync-audit sync-check sync-push sync-pull sync-settings test lint format
+.PHONY: help validate validate-fix catalog-sync validate-and-sync sync-global watch-sync sync-audit sync-check sync-push sync-pull sync-settings test lint format
 
 help: ## Show this help message
 	@echo 'Usage: make [target]'
 	@echo ''
 	@echo 'Available targets:'
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-20s %s\n", $$1, $$2}'
+
+validate: ## Validate YAML frontmatter in all elements (agents, skills, commands)
+	@echo "Validating project elements..."
+	@python -m src.tools.element_validator.main .claude --recursive --quiet || true
+	@echo "\nValidating global elements..."
+	@python -m src.tools.element_validator.main ~/.claude --recursive --quiet || true
+
+validate-fix: ## Auto-fix YAML validation errors in all elements
+	@echo "Auto-fixing project elements..."
+	@python -m src.tools.element_validator.main .claude --fix --recursive --quiet
+	@echo "\nAuto-fixing global elements..."
+	@python -m src.tools.element_validator.main ~/.claude --fix --recursive --quiet
+	@echo "\n✅ All elements validated and fixed"
+	@echo "⚠️  Please review changes before committing"
+
+catalog-sync: ## Regenerate catalog manifests from validated elements
+	@echo "Regenerating catalog manifests..."
+	@python -m src.tools.catalog_system.cli sync
+	@echo "\n📊 Catalog statistics:"
+	@python -m src.tools.catalog_system.cli stats
+
+validate-and-sync: ## Complete workflow: validate → fix → regenerate catalog
+	@echo "🔍 Step 1: Validating all elements..."
+	@$(MAKE) validate
+	@echo "\n🔧 Step 2: Auto-fixing validation errors..."
+	@$(MAKE) validate-fix
+	@echo "\n📦 Step 3: Regenerating catalog manifests..."
+	@$(MAKE) catalog-sync
+	@echo "\n✅ Complete! All elements validated, fixed, and catalog updated."
 
 sync-global: ## Copy project .claude files to global ~/.claude
 	@./scripts/copy-to-global.sh

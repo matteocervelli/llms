@@ -1,3 +1,8 @@
+---
+name: communication-protocol
+description: 'TODO: Brief description of what the Skill does and when to use it'
+---
+
 # Communication Protocol
 
 This document defines the communication protocol for agent-to-agent communication in recursive validation loops. It establishes standards for message formatting, communication flows, status signaling, and error handling.

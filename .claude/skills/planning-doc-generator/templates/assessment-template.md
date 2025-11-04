@@ -1,3 +1,8 @@
+---
+name: assessment-template
+description: 'TODO: Brief description of what the Skill does and when to use it'
+---
+
 # Assessment: {PROJECT_NAME}
 
 **Date:** {DATE}

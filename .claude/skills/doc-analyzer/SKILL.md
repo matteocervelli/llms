@@ -1,9 +1,8 @@
 ---
 name: doc-analyzer
-description: Analyze and extract relevant patterns, best practices, and usage examples from fetched documentation for implementation guidance.
-allowed-tools:
-  - Read
-  - Grep
+description: Analyze and extract relevant patterns, best practices, and usage examples
+  from fetched documentation for implementation guidance.
+allowed-tools: Read, Grep
 ---
 
 ## Purpose

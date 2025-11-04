@@ -1,3 +1,8 @@
+---
+name: component-design-guide
+description: 'TODO: Brief description of what the Skill does and when to use it'
+---
+
 # Component Design Guide
 
 This guide provides detailed principles and patterns for designing clean, maintainable components with clear responsibilities and minimal coupling.

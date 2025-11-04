@@ -1,3 +1,8 @@
+---
+name: review-checklist
+description: 'TODO: Brief description of what the Skill does and when to use it'
+---
+
 # Code Review Checklist
 
 This comprehensive checklist covers all aspects of code quality, testing, performance, security, and style for thorough code reviews.

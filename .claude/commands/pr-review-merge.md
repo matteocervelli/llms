@@ -1,7 +1,7 @@
 ---
 description: Review PR before merging to check for best practices and potential issues
 argument-hint: <pr-number>
-allowed-tools: [gh, git, filesystem, security-scan]
+allowed-tools: gh, git, filesystem, security-scan
 ---
 
 # PR Review Before Merge: $ARGUMENTS

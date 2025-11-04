@@ -1,3 +1,8 @@
+---
+name: validation-checklist
+description: 'TODO: Brief description of what the Skill does and when to use it'
+---
+
 # Validation Checklist
 
 Comprehensive quality gate checklist for validation workflow. Use this checklist to track validation progress and ensure all quality standards are met before deployment.

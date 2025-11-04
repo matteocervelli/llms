@@ -1,9 +1,8 @@
 ---
 name: version-checker
-description: Check version compatibility, breaking changes, and security vulnerabilities for dependencies
-allowed-tools:
-  - Read
-  - Bash
+description: Check version compatibility, breaking changes, and security vulnerabilities
+  for dependencies
+allowed-tools: Read, Bash
 ---
 
 # Version Checker Skill

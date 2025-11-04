@@ -1,3 +1,8 @@
+---
+name: api-design-guide
+description: 'TODO: Brief description of what the Skill does and when to use it'
+---
+
 # API Design Guide
 
 This guide provides comprehensive principles and best practices for designing RESTful APIs that are intuitive, maintainable, and provide excellent developer experience.

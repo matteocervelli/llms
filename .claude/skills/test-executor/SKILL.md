@@ -1,11 +1,9 @@
 ---
 name: test-executor
-description: Execute test suites with proper configuration, parallel execution, and detailed reporting. Use when running unit tests, integration tests, or full test suites.
-allowed-tools:
-  - Read
-  - Bash
-  - Grep
-  - Glob
+description: Execute test suites with proper configuration, parallel execution, and
+  detailed reporting. Use when running unit tests, integration tests, or full test
+  suites.
+allowed-tools: Read, Bash, Grep, Glob
 ---
 
 # Test Executor Skill

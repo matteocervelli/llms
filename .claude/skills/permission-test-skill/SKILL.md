@@ -1,6 +1,7 @@
 ---
 name: permission-test-skill
-description: Permission test. Use for testing.---
+description: Permission test. Use for testing.
+---
 
 # permission-test-skill
 

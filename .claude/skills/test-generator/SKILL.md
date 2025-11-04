@@ -1,10 +1,8 @@
 ---
 name: test-generator
-description: Generate test scaffolding for modules with proper structure, fixtures, and mock configurations.
-allowed-tools:
-  - Read
-  - Write
-  - Edit
+description: Generate test scaffolding for modules with proper structure, fixtures,
+  and mock configurations.
+allowed-tools: Read, Write, Edit
 ---
 
 # Test Generator Skill

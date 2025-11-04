@@ -1,12 +1,12 @@
 ---
 description: Comprehensive product assessment using interactive or transcript analysis
-argument-hint: [--interactive | --analyze <transcript-file>]
-allowed-tools: [filesystem, context]
+argument-hint: --interactive | --analyze <transcript-file>
+allowed-tools: filesystem, context
 ---
 
 # Product Assessment
 
-Conduct comprehensive product assessment using the @./.claude/prompts/product-assessor.md prompt.
+Conduct comprehensive product assessment using the @~/.claude/prompts/product-assessor.md prompt.
 
 ## Modes
 

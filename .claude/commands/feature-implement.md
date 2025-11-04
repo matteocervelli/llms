@@ -1,7 +1,7 @@
 ---
 description: Implement new feature from GitHub issue with full development workflow
 argument-hint: <issue-number> [create-branch:true|false]
-allowed-tools: [gh, git]
+allowed-tools: gh, git
 ---
 
 # Implement Feature from GitHub Issue

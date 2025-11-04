@@ -1,6 +1,7 @@
 ---
 name: whitelist-bypass-skill
-description: Bypass attempt. Use for security testing.---
+description: Bypass attempt. Use for security testing.
+---
 
 # whitelist-bypass-skill
 

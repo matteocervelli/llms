@@ -1,0 +1,84 @@
+# Story Status Configuration
+# Valid statuses and their transitions
+
+statuses:
+  draft:
+    name: "Draft"
+    description: "Story is being written, not yet complete"
+    color: "gray"
+    transitions_to: ["backlog", "discarded"]
+    github_state: null  # Not synced to GitHub
+
+  backlog:
+    name: "Backlog"
+    description: "Story is ready but not yet prioritized for a sprint"
+    color: "blue"
+    transitions_to: ["ready", "discarded"]
+    github_state: "open"
+    github_labels: ["backlog"]
+
+  ready:
+    name: "Ready"
+    description: "Story is refined and ready for development"
+    color: "green"
+    transitions_to: ["in_progress", "backlog"]
+    github_state: "open"
+    github_labels: ["ready"]
+
+  in_progress:
+    name: "In Progress"
+    description: "Story is actively being developed"
+    color: "yellow"
+    transitions_to: ["in_review", "blocked", "backlog"]
+    github_state: "open"
+    github_labels: ["in-progress"]
+
+  blocked:
+    name: "Blocked"
+    description: "Story is blocked by dependencies or issues"
+    color: "red"
+    transitions_to: ["in_progress", "backlog"]
+    github_state: "open"
+    github_labels: ["blocked"]
+
+  in_review:
+    name: "In Review"
+    description: "Story implementation is under review"
+    color: "purple"
+    transitions_to: ["done", "in_progress"]
+    github_state: "open"
+    github_labels: ["in-review"]
+
+  done:
+    name: "Done"
+    description: "Story is complete and accepted"
+    color: "green"
+    transitions_to: ["backlog"]  # Can reopen if needed
+    github_state: "closed"
+    github_labels: ["done"]
+
+  discarded:
+    name: "Discarded"
+    description: "Story is no longer relevant or needed"
+    color: "gray"
+    transitions_to: []  # Terminal state
+    github_state: "closed"
+    github_labels: ["wontfix"]
+
+# Initial status for new stories
+default_status: "draft"
+
+# Status workflow for typical story lifecycle
+typical_workflow:
+  - "draft"
+  - "backlog"
+  - "ready"
+  - "in_progress"
+  - "in_review"
+  - "done"
+
+# Status categories
+categories:
+  todo: ["draft", "backlog", "ready"]
+  active: ["in_progress", "blocked", "in_review"]
+  complete: ["done", "discarded"]

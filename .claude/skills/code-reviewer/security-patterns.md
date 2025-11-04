@@ -1,3 +1,8 @@
+---
+name: security-patterns
+description: 'TODO: Brief description of what the Skill does and when to use it'
+---
+
 # Security Patterns and Best Practices
 
 This document provides comprehensive security patterns, common vulnerabilities, and best practices for secure coding.

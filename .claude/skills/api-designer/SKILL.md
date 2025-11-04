@@ -1,10 +1,8 @@
 ---
 name: api-designer
-description: Design REST APIs or function contracts with clear request/response specifications, error handling patterns, authentication strategies, and comprehensive documentation.
-allowed-tools:
-  - Read
-  - Write
-  - Edit
+description: Design REST APIs or function contracts with clear request/response specifications,
+  error handling patterns, authentication strategies, and comprehensive documentation.
+allowed-tools: Read, Write, Edit
 ---
 
 ## Purpose

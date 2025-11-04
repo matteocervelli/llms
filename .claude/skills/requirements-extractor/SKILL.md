@@ -1,11 +1,8 @@
 ---
 name: requirements-extractor
-description: Auto-activates when analyzing GitHub issues to extract functional requirements, non-functional requirements, acceptance criteria, and user stories.
-allowed-tools:
-  - Read
-  - Grep
-  - Bash
-  - gh
+description: Auto-activates when analyzing GitHub issues to extract functional requirements,
+  non-functional requirements, acceptance criteria, and user stories.
+allowed-tools: Read, Grep, Bash, gh
 ---
 
 ## Purpose

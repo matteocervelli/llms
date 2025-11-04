@@ -1,3 +1,8 @@
+---
+name: validation-workflow
+description: 'TODO: Brief description of what the Skill does and when to use it'
+---
+
 # Validation Workflow Guide
 
 This guide provides detailed procedures for managing the validation workflow, including specialist invocation, dependency resolution, and status tracking.
