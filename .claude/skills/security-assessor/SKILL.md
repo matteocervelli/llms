@@ -1,9 +1,9 @@
 ---
 name: security-assessor
-description: Auto-activates during requirements analysis to assess security risks using OWASP Top 10 framework, identify security requirements, and recommend mitigation strategies.
-allowed-tools:
-  - Read
-  - Grep
+description: Auto-activates during requirements analysis to assess security risks
+  using OWASP Top 10 framework, identify security requirements, and recommend mitigation
+  strategies.
+allowed-tools: Read, Grep
 ---
 
 ## Purpose

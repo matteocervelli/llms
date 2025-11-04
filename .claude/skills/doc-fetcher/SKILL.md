@@ -1,8 +1,8 @@
 ---
 name: doc-fetcher
-description: Fetch library and framework documentation via context7-mcp and fetch-mcp for comprehensive documentation research with version-specific content.
-allowed-tools:
-  - Read
+description: Fetch library and framework documentation via context7-mcp and fetch-mcp
+  for comprehensive documentation research with version-specific content.
+allowed-tools: Read
 ---
 
 ## Purpose

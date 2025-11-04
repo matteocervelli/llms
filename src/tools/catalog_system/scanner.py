@@ -21,7 +21,7 @@ Example Usage:
 
 import yaml  # type: ignore[import-untyped]
 from pathlib import Path
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 
 from .models import (
     SkillCatalogEntry,
@@ -29,6 +29,13 @@ from .models import (
     AgentCatalogEntry,
 )
 from .exceptions import ScanError
+
+# Import validator for element validation
+try:
+    from ..element_validator import ElementValidator, ElementType
+    VALIDATOR_AVAILABLE = True
+except ImportError:
+    VALIDATOR_AVAILABLE = False
 
 
 class Scanner:
@@ -55,9 +62,24 @@ class Scanner:
     # Scope detection patterns
     GLOBAL_MARKER = ".claude"  # in home directory
 
-    def __init__(self) -> None:
-        """Initialize the Scanner."""
-        pass
+    def __init__(self, validate: bool = True, skip_invalid: bool = True) -> None:
+        """
+        Initialize the Scanner.
+
+        Args:
+            validate: Enable element validation (requires element_validator)
+            skip_invalid: Skip invalid elements instead of failing
+        """
+        self.validate_elements = validate and VALIDATOR_AVAILABLE
+        self.skip_invalid = skip_invalid
+
+        if self.validate_elements:
+            self.validator = ElementValidator()
+        else:
+            self.validator = None
+
+        if validate and not VALIDATOR_AVAILABLE:
+            print("Warning: element_validator not available, validation disabled")
 
     def scan_skills(self, scope_paths: List[Path]) -> List[SkillCatalogEntry]:
         """
@@ -102,6 +124,10 @@ class Scanner:
                     # Look for SKILL.md file
                     skill_file = item / "SKILL.md"
                     if not skill_file.exists():
+                        continue
+
+                    # Validate element (skip if invalid and skip_invalid=True)
+                    if not self._validate_element(skill_file, ElementType.SKILL if VALIDATOR_AVAILABLE else None):
                         continue
 
                     # Parse frontmatter and create entry
@@ -162,6 +188,10 @@ class Scanner:
                     if not item.is_file() or item.suffix != ".md":
                         continue
 
+                    # Validate element (skip if invalid and skip_invalid=True)
+                    if not self._validate_element(item, ElementType.COMMAND if VALIDATOR_AVAILABLE else None):
+                        continue
+
                     # Parse frontmatter and create entry
                     try:
                         entry = self._create_command_entry(item, scope)
@@ -215,6 +245,10 @@ class Scanner:
             try:
                 for item in agents_dir.iterdir():
                     if not item.is_file() or item.suffix != ".md":
+                        continue
+
+                    # Validate element (skip if invalid and skip_invalid=True)
+                    if not self._validate_element(item, ElementType.AGENT if VALIDATOR_AVAILABLE else None):
                         continue
 
                     # Parse frontmatter and create entry
@@ -444,3 +478,40 @@ class Scanner:
             specialization=specialization,
             requires_skills=requires_skills,
         )
+
+    def _validate_element(
+        self, file_path: Path, element_type: Optional[ElementType] = None
+    ) -> bool:
+        """
+        Validate an element file using the ElementValidator.
+
+        Args:
+            file_path: Path to the element file
+            element_type: Optional element type hint
+
+        Returns:
+            True if valid or validation disabled, False if invalid
+
+        Raises:
+            ScanError: If validation fails and skip_invalid is False
+        """
+        if not self.validate_elements or self.validator is None:
+            # Validation disabled
+            return True
+
+        result = self.validator.validate_element(file_path, element_type)
+
+        if not result.is_valid:
+            error_summary = f"{file_path.name}: {len(result.errors)} errors"
+            for error in result.errors[:3]:  # Show first 3 errors
+                error_summary += f"\n  - [{error.field}] {error.message}"
+
+            if self.skip_invalid:
+                # Log warning and continue
+                print(f"Warning: Skipping invalid element: {error_summary}")
+                return False
+            else:
+                # Raise error to stop scanning
+                raise ScanError(f"Invalid element: {error_summary}")
+
+        return True

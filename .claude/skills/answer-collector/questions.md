@@ -1,3 +1,8 @@
+---
+name: questions
+description: 'TODO: Brief description of what the Skill does and when to use it'
+---
+
 # Product Assessment Questions
 
 ## WHY ARE WE BUILDING THIS? (4 questions)

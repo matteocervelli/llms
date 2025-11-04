@@ -1,10 +1,8 @@
 ---
 name: data-modeler
-description: Design data models with Pydantic schemas, comprehensive validation rules, type annotations, and relationship mappings.
-allowed-tools:
-  - Read
-  - Write
-  - Edit
+description: Design data models with Pydantic schemas, comprehensive validation rules,
+  type annotations, and relationship mappings.
+allowed-tools: Read, Write, Edit
 ---
 
 ## Purpose

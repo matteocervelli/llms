@@ -1,3 +1,8 @@
+---
+name: message-templates
+description: 'TODO: Brief description of what the Skill does and when to use it'
+---
+
 # Message Templates
 
 Pre-defined message templates for agent-to-agent communication in recursive validation loops. Use these templates to ensure consistent, structured communication.

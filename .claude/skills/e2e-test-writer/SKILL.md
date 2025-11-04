@@ -1,18 +1,10 @@
 ---
 name: e2e-test-writer
-description: Write comprehensive end-to-end tests using Playwright with page object model pattern. Use when creating browser-based tests for user workflows.
-allowed-tools:
-  - Read
-  - Write
-  - Edit
-  - Grep
-  - Glob
-  - Bash
-  - mcp__playwright-mcp__playwright_navigate
-  - mcp__playwright-mcp__playwright_screenshot
-  - mcp__playwright-mcp__playwright_click
-  - mcp__playwright-mcp__playwright_fill
-  - mcp__playwright-mcp__playwright_evaluate
+description: Write comprehensive end-to-end tests using Playwright with page object
+  model pattern. Use when creating browser-based tests for user workflows.
+allowed-tools: Read, Write, Edit, Grep, Glob, Bash, mcp__playwright-mcp__playwright_navigate,
+  mcp__playwright-mcp__playwright_screenshot, mcp__playwright-mcp__playwright_click,
+  mcp__playwright-mcp__playwright_fill, mcp__playwright-mcp__playwright_evaluate
 ---
 
 # E2E Test Writer Skill

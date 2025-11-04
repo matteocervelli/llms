@@ -1,3 +1,8 @@
+---
+name: security-checklist
+description: 'TODO: Brief description of what the Skill does and when to use it'
+---
+
 # Security Assessment Checklist
 
 Comprehensive OWASP Top 10 security assessment checklist with Python-specific considerations.

@@ -1,10 +1,8 @@
 ---
 name: tech-stack-evaluator
-description: Auto-activates during requirements analysis to evaluate technical stack compatibility, recommend appropriate technologies, and assess performance implications.
-allowed-tools:
-  - Read
-  - Bash
-  - Grep
+description: Auto-activates during requirements analysis to evaluate technical stack
+  compatibility, recommend appropriate technologies, and assess performance implications.
+allowed-tools: Read, Bash, Grep
 ---
 
 ## Purpose

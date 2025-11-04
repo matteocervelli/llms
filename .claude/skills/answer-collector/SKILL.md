@@ -1,3 +1,8 @@
+---
+name: skill
+description: 'TODO: Brief description of what the Skill does and when to use it'
+---
+
 # Answer Collector Skill
 
 **Purpose:** Incrementally collect and validate product assessment responses in structured JSON format.

@@ -1,3 +1,8 @@
+---
+name: function-design-patterns
+description: 'TODO: Brief description of what the Skill does and when to use it'
+---
+
 # Function Design Patterns
 
 This guide provides comprehensive patterns for designing clean, maintainable function signatures and contracts.

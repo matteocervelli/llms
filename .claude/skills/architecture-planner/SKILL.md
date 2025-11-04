@@ -1,10 +1,8 @@
 ---
 name: architecture-planner
-description: Design component architecture and module structure using established architectural patterns for clean, maintainable, and scalable systems.
-allowed-tools:
-  - Read
-  - Write
-  - Edit
+description: Design component architecture and module structure using established
+  architectural patterns for clean, maintainable, and scalable systems.
+allowed-tools: Read, Write, Edit
 ---
 
 ## Purpose

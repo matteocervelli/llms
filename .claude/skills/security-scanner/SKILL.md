@@ -1,11 +1,8 @@
 ---
 name: security-scanner
-description: Scan codebase for security vulnerabilities including secrets, insecure dependencies, and unsafe code patterns. Use when performing automated security scans.
-allowed-tools:
-  - Read
-  - Grep
-  - Glob
-  - Bash
+description: Scan codebase for security vulnerabilities including secrets, insecure
+  dependencies, and unsafe code patterns. Use when performing automated security scans.
+allowed-tools: Read, Grep, Glob, Bash
 ---
 
 # Security Scanner Skill

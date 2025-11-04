@@ -1,12 +1,8 @@
 ---
 name: changelog-generator
-description: Generate CHANGELOG entries following conventional commits format with semantic versioning. Use when finalizing features to maintain proper change history.
-allowed-tools:
-  - Read
-  - Write
-  - Edit
-  - Bash
-  - Grep
+description: Generate CHANGELOG entries following conventional commits format with
+  semantic versioning. Use when finalizing features to maintain proper change history.
+allowed-tools: Read, Write, Edit, Bash, Grep
 ---
 
 # CHANGELOG Generator Skill

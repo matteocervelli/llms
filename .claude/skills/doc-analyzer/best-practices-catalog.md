@@ -1,3 +1,8 @@
+---
+name: best-practices-catalog
+description: 'TODO: Brief description of what the Skill does and when to use it'
+---
+
 # Best Practices Catalog
 
 ## Overview

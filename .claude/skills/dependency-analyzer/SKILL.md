@@ -1,10 +1,8 @@
 ---
 name: dependency-analyzer
-description: Analyze project dependencies, build dependency trees, detect conflicts, and check compatibility
-allowed-tools:
-  - Read
-  - Bash
-  - Grep
+description: Analyze project dependencies, build dependency trees, detect conflicts,
+  and check compatibility
+allowed-tools: Read, Bash, Grep
 ---
 
 # Dependency Analyzer Skill

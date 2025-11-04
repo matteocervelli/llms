@@ -1,6 +1,6 @@
 ---
 description: Initialize new project with complete setup and documentation
-allowed-tools: [gh, git, filesystem]
+allowed-tools: gh, git, filesystem
 ---
 
 # Project Kickoff: $ARGUMENTS

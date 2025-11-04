@@ -1,6 +1,6 @@
 ---
 description: Implement production-ready infrastructure with security and performance
-allowed-tools: [git, filesystem, sequential-thinking-mcp, context7-mcp]
+allowed-tools: git, filesystem, sequential-thinking-mcp, context7-mcp
 ---
 
 # Infrastructure Setup: $ARGUMENTS

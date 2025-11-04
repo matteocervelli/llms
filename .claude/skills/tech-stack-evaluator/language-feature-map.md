@@ -1,3 +1,8 @@
+---
+name: language-feature-map
+description: 'TODO: Brief description of what the Skill does and when to use it'
+---
+
 # Language Feature Map
 
 Language-specific features, capabilities, and performance characteristics for Python, TypeScript, and Rust.

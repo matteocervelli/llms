@@ -1,14 +1,10 @@
 ---
 name: analysis
-description: Analyze feature requirements, dependencies, and security considerations. Use when starting feature implementation from GitHub issues to understand scope, technical feasibility, and risks.
-allowed-tools:
-  - Read
-  - Grep
-  - Glob
-  - Bash
-  - mcp__github-mcp__get_issue
-  - mcp__github-mcp__get_issue_comments
-  - mcp__github-mcp__search_issues
+description: Analyze feature requirements, dependencies, and security considerations.
+  Use when starting feature implementation from GitHub issues to understand scope,
+  technical feasibility, and risks.
+allowed-tools: Read, Grep, Glob, Bash, mcp__github-mcp__get_issue, mcp__github-mcp__get_issue_comments,
+  mcp__github-mcp__search_issues
 ---
 
 # Feature Analysis Skill

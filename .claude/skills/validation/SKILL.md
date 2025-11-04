@@ -1,11 +1,9 @@
 ---
 name: validation
-description: Validate code quality, test coverage, performance, and security. Use when verifying implemented features meet all standards and requirements before marking complete.
-allowed-tools:
-  - Read
-  - Bash
-  - Grep
-  - Glob
+description: Validate code quality, test coverage, performance, and security. Use
+  when verifying implemented features meet all standards and requirements before marking
+  complete.
+allowed-tools: Read, Bash, Grep, Glob
 ---
 
 # Feature Validation Skill

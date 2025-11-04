@@ -1,6 +1,6 @@
 ---
 description: Fix PR failures from CI/CD bots and automated tests
-allowed-tools: [gh, git, filesystem]
+allowed-tools: gh, git, filesystem
 ---
 
 # Fix PR Failures: $ARGUMENTS

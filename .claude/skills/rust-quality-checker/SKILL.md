@@ -1,11 +1,8 @@
 ---
 name: rust-quality-checker
-description: Validate Rust code quality with rustfmt, clippy, cargo check, and security analysis. Use for Rust codebases to ensure idiomatic Rust code and best practices.
-allowed-tools:
-  - Read
-  - Bash
-  - Grep
-  - Glob
+description: Validate Rust code quality with rustfmt, clippy, cargo check, and security
+  analysis. Use for Rust codebases to ensure idiomatic Rust code and best practices.
+allowed-tools: Read, Bash, Grep, Glob
 ---
 
 # Rust Quality Checker Skill

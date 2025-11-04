@@ -1,3 +1,8 @@
+---
+name: requirements-checklist
+description: 'TODO: Brief description of what the Skill does and when to use it'
+---
+
 # Requirements Analysis Checklist
 
 ## Functional Requirements

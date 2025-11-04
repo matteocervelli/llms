@@ -1,11 +1,8 @@
 ---
 name: owasp-checker
-description: Verify compliance with OWASP Top 10 2021 security standards. Use when performing OWASP compliance checks and security certification.
-allowed-tools:
-  - Read
-  - Grep
-  - Glob
-  - Bash
+description: Verify compliance with OWASP Top 10 2021 security standards. Use when
+  performing OWASP compliance checks and security certification.
+allowed-tools: Read, Grep, Glob, Bash
 ---
 
 # OWASP Top 10 Checker Skill

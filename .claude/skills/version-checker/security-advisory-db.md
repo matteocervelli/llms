@@ -1,3 +1,8 @@
+---
+name: security-advisory-db
+description: 'TODO: Brief description of what the Skill does and when to use it'
+---
+
 # Security Advisory Database
 
 ## Overview

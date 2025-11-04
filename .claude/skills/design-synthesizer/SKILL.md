@@ -1,10 +1,8 @@
 ---
 name: design-synthesizer
-description: Auto-activates when synthesizing outputs from multiple parallel sub-agents to create cohesive, integrated design with consistency checking and conflict resolution.
-allowed-tools:
-  - Read
-  - Write
-  - Edit
+description: Auto-activates when synthesizing outputs from multiple parallel sub-agents
+  to create cohesive, integrated design with consistency checking and conflict resolution.
+allowed-tools: Read, Write, Edit
 ---
 
 ## Purpose

@@ -1,3 +1,8 @@
+---
+name: data-model-guide
+description: 'TODO: Brief description of what the Skill does and when to use it'
+---
+
 # Data Model Design Guide
 
 This guide provides comprehensive principles and patterns for designing robust, maintainable data models.

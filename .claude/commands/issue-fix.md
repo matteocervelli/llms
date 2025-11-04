@@ -1,6 +1,7 @@
 ---
-description: Fix bugs and resolve problems from GitHub issues with security and performance validation
-allowed-tools: [gh, git, sequential-thinking-mcp]
+description: Fix bugs and resolve problems from GitHub issues with security and performance
+  validation
+allowed-tools: gh, git, sequential-thinking-mcp
 ---
 
 # Fix Bug from Issue: $ARGUMENTS

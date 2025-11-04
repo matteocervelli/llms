@@ -1,11 +1,9 @@
 ---
 name: python-quality-checker
-description: Validate Python code quality with formatting, type checking, linting, and security analysis. Use for Python codebases to ensure PEP 8 compliance, type safety, and code quality.
-allowed-tools:
-  - Read
-  - Bash
-  - Grep
-  - Glob
+description: Validate Python code quality with formatting, type checking, linting,
+  and security analysis. Use for Python codebases to ensure PEP 8 compliance, type
+  safety, and code quality.
+allowed-tools: Read, Bash, Grep, Glob
 ---
 
 # Python Quality Checker Skill

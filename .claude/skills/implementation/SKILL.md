@@ -1,13 +1,8 @@
 ---
 name: implementation
-description: Implement features with code, tests, and documentation. Use when building features from approved designs following TDD and project coding standards.
-allowed-tools:
-  - Read
-  - Write
-  - Edit
-  - Bash
-  - Grep
-  - Glob
+description: Implement features with code, tests, and documentation. Use when building
+  features from approved designs following TDD and project coding standards.
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
 # Feature Implementation Skill

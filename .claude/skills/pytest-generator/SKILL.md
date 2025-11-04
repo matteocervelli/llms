@@ -1,13 +1,8 @@
 ---
 name: pytest-generator
-description: Generate pytest-based unit tests for Python code. Creates test files following pytest conventions with proper fixtures, mocking, and parametrization.
-allowed-tools:
-  - Read
-  - Write
-  - Edit
-  - Bash
-  - Grep
-  - Glob
+description: Generate pytest-based unit tests for Python code. Creates test files
+  following pytest conventions with proper fixtures, mocking, and parametrization.
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
 # Pytest Generator Skill

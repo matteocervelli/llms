@@ -1,3 +1,8 @@
+---
+name: pydantic-patterns
+description: 'TODO: Brief description of what the Skill does and when to use it'
+---
+
 # Pydantic Patterns and Examples
 
 This guide provides comprehensive Pydantic-specific patterns, advanced techniques, and complete code examples.

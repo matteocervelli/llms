@@ -1,10 +1,8 @@
 ---
 name: planning-doc-generator
-description: Generate project assessment markdown documents from JSON data with WHY/WHO/WHAT sections and GO/NO-GO decision matrix.
-allowed-tools:
-  - Read
-  - Write
-  - Edit
+description: Generate project assessment markdown documents from JSON data with WHY/WHO/WHAT
+  sections and GO/NO-GO decision matrix.
+allowed-tools: Read, Write, Edit
 ---
 
 # Planning Document Generator Skill

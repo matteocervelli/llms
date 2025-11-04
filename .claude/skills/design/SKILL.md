@@ -1,12 +1,8 @@
 ---
 name: design
-description: Design system architecture, API contracts, and data flows. Use when translating analyzed requirements into technical design for feature implementation.
-allowed-tools:
-  - Read
-  - Write
-  - Edit
-  - Grep
-  - Glob
+description: Design system architecture, API contracts, and data flows. Use when translating
+  analyzed requirements into technical design for feature implementation.
+allowed-tools: Read, Write, Edit, Grep, Glob
 ---
 
 # Feature Design Skill

@@ -1,14 +1,9 @@
 ---
 name: accessibility-checker
-description: Validate WCAG 2.1 Level AA compliance and accessibility best practices. Use when performing accessibility audits and WCAG certification.
-allowed-tools:
-  - Read
-  - Grep
-  - Glob
-  - Bash
-  - mcp__playwright-mcp__playwright_navigate
-  - mcp__playwright-mcp__playwright_screenshot
-  - mcp__playwright-mcp__playwright_evaluate
+description: Validate WCAG 2.1 Level AA compliance and accessibility best practices.
+  Use when performing accessibility audits and WCAG certification.
+allowed-tools: Read, Grep, Glob, Bash, mcp__playwright-mcp__playwright_navigate, mcp__playwright-mcp__playwright_screenshot,
+  mcp__playwright-mcp__playwright_evaluate
 ---
 
 # Accessibility Checker Skill

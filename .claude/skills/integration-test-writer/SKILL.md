@@ -1,13 +1,9 @@
 ---
 name: integration-test-writer
-description: Generate comprehensive integration tests for component interactions, workflows, and system boundaries. Use for testing API endpoints, database operations, and multi-component flows.
-allowed-tools:
-  - Read
-  - Write
-  - Edit
-  - Bash
-  - Grep
-  - Glob
+description: Generate comprehensive integration tests for component interactions,
+  workflows, and system boundaries. Use for testing API endpoints, database operations,
+  and multi-component flows.
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
 # Integration Test Writer Skill

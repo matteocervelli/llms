@@ -1,3 +1,8 @@
+---
+name: synthesis-guide
+description: 'TODO: Brief description of what the Skill does and when to use it'
+---
+
 # Design Synthesis Guide
 
 **Purpose**: Comprehensive guide for synthesizing outputs from multiple parallel sub-agents (Architecture Designer, Documentation Researcher, Dependency Manager) into cohesive, integrated design.

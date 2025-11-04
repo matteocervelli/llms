@@ -1,3 +1,8 @@
+---
+name: architecture-patterns
+description: 'TODO: Brief description of what the Skill does and when to use it'
+---
+
 # Architecture Patterns Reference
 
 ## Overview
