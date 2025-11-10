@@ -1,3 +1,9 @@
+---
+description: Plan a sprint by selecting stories based on capacity, dependencies, and priority
+argument-hint: "[sprint-number] [capacity]"
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob, AskUserQuestion
+---
+
 # Plan Sprint with Capacity Management
 
 Plan a sprint by selecting stories based on capacity, dependencies, and priority.

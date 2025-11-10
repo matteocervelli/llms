@@ -3,13 +3,7 @@ name: technical-annotator
 type: specialist
 description: Add technical context, implementation hints, and effort estimates to user stories
 version: 1.0.0
-allowed_tools:
-  - Read
-  - Write
-  - Edit
-  - Bash
-  - Grep
-  - Glob
+allowed_tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
 # Technical Annotator Skill

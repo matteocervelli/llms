@@ -1,3 +1,9 @@
+---
+description: Create user stories from a feature description following INVEST criteria
+argument-hint: "[feature-description]"
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob, Task, AskUserQuestion
+---
+
 # Create New User Stories from Feature
 
 Create user stories from a feature description following INVEST criteria.

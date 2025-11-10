@@ -3,11 +3,8 @@ name: technical-annotator-agent
 type: specialist
 description: Silent agent that adds technical context and implementation guidance to user stories
 version: 1.0.0
-allowed_tools:
-  - Read
-  - Bash
-  - Grep
-  - Glob
+allowed_tools: Read, Bash, Grep, Glob
+model: haiku
 ---
 
 # Technical Annotator Agent

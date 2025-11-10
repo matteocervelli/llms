@@ -1,3 +1,9 @@
+---
+description: Add technical annotations, implementation hints, and effort estimates to user stories
+argument-hint: <story-id|--all>
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob
+---
+
 # Add Technical Context to User Stories
 
 Add technical annotations, implementation hints, and effort estimates to user stories.

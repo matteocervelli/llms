@@ -3,11 +3,8 @@ name: qa-validator-agent
 type: specialist
 description: Silent agent that validates user stories against INVEST criteria
 version: 1.0.0
-allowed_tools:
-  - Read
-  - Bash
-  - Grep
-  - Glob
+allowed_tools: Read, Bash, Grep, Glob
+model: haiku
 ---
 
 # QA Validator Agent

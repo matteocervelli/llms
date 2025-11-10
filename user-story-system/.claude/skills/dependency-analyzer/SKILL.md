@@ -3,11 +3,7 @@ name: dependency-analyzer
 type: specialist
 description: Analyze story dependencies, detect issues, and generate visual dependency graphs
 version: 1.0.0
-allowed_tools:
-  - Read
-  - Bash
-  - Grep
-  - Glob
+allowed_tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
 # Dependency Analyzer Skill

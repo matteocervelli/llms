@@ -1,3 +1,9 @@
+---
+description: Analyze story dependencies, detect circular dependencies, and generate dependency graphs
+argument-hint: <story-id|--all|--graph>
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob
+---
+
 # Analyze Story Dependencies
 
 Analyze story dependencies, detect circular dependencies, and generate dependency graphs.

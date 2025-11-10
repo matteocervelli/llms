@@ -3,14 +3,7 @@ name: story-orchestrator-agent
 type: orchestrator
 description: Main workflow coordinator for user story creation and management
 version: 1.0.0
-allowed_tools:
-  - Read
-  - Write
-  - Edit
-  - Bash
-  - Grep
-  - Glob
-  - Task
+allowed_tools: Read, Write, Edit, Bash, Grep, Glob, Task
 ---
 
 # Story Orchestrator Agent

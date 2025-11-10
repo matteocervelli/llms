@@ -3,14 +3,7 @@ name: user-story-generator
 type: orchestrator
 description: Create user stories from feature descriptions with interactive Q&A and automated validation
 version: 1.0.0
-allowed_tools:
-  - Read
-  - Write
-  - Edit
-  - Bash
-  - Grep
-  - Glob
-  - Task
+allowed_tools: Read, Write, Edit, Bash, Grep, Glob, Task
 ---
 
 # User Story Generator Skill

@@ -3,13 +3,7 @@ name: sprint-planner
 type: specialist
 description: Plan sprints with capacity management, dependency checking, and priority-based story selection
 version: 1.0.0
-allowed_tools:
-  - Read
-  - Write
-  - Edit
-  - Bash
-  - Grep
-  - Glob
+allowed_tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
 # Sprint Planner Skill

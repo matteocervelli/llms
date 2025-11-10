@@ -1,3 +1,9 @@
+---
+description: Validate and refine existing user stories against INVEST criteria
+argument-hint: <story-id|backlog|--all>
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob, AskUserQuestion
+---
+
 # Refine and Validate User Stories
 
 Validate and refine existing user stories against INVEST criteria.

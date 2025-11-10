@@ -3,13 +3,7 @@ name: story-validator
 type: specialist
 description: Validate user stories against INVEST criteria and suggest improvements
 version: 1.0.0
-allowed_tools:
-  - Read
-  - Write
-  - Edit
-  - Bash
-  - Grep
-  - Glob
+allowed_tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
 # Story Validator Skill
