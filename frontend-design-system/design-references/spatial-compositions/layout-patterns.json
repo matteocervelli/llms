@@ -1,0 +1,154 @@
+{
+  "category": "Spatial Composition",
+  "subcategory": "Layout Patterns",
+  "description": "Advanced layout techniques including asymmetry, overlap, diagonal flows, and grid-breaking",
+  "items": [
+    {
+      "name": "Asymmetric Two-Column Contrast",
+      "description": "Unequal column widths creating dynamic visual balance (e.g., 30/70 or 40/60 split)",
+      "tags": ["asymmetric", "two-column", "contrast", "imbalance"],
+      "gridBase": "CSS Grid with unequal fractions",
+      "example": ".container {\n  display: grid;\n  grid-template-columns: 1fr 2.5fr;\n  gap: 4rem;\n  align-items: center;\n}\n\n/* Large visual on right, smaller text on left */\n.layout {\n  display: grid;\n  grid-template-columns: clamp(300px, 35%, 400px) 1fr;\n  gap: 3rem;\n}",
+      "visualComposition": "Small detailed content (text, list, metadata) + Large emphasis element (image, illustration, statement)",
+      "useCases": [
+        "Product showcase pages",
+        "Feature comparisons",
+        "Team bios with photos",
+        "Article with featured imagery",
+        "Before/after demonstrations"
+      ],
+      "responsiveBehavior": "Collapses to single column at breakpoint (< 768px typically), then stacks vertically maintaining visual emphasis",
+      "sources": [
+        "Contemporary magazine design",
+        "Modern SaaS landing pages",
+        "Editorial web design"
+      ]
+    },
+    {
+      "name": "Overlapping Cards with Z-Index Layering",
+      "description": "Multiple cards positioned with negative margins and z-index creating depth perception",
+      "tags": ["overlap", "layering", "depth", "z-index"],
+      "gridBase": "Absolute/relative positioning or CSS Grid with negative margins",
+      "example": ".card-stack {\n  position: relative;\n  height: 500px;\n}\n\n.card {\n  position: absolute;\n  width: 300px;\n  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);\n  border-radius: 8px;\n}\n\n.card:nth-child(1) {\n  left: 0;\n  top: 0;\n  z-index: 3;\n}\n\n.card:nth-child(2) {\n  left: 60px;\n  top: 40px;\n  z-index: 2;\n}\n\n.card:nth-child(3) {\n  left: 120px;\n  top: 80px;\n  z-index: 1;\n}\n\n/* Alternative: using grid-column and margin */\n.overlapping-grid {\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  margin: 0 -1rem;\n}\n\n.card { margin: 0 1rem; z-index: calc(4 - var(--index)); }",
+      "visualComposition": "3-5 stacked cards with staggered positioning, each slightly offset horizontally and vertically",
+      "useCases": [
+        "Portfolio showcases",
+        "Team member cards",
+        "Service feature cards",
+        "Process flow visualization",
+        "Image gallery displays"
+      ],
+      "responsiveBehavior": "Desktop: overlapped stacking. Tablet: reduced offset. Mobile: single column with cascading effect",
+      "sources": [
+        "Apple design patterns",
+        "Dribbble design showcases",
+        "Premium portfolio templates"
+      ]
+    },
+    {
+      "name": "Diagonal Flow with Transform Skew",
+      "description": "Elements arranged along diagonal axis using skew transforms and rotations",
+      "tags": ["diagonal", "skew", "transform", "flow"],
+      "gridBase": "Combination of Grid, Flexbox, and CSS Transform",
+      "example": ".diagonal-section {\n  position: relative;\n  overflow: hidden;\n  background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);\n}\n\n/* Skewed background shape */\n.diagonal-bg {\n  position: absolute;\n  width: 150%;\n  height: 150%;\n  background: var(--accent-color);\n  transform: skew(-10deg) rotate(-5deg);\n  opacity: 0.1;\n  top: -10%;\n  left: -10%;\n  z-index: 0;\n}\n\n.diagonal-content {\n  position: relative;\n  z-index: 1;\n  display: grid;\n  grid-template-columns: 1fr 1fr;\n  gap: 3rem;\n  align-items: center;\n  padding: 6rem 4rem;\n}\n\n/* Diagonal element arrangement */\n.element {\n  position: relative;\n}\n\n.element:nth-child(odd) {\n  transform: rotate(-2deg) skewX(-3deg);\n  margin-top: 2rem;\n}\n\n.element:nth-child(even) {\n  transform: rotate(2deg) skewX(3deg);\n  margin-top: -2rem;\n}",
+      "visualComposition": "Elements positioned along 45-degree (or 30/60 degree) axis, creating dynamic non-orthogonal flow",
+      "useCases": [
+        "Hero section intro flows",
+        "Feature comparison sections",
+        "Timeline presentations",
+        "Testimonial sections",
+        "Service feature displays"
+      ],
+      "responsiveBehavior": "Reduces skew angles on mobile, uses simpler layout at smaller breakpoints, maintains diagonal visual concept",
+      "sources": [
+        "Modern web agency design",
+        "Cutting-edge SaaS interfaces",
+        "Creative studio portfolios"
+      ]
+    },
+    {
+      "name": "Grid Break-Out with Absolute Positioning",
+      "description": "Container-constrained grid with elements breaking out of boundaries using absolute positioning",
+      "tags": ["grid-break", "absolute-positioning", "boundary-breaking", "emphasis"],
+      "gridBase": "CSS Grid parent with relative positioning + absolute child positioning",
+      "example": ".grid-container {\n  display: grid;\n  grid-template-columns: repeat(12, 1fr);\n  gap: 2rem;\n  position: relative;\n  margin: 4rem;\n}\n\n/* Standard grid items */\n.grid-item {\n  grid-column: span 4;\n  position: relative;\n}\n\n/* Breaking out of grid bounds */\n.breakout-large {\n  position: absolute;\n  width: 150%;\n  height: 120%;\n  top: -10%;\n  left: -25%;\n  z-index: 10;\n  /* Image or graphic that overlaps adjacent grid items */\n}\n\n/* Full-width section overlay */\n.breakout-full {\n  position: absolute;\n  width: 100vw;\n  left: 50%;\n  transform: translateX(-50%);\n  background: var(--emphasis-color);\n  z-index: 5;\n}",
+      "visualComposition": "Regular grid with 1-2 large elements that extend beyond grid container boundaries, creating break-out visual effect",
+      "useCases": [
+        "Magazine-style layouts",
+        "Featured content sections",
+        "Image galleries with emphasis",
+        "Design showcase presentations",
+        "Portfolio hero sections"
+      ],
+      "responsiveBehavior": "Desktop: elements break out dynamically. Tablet: reduced breakout extent. Mobile: contained within bounds, layered stacking",
+      "sources": [
+        "Editorial design magazines",
+        "Design publication websites",
+        "Premium portfolio showcases"
+      ]
+    },
+    {
+      "name": "Circular/Organic Grid Layout",
+      "description": "Non-rectangular grid arrangement using radial positioning and organic shapes",
+      "tags": ["circular", "organic", "radial", "non-standard"],
+      "gridBase": "CSS Grid with radial positioning or absolute positioning in circular pattern",
+      "example": ".circular-grid {\n  position: relative;\n  width: 600px;\n  height: 600px;\n  /* Central container point */\n}\n\n.item {\n  position: absolute;\n  width: 120px;\n  height: 120px;\n  border-radius: 50%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  /* Positioned via transforms */\n}\n\n/* Center item */\n.item:nth-child(1) {\n  left: 50%;\n  top: 50%;\n  transform: translate(-50%, -50%) scale(1.2);\n  z-index: 10;\n}\n\n/* Orbit positioning for surrounding items */\n.item:nth-child(n+2) {\n  left: 50%;\n  top: 50%;\n  /* Calculate rotation and radius */\n}\n\n/* Formula: rotate(angle) translateX(radius) */\n.item:nth-child(2) { transform: translate(-50%, -50%) rotate(0deg) translateX(150px) rotate(0deg); }\n.item:nth-child(3) { transform: translate(-50%, -50%) rotate(72deg) translateX(150px) rotate(-72deg); }\n.item:nth-child(4) { transform: translate(-50%, -50%) rotate(144deg) translateX(150px) rotate(-144deg); }\n.item:nth-child(5) { transform: translate(-50%, -50%) rotate(216deg) translateX(150px) rotate(-216deg); }\n.item:nth-child(6) { transform: translate(-50%, -50%) rotate(288deg) translateX(150px) rotate(-288deg); }",
+      "visualComposition": "Central element with 4-8 surrounding elements arranged in circular pattern with optional varying sizes",
+      "useCases": [
+        "Service category showcases",
+        "Team member directories (circular arrangement)",
+        "Skill/capability mapping",
+        "Process workflows (circular)",
+        "Feature comparison wheels"
+      ],
+      "responsiveBehavior": "Scales down proportionally on mobile, may convert to linear stacking at breakpoints, maintains relative positioning",
+      "sources": [
+        "Innovative interaction design",
+        "Mind-map visualizations",
+        "Modern portfolio presentations"
+      ]
+    },
+    {
+      "name": "Masonry with Variable Heights",
+      "description": "Irregular grid where items have varying heights creating interlocked visual pattern",
+      "tags": ["masonry", "variable-height", "irregular", "interlocked"],
+      "gridBase": "CSS Grid with auto-fit and row-span, or CSS Columns fallback",
+      "example": "/* CSS Grid Masonry */\n.masonry {\n  display: grid;\n  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));\n  grid-auto-rows: 250px;\n  gap: 2rem;\n  grid-auto-flow: dense; /* Fills gaps efficiently */\n}\n\n.item {\n  background: var(--item-bg);\n  border-radius: 8px;\n  overflow: hidden;\n}\n\n/* Size variations */\n.item:nth-child(2n) {\n  grid-row: span 2;\n}\n\n.item:nth-child(3n) {\n  grid-column: span 2;\n}\n\n/* CSS Columns fallback */\n.masonry-columns {\n  column-count: 3;\n  column-gap: 2rem;\n  column-width: 300px;\n}\n\n.item {\n  break-inside: avoid;\n  margin-bottom: 2rem;\n}",
+      "visualComposition": "Cards of varying heights (single, double, or triple height) arranged in columns creating staggered, interlocked visual",
+      "useCases": [
+        "Photo galleries",
+        "Portfolio item showcases",
+        "Blog post grids",
+        "Product catalogs",
+        "Image-heavy content displays"
+      ],
+      "responsiveBehavior": "Desktop: 3-4 columns with variable heights. Tablet: 2 columns with reduced variation. Mobile: single column, variable heights maintained",
+      "sources": [
+        "Pinterest layout pattern",
+        "Modern gallery implementations",
+        "Content-heavy design showcases"
+      ]
+    },
+    {
+      "name": "Split-Screen with Scroll Offset",
+      "description": "Two-column layout where right content scrolls at different rate creating parallax effect",
+      "tags": ["split-screen", "scroll-offset", "parallax", "two-pane"],
+      "gridBase": "Flexbox or Grid with position: sticky and overflow handling",
+      "example": ".split-layout {\n  display: grid;\n  grid-template-columns: 1fr 1fr;\n  min-height: 100vh;\n  overflow: hidden;\n}\n\n.left-pane {\n  position: sticky;\n  top: 0;\n  height: 100vh;\n  overflow-y: auto;\n  background: var(--bg-left);\n}\n\n.right-pane {\n  overflow-y: auto;\n  height: 100vh;\n  background: var(--bg-right);\n}\n\n/* Parallax effect with transform */\n.parallax-element {\n  position: absolute;\n  will-change: transform;\n  /* JavaScript updates: transform: translateY(scrollOffset * 0.5) */\n}\n\n/* Alternative: using animation-timeline */\n.right-pane {\n  animation: scroll-parallax linear forwards;\n  animation-timeline: view();\n}",
+      "visualComposition": "Equal or weighted columns with independent scroll behaviors creating depth and movement impression",
+      "useCases": [
+        "Documentation with live preview",
+        "Code editor interfaces",
+        "Before/after comparisons",
+        "Story-telling layouts",
+        "Product comparison pages"
+      ],
+      "responsiveBehavior": "Desktop: side-by-side with independent scrolling. Tablet/Mobile: stacked vertically with synchronized scroll, parallax reduced or disabled",
+      "sources": [
+        "Code editor UI patterns",
+        "Modern documentation sites",
+        "Interactive storytelling"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "category": "Motion & Animation",
+  "subcategory": "CSS Animation Patterns",
+  "description": "Common animation patterns and techniques for web interfaces with implementation examples",
+  "items": [
+    {
+      "name": "Staggered Sequential Reveal",
+      "description": "Elements appear one after another with consistent delay between each item",
+      "tags": ["reveal", "stagger", "entrance", "cascade"],
+      "timing": "250ms - 500ms delay increments",
+      "easing": "cubic-bezier(0.34, 1.56, 0.64, 1)",
+      "css": "@keyframes slideUp {\n  from { opacity: 0; transform: translateY(30px); }\n  to { opacity: 1; transform: translateY(0); }\n}\n\n.item {\n  animation: slideUp 0.6s ease-out forwards;\n}\n\n.item:nth-child(1) { animation-delay: 0ms; }\n.item:nth-child(2) { animation-delay: 100ms; }\n.item:nth-child(3) { animation-delay: 200ms; }\n.item:nth-child(n+4) { animation-delay: calc(100ms * (var(--item-index) - 1)); }",
+      "duration": "600ms total per item",
+      "example": "Page load animations, list item reveals, dropdown menu appearances",
+      "performance": "GPU-accelerated, smooth at 60fps",
+      "source": "Modern web design patterns"
+    },
+    {
+      "name": "Page Load Orchestration",
+      "description": "Coordinated multi-layer entrance sequence for landing page initial view",
+      "tags": ["orchestration", "page-load", "entrance", "complex"],
+      "timing": "Timeline: 0-200ms (logo), 200-600ms (headline), 600-1000ms (subheading), 800-1200ms (CTA)",
+      "easing": "cubic-bezier(0.16, 1, 0.3, 1)",
+      "css": "/* Background fade in */\n@keyframes bgFadeIn { from { opacity: 0; } to { opacity: 1; } }\n.hero-bg { animation: bgFadeIn 0.3s ease-in forwards; }\n\n/* Logo scale in */\n@keyframes logoScale { from { opacity: 0; scale: 0.8; } to { opacity: 1; scale: 1; } }\n.logo { animation: logoScale 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; animation-delay: 0ms; }\n\n/* Headline slide from left */\n@keyframes headlineSlide { from { opacity: 0; transform: translateX(-40px); } to { opacity: 1; transform: translateX(0); } }\n.headline { animation: headlineSlide 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; animation-delay: 150ms; }\n\n/* Subheading fade in */\n@keyframes descFade { from { opacity: 0; } to { opacity: 1; } }\n.description { animation: descFade 0.4s ease-out forwards; animation-delay: 500ms; }\n\n/* CTA button float in */\n@keyframes ctaFloat { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }\n.cta { animation: ctaFloat 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; animation-delay: 800ms; }",
+      "duration": "1200ms - 1500ms total orchestration",
+      "example": "Landing page hero sections, product launches, premium website introductions",
+      "performance": "Carefully sequenced to avoid layout thrashing",
+      "source": "Premium web design studios"
+    },
+    {
+      "name": "Hover State Microinteraction",
+      "description": "Subtle interactive feedback on element hover with scale and glow effects",
+      "tags": ["hover", "microinteraction", "feedback", "interactive"],
+      "timing": "150ms - 250ms for hover entrance",
+      "easing": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "css": ".button {\n  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);\n  background: #3b82f6;\n  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);\n}\n\n.button:hover {\n  transform: translateY(-2px) scale(1.05);\n  box-shadow: 0 12px 16px rgba(59, 130, 246, 0.3);\n  background: #2563eb;\n}\n\n.button:active {\n  transform: translateY(0) scale(0.98);\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\n}",
+      "duration": "200ms standard",
+      "example": "Button interactions, card hovers, link emphasis, navigation feedback",
+      "performance": "GPU-accelerated transforms and opacity only",
+      "source": "UI/UX interaction design standards"
+    },
+    {
+      "name": "Scroll Trigger Fade-In",
+      "description": "Elements fade and slide into view when scrolled into viewport",
+      "tags": ["scroll", "trigger", "intersection", "fade-in"],
+      "timing": "600ms duration when triggered",
+      "easing": "ease-out",
+      "css": "@keyframes scrollReveal {\n  from { opacity: 0; transform: translateY(40px); }\n  to { opacity: 1; transform: translateY(0); }\n}\n\n.scroll-trigger {\n  opacity: 0;\n}\n\n.scroll-trigger.in-view {\n  animation: scrollReveal 0.6s ease-out forwards;\n}\n\n/* Optional: different timing per item */\n.scroll-trigger:nth-child(1).in-view { animation-delay: 0ms; }\n.scroll-trigger:nth-child(2).in-view { animation-delay: 100ms; }\n.scroll-trigger:nth-child(3).in-view { animation-delay: 200ms; }",
+      "duration": "600ms with optional stagger",
+      "example": "Landing page sections, content reveals, image galleries, statistics counters",
+      "performance": "Requires Intersection Observer API for performance",
+      "source": "Modern lazy-load animation patterns"
+    },
+    {
+      "name": "Loading Skeleton Pulse",
+      "description": "Subtle pulsing animation indicating content loading state",
+      "tags": ["loading", "skeleton", "pulse", "placeholder"],
+      "timing": "1.5s - 2s pulse cycle",
+      "easing": "ease-in-out",
+      "css": "@keyframes pulse {\n  0%, 100% { opacity: 1; }\n  50% { opacity: 0.5; }\n}\n\n.skeleton {\n  background: linear-gradient(\n    90deg,\n    #e5e7eb 25%,\n    #f3f4f6 50%,\n    #e5e7eb 75%\n  );\n  background-size: 200% 100%;\n  animation: pulse 1.5s ease-in-out infinite;\n}\n\n/* Shimmer effect alternative */\n@keyframes shimmer {\n  0% { background-position: -1000px 0; }\n  100% { background-position: 1000px 0; }\n}\n\n.skeleton-shimmer {\n  background-image: linear-gradient(\n    90deg,\n    #f6f7f8 0px,\n    #edeef1 40px,\n    #f6f7f8 80px\n  );\n  background-size: 200px 100%;\n  animation: shimmer 2s infinite;\n}",
+      "duration": "1.5s - 2s infinite",
+      "example": "Content placeholders, data loading states, skeleton screens, image loading",
+      "performance": "Lightweight, no heavy rendering impact",
+      "source": "Google Material Design Loading Patterns"
+    },
+    {
+      "name": "Modal Entrance & Exit",
+      "description": "Coordinated animation for modal/dialog overlay and content entrance",
+      "tags": ["modal", "dialog", "overlay", "entrance-exit"],
+      "timing": "Overlay: 300ms, Content: 400ms",
+      "easing": "cubic-bezier(0.16, 1, 0.3, 1)",
+      "css": "/* Backdrop fade in */\n@keyframes backdropFadeIn {\n  from { opacity: 0; }\n  to { opacity: 1; }\n}\n\n.modal-backdrop {\n  background: rgba(0, 0, 0, 0.5);\n  animation: backdropFadeIn 0.3s ease-out forwards;\n}\n\n/* Content scale & fade in */\n@keyframes contentEnter {\n  from {\n    opacity: 0;\n    transform: scale(0.95) translateY(-20px);\n  }\n  to {\n    opacity: 1;\n    transform: scale(1) translateY(0);\n  }\n}\n\n.modal-content {\n  animation: contentEnter 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;\n  animation-delay: 50ms;\n}\n\n/* Exit animations (reversed) */\n.modal-backdrop.exit {\n  animation: backdropFadeIn 0.3s ease-in reverse forwards;\n}\n\n.modal-content.exit {\n  animation: contentEnter 0.3s ease-in reverse forwards;\n}",
+      "duration": "300-400ms entrance, 250-300ms exit",
+      "example": "Dialog boxes, confirmation modals, information overlays, form popups",
+      "performance": "Backdrop uses opacity only (GPU-accelerated)",
+      "source": "Material Design dialog animations"
+    },
+    {
+      "name": "Parallax Scroll Effect",
+      "description": "Background and foreground elements move at different speeds on scroll",
+      "tags": ["parallax", "scroll", "depth", "effect"],
+      "timing": "Based on scroll velocity",
+      "easing": "linear (scroll-driven)",
+      "css": ".parallax-container { perspective: 1000px; }\n\n.parallax-bg {\n  /* Using CSS scroll-driven animations (modern approach) */\n  animation: parallax-move linear forwards;\n  animation-timeline: view();\n  animation-range: entry 0% cover 100%;\n}\n\n@keyframes parallax-move {\n  to { transform: translateY(100px); }\n}\n\n/* Fallback: JavaScript-based parallax */\n.parallax-bg {\n  will-change: transform;\n  /* JavaScript updates transform: translateY(offset * 0.5) on scroll */\n}",
+      "duration": "Continuous based on scroll position",
+      "example": "Hero section depth effects, background imagery, immersive scrolling experiences",
+      "performance": "Use will-change, limit to critical elements, consider requestAnimationFrame",
+      "source": "Advanced web animation techniques"
+    }
+  ]
+}
