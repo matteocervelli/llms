@@ -1,0 +1,47 @@
+# Dangerous command patterns - STRICT blocking
+# Edit this file to customize blocked commands
+
+patterns:
+  - pattern: 'rm\s+-[rf]*[rf]\s+[/~]'
+    message: "rm -rf with root or home path"
+    severity: critical
+
+  - pattern: 'sudo\s+rm'
+    message: "sudo rm commands"
+    severity: critical
+
+  - pattern: 'chmod\s+777'
+    message: "chmod 777 (dangerous permissions)"
+    severity: high
+
+  - pattern: '>\s*/etc/'
+    message: "Writing to /etc/"
+    severity: critical
+
+  - pattern: 'mkfs\.'
+    message: "mkfs filesystem commands"
+    severity: critical
+
+  - pattern: 'dd\s+if=.*of=/dev/'
+    message: "dd writing to device"
+    severity: critical
+
+  - pattern: ':\(\)\{:\|:&\};:'
+    message: "Fork bomb"
+    severity: critical
+
+  - pattern: 'curl.*\|\s*(ba)?sh'
+    message: "Piping curl to shell"
+    severity: high
+
+  - pattern: 'wget.*\|\s*(ba)?sh'
+    message: "Piping wget to shell"
+    severity: high
+
+  - pattern: 'git\s+push.*--force\s+(origin\s+)?(main|master)'
+    message: "Force push to main/master"
+    severity: high
+
+  - pattern: 'git\s+commit.*(-n\b|--no-verify)'
+    message: "--no-verify/-n bypasses security gate (run /security-verify scan first)"
+    severity: critical

@@ -6,11 +6,77 @@
         "hooks": [
           {
             "type": "command",
-            "command": "~/.claude/hooks/pre-commit.py",
-            "timeout": 180
+            "command": "python ~/.claude/hooks/hook_handler.py pretool bash"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python ~/.claude/hooks/hook_handler.py pretool edit"
+          }
+        ]
+      },
+      {
+        "matcher": "Read",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python ~/.claude/hooks/hook_handler.py pretool read"
           }
         ]
       }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python ~/.claude/hooks/hook_handler.py posttool edit"
+          }
+        ]
+      },
+      {
+        "matcher": "ExitPlanMode",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python ~/.claude/hooks/hook_handler.py posttool exitplanmode"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python ~/.claude/hooks/hook_handler.py session"
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Bash(git status)",
+      "Bash(git log *)",
+      "Bash(git diff *)",
+      "Bash(uv *)",
+      "Bash(python *)",
+      "Bash(ruff *)",
+      "Bash(pytest *)"
+    ],
+    "deny": [
+      "Bash(git push --force *)",
+      "Read(**/.env)",
+      "Read(**/*.pem)",
+      "Read(**/*.key)",
+      "Read(**/.aws/*)",
+      "Read(**/.ssh/*)"
     ]
   }
 }

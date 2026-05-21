@@ -1,0 +1,151 @@
+{
+  "category": "Typography",
+  "subcategory": "Weight Scales",
+  "description": "Font weight progression patterns and size jump combinations for typographic hierarchy",
+  "items": [
+    {
+      "name": "Extreme Contrast - Ultra Light to Black",
+      "description": "Maximum visual contrast using extreme weight variations (100 to 900)",
+      "tags": ["extreme", "high-contrast", "dramatic", "impact"],
+      "weightProgression": [100, 200, 400, 600, 800, 900],
+      "pattern": "100→200→400→600→800→900",
+      "sizeProgression": {
+        "heading1": "48px - 900",
+        "heading2": "36px - 800",
+        "heading3": "28px - 700",
+        "subtitle": "20px - 600",
+        "body": "16px - 400",
+        "caption": "12px - 200",
+        "disabled": "12px - 100"
+      },
+      "sizeJumpRatio": 1.33,
+      "useCases": [
+        "High-impact landing pages",
+        "Fashion and lifestyle brands",
+        "Editorial design with strong visual hierarchy",
+        "Magazine and luxury publications"
+      ],
+      "example": "Display weight 900 for main headline, 100 for subtle captions creates 8x weight ratio",
+      "source": "Modern editorial typography"
+    },
+    {
+      "name": "Binary Weight System",
+      "description": "Simplified two-weight system for minimal, focused design (Regular + Bold)",
+      "tags": ["minimal", "binary", "simple", "efficient"],
+      "weightProgression": [400, 700],
+      "pattern": "400→700",
+      "sizeProgression": {
+        "heading1": "56px - 700",
+        "heading2": "40px - 700",
+        "heading3": "28px - 700",
+        "body": "16px - 400",
+        "caption": "14px - 400"
+      },
+      "sizeJumpRatio": 1.4,
+      "useCases": [
+        "Minimalist apps and interfaces",
+        "Content-focused websites",
+        "Technical documentation",
+        "Data-heavy dashboards"
+      ],
+      "example": "Use 700 for hierarchy, 400 for all readable content - clean and focused",
+      "source": "Swiss style design"
+    },
+    {
+      "name": "Aggressive Size Scaling (3x+)",
+      "description": "Large size jumps between hierarchy levels combined with weight variation",
+      "tags": ["aggressive", "large-jumps", "dramatic", "bold"],
+      "weightProgression": [300, 500, 700, 900],
+      "pattern": "300→500→700→900 with 3x size jumps",
+      "sizeProgression": {
+        "heading1": "72px - 900",
+        "heading2": "48px - 800",
+        "heading3": "32px - 700",
+        "subtitle": "20px - 500",
+        "body": "16px - 400",
+        "small": "10px - 300"
+      },
+      "sizeJumpRatio": 1.5,
+      "useCases": [
+        "Mobile-first responsive design",
+        "Hero sections with clear CTAs",
+        "Presentations and slide decks",
+        "Attention-grabbing promotional pages"
+      ],
+      "example": "H1 at 72px-900 with Body at 16px-400 creates dramatic visual separation",
+      "source": "Mobile typography best practices"
+    },
+    {
+      "name": "Geometric Progression",
+      "description": "Mathematical scaling using consistent ratio (1.2x Modular Scale)",
+      "tags": ["geometric", "mathematical", "harmonic", "systematic"],
+      "weightProgression": [300, 400, 500, 600, 700, 800],
+      "pattern": "300→400→500→600→700→800 with 1.2x size ratio",
+      "sizeProgression": {
+        "heading1": "48px - 800",
+        "heading2": "40px - 700",
+        "heading3": "33px - 600",
+        "heading4": "27px - 500",
+        "body": "16px - 400",
+        "small": "13px - 300"
+      },
+      "sizeJumpRatio": 1.2,
+      "useCases": [
+        "Design systems and component libraries",
+        "Balanced, proportional layouts",
+        "Academic and scientific publications",
+        "Enterprise applications"
+      ],
+      "example": "Each level multiplies by 1.2x: 16 × 1.2 = 19.2px (round to 20), × 1.2 = 24px",
+      "source": "Modular scale typography"
+    },
+    {
+      "name": "Subtle Distinction",
+      "description": "Minimal weight variation for sophisticated, understated typography",
+      "tags": ["subtle", "refined", "elegant", "minimal"],
+      "weightProgression": [400, 500, 600],
+      "pattern": "400→500→600",
+      "sizeProgression": {
+        "heading1": "42px - 600",
+        "heading2": "32px - 600",
+        "heading3": "24px - 500",
+        "body": "16px - 400",
+        "caption": "14px - 400"
+      },
+      "sizeJumpRatio": 1.25,
+      "useCases": [
+        "Luxury and premium brands",
+        "Professional services",
+        "High-end e-commerce",
+        "Cultural institutions"
+      ],
+      "example": "Rely more on size variation than weight for hierarchy - 600 and 400 only",
+      "source": "Luxury brand typography"
+    },
+    {
+      "name": "Variable Font Optimization",
+      "description": "Leveraging variable fonts for smooth weight transitions and file efficiency",
+      "tags": ["variable-fonts", "modern", "smooth", "efficient"],
+      "weightProgression": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      "pattern": "Full 100-900 range with variable interpolation",
+      "sizeProgression": {
+        "heading1": "48px - 800",
+        "heading2": "36px - 700",
+        "heading3": "28px - 650",
+        "highlight": "20px - 600",
+        "body": "16px - 400",
+        "caption": "12px - 350",
+        "disabled": "12px - 250"
+      },
+      "sizeJumpRatio": 1.33,
+      "useCases": [
+        "Performance-critical applications",
+        "Modern web applications",
+        "Dynamic content systems",
+        "Responsive interfaces"
+      ],
+      "example": "Use 650 weight smoothly between 600-700 for refined transitions without additional font files",
+      "source": "OpenType variable fonts specification"
+    }
+  ]
+}

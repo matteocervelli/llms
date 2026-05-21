@@ -1,0 +1,34 @@
+# Codex CLI configuration
+# Reference: https://github.com/openai/codex
+
+[model]
+model = "o4-mini"
+# model = "o3"  # for complex tasks
+
+[approval]
+# "suggest" = show diffs, require approval before applying
+# "auto-edit" = apply edits automatically, ask for commands
+# "full-auto" = run autonomously (use in sandboxed environments only)
+mode = "suggest"
+
+[hooks]
+# Same hook protocol as Claude Code: Python scripts reading JSON from stdin
+# Exit 2 = block, exit 0 = allow
+pre_exec = "python .codex/hooks/hook_handler.py pretool bash"
+post_edit = "python .codex/hooks/hook_handler.py posttool edit"
+
+[permissions]
+# Commands always allowed
+allow = [
+  "git status",
+  "git log",
+  "git diff",
+  "uv *",
+  "python *",
+  "ruff *",
+  "pytest *",
+]
+# Commands always blocked
+deny = [
+  "git push --force",
+]

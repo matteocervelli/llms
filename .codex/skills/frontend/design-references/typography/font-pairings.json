@@ -1,0 +1,157 @@
+{
+  "category": "Typography",
+  "subcategory": "Font Pairings",
+  "description": "Curated font combinations for different design contexts and tones",
+  "items": [
+    {
+      "name": "Editorial Premium",
+      "description": "High-end publication pairing with serif display and geometric sans body",
+      "tags": ["editorial", "luxury", "premium", "serif"],
+      "displayFont": {
+        "family": "Playfair Display",
+        "googleFontsUrl": "https://fonts.google.com/specimen/Playfair+Display",
+        "weights": [400, 700, 900],
+        "usage": "Headlines, section titles"
+      },
+      "bodyFont": {
+        "family": "Inter",
+        "googleFontsUrl": "https://fonts.google.com/specimen/Inter",
+        "weights": [400, 500, 600],
+        "usage": "Body text, copy, labels"
+      },
+      "monoFont": {
+        "family": "IBM Plex Mono",
+        "googleFontsUrl": "https://fonts.google.com/specimen/IBM+Plex+Mono",
+        "weights": [400, 600],
+        "usage": "Code, technical content"
+      },
+      "example": "Financial reports, luxury brands, editorial design",
+      "source": "Google Fonts premium pairings"
+    },
+    {
+      "name": "Technical Minimal",
+      "description": "Clean geometric sans pairing optimized for technical documentation",
+      "tags": ["technical", "minimal", "code-focused", "sans-serif"],
+      "displayFont": {
+        "family": "JetBrains Mono",
+        "googleFontsUrl": "https://www.jetbrains.com/lp/mono/",
+        "weights": [400, 600, 700],
+        "usage": "Headlines, code emphasis"
+      },
+      "bodyFont": {
+        "family": "Roboto",
+        "googleFontsUrl": "https://fonts.google.com/specimen/Roboto",
+        "weights": [400, 500],
+        "usage": "Body text, UI copy"
+      },
+      "monoFont": {
+        "family": "Source Code Pro",
+        "googleFontsUrl": "https://fonts.google.com/specimen/Source+Code+Pro",
+        "weights": [400, 600, 700],
+        "usage": "Code blocks, monospace content"
+      },
+      "example": "Developer docs, API references, technical blogs",
+      "source": "JetBrains + Google Fonts"
+    },
+    {
+      "name": "Playful Modern",
+      "description": "Contemporary sans-serif combo with distinctive geometric character",
+      "tags": ["playful", "modern", "friendly", "rounded"],
+      "displayFont": {
+        "family": "Poppins",
+        "googleFontsUrl": "https://fonts.google.com/specimen/Poppins",
+        "weights": [600, 700, 800],
+        "usage": "Headlines, callouts, brand messaging"
+      },
+      "bodyFont": {
+        "family": "Open Sans",
+        "googleFontsUrl": "https://fonts.google.com/specimen/Open+Sans",
+        "weights": [400, 500, 600],
+        "usage": "Body text, descriptions"
+      },
+      "monoFont": {
+        "family": "Courier Prime",
+        "googleFontsUrl": "https://fonts.google.com/specimen/Courier+Prime",
+        "weights": [400, 700],
+        "usage": "Code, monospace emphasis"
+      },
+      "example": "Startups, tech companies, educational platforms",
+      "source": "Modern design trends"
+    },
+    {
+      "name": "Sophisticated Serif",
+      "description": "Classic serif combination with high contrast and elegance",
+      "tags": ["sophisticated", "serif", "luxury", "formal"],
+      "displayFont": {
+        "family": "Crimson Text",
+        "googleFontsUrl": "https://fonts.google.com/specimen/Crimson+Text",
+        "weights": [400, 600, 700],
+        "usage": "Headlines, display text"
+      },
+      "bodyFont": {
+        "family": "Lato",
+        "googleFontsUrl": "https://fonts.google.com/specimen/Lato",
+        "weights": [400, 700],
+        "usage": "Body text, interface text"
+      },
+      "monoFont": {
+        "family": "Inconsolata",
+        "googleFontsUrl": "https://fonts.google.com/specimen/Inconsolata",
+        "weights": [400, 700],
+        "usage": "Code, technical references"
+      },
+      "example": "Law firms, traditional publishing, heritage brands",
+      "source": "Classic typography principles"
+    },
+    {
+      "name": "Minimalist System",
+      "description": "Neutral geometric sans pairing optimized for UI systems",
+      "tags": ["minimal", "system", "ui-focused", "geometric"],
+      "displayFont": {
+        "family": "Space Mono",
+        "googleFontsUrl": "https://fonts.google.com/specimen/Space+Mono",
+        "weights": [400, 700],
+        "usage": "Headlines, emphasis, UI labels"
+      },
+      "bodyFont": {
+        "family": "Nunito",
+        "googleFontsUrl": "https://fonts.google.com/specimen/Nunito",
+        "weights": [400, 500, 600, 700],
+        "usage": "Body text, UI copy, descriptions"
+      },
+      "monoFont": {
+        "family": "Roboto Mono",
+        "googleFontsUrl": "https://fonts.google.com/specimen/Roboto+Mono",
+        "weights": [400, 500, 700],
+        "usage": "Code, data display"
+      },
+      "example": "SaaS products, mobile apps, design systems",
+      "source": "Google Material Design"
+    },
+    {
+      "name": "Expressive Experimental",
+      "description": "Bold display typeface with minimalist body for creative industries",
+      "tags": ["experimental", "expressive", "creative", "display"],
+      "displayFont": {
+        "family": "Bebas Neue",
+        "googleFontsUrl": "https://fonts.google.com/specimen/Bebas+Neue",
+        "weights": [400],
+        "usage": "Headlines, brand messaging, impact"
+      },
+      "bodyFont": {
+        "family": "Cabin",
+        "googleFontsUrl": "https://fonts.google.com/specimen/Cabin",
+        "weights": [400, 500, 600, 700],
+        "usage": "Body text, detailed copy"
+      },
+      "monoFont": {
+        "family": "Fira Code",
+        "googleFontsUrl": "https://fonts.google.com/specimen/Fira+Code",
+        "weights": [400, 500, 600, 700],
+        "usage": "Code, programming content"
+      },
+      "example": "Creative agencies, music/art platforms, experimental design",
+      "source": "Contemporary creative typography"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+/* Fixture: no design anti-patterns — should produce zero findings */
+body {
+  font-family: "Playfair Display", serif;
+  color: #1a1a1a;
+}
+
+.button {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid #e2e8f0;
+}
+
+.loader {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

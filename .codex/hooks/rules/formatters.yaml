@@ -1,0 +1,67 @@
+# Auto-formatter configuration
+# Maps file extensions to formatter commands
+
+formatters:
+  # Python
+  .py:
+    command: ["ruff", "format", "--quiet"]
+    fallback: null
+
+  # JavaScript/TypeScript
+  .js:
+    command: ["prettier", "--write"]
+    fallback: ["npx", "prettier", "--write"]
+
+  .jsx:
+    command: ["prettier", "--write"]
+    fallback: ["npx", "prettier", "--write"]
+
+  .ts:
+    command: ["prettier", "--write"]
+    fallback: ["npx", "prettier", "--write"]
+
+  .tsx:
+    command: ["prettier", "--write"]
+    fallback: ["npx", "prettier", "--write"]
+
+  # Data formats
+  .json:
+    command: ["prettier", "--write"]
+    fallback: ["npx", "prettier", "--write"]
+
+  .yaml:
+    command: ["prettier", "--write"]
+    fallback: ["npx", "prettier", "--write"]
+
+  .yml:
+    command: ["prettier", "--write"]
+    fallback: ["npx", "prettier", "--write"]
+
+  # Styles
+  .css:
+    command: ["prettier", "--write"]
+    fallback: ["npx", "prettier", "--write"]
+
+  .scss:
+    command: ["prettier", "--write"]
+    fallback: ["npx", "prettier", "--write"]
+
+  # Documentation
+  .md:
+    command: ["prettier", "--write"]
+    fallback: ["npx", "prettier", "--write"]
+
+  # Shell
+  .sh:
+    command: ["shfmt", "-w"]
+    fallback: null
+
+  .bash:
+    command: ["shfmt", "-w"]
+    fallback: null
+
+# Timeout for formatter execution (seconds)
+timeout: 10
+
+# Whether to fail silently if formatter not found
+silent_fail: true

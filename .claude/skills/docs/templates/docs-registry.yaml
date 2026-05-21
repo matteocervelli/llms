@@ -1,0 +1,48 @@
+# docs-registry.yaml — Tracciamento pagine documentazione utente
+# Posizione: {repo}/site/docs-registry.yaml
+# Gestito da: /docs registry
+# Non modificare manualmente i campi last_updated e status — usare /docs registry update
+
+meta:
+  project: "{{APP_NAME}}"
+  domain: "{{DOMAIN}}"
+  docs_base: "/docs"
+  default_language: "it"
+  last_audit: null
+
+# Pagine required (FAIL se mancanti in /docs audit)
+# Aggiungere nuove pagine con /docs create <type>
+docs:
+  getting-started-it:
+    file: src/content/docs/it/getting-started.md
+    type: getting-started
+    language: it
+    feature: onboarding
+    last_updated: null
+    last_deployed: null
+    status: missing # draft | published | stale | missing
+    linked_version: null
+    required: true
+
+  getting-started-en:
+    file: src/content/docs/en/getting-started.md
+    type: getting-started
+    language: en
+    feature: onboarding
+    last_updated: null
+    status: missing
+    linked_version: null
+    required: true
+
+# Aggiungere qui le pagine create con /docs create
+# Esempio:
+#
+# feature-guide-fatture-it:
+#   file: src/content/docs/it/features/fatture.md
+#   type: feature-guide
+#   language: it
+#   feature: invoicing
+#   last_updated: 2026-03-16
+#   status: draft
+#   linked_version: "1.0.0"
+#   required: false

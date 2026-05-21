@@ -1,0 +1,46 @@
+# Protected file patterns
+# Edit this file to customize file protection
+
+# STRICT blocking - these files cannot be modified
+blocked:
+  - pattern: '\.env($|\.)'
+    message: "Cannot modify .env files (credentials)"
+
+  - pattern: '\.git/'
+    message: "Cannot modify .git directory"
+
+  - pattern: '\.ssh/'
+    message: "Cannot modify .ssh directory"
+
+  - pattern: 'credentials\.'
+    message: "Cannot modify credentials files"
+
+  - pattern: 'secrets?\.'
+    message: "Cannot modify secrets files"
+
+  - pattern: '\.pem$'
+    message: "Cannot modify PEM key files"
+
+  - pattern: '\.key$'
+    message: "Cannot modify key files"
+
+
+# GRACEFUL redirect - edits silently redirected to /dev/null
+redirect:
+  - pattern: 'package-lock\.json$'
+    reason: "Lock file - auto-generated"
+
+  - pattern: 'yarn\.lock$'
+    reason: "Lock file - auto-generated"
+
+  - pattern: 'pnpm-lock\.yaml$'
+    reason: "Lock file - auto-generated"
+
+  - pattern: 'Gemfile\.lock$'
+    reason: "Lock file - auto-generated"
+
+  - pattern: 'poetry\.lock$'
+    reason: "Lock file - auto-generated"
+
+  - pattern: 'Cargo\.lock$'
+    reason: "Lock file - auto-generated"

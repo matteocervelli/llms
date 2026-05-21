@@ -1,0 +1,26 @@
+# Named database connections for /analytics skill
+# Note: use plain postgresql:// (not +asyncpg) for psql CLI compatibility
+#
+# Passwords: set these env vars in settings.local.json (gitignored) or your shell:
+#   RATIO_DB_PASS, TABULARIUM_DB_PASS, MERCURIUS_DB_PASS
+
+connections:
+  ratio:
+    type: psql
+    description: "Ratio production DB (app-ratio backend)"
+
+  ratio-crm:
+    type: psql
+    description: "Ratio CRM mixins DB"
+
+  tabularium:
+    type: psql
+    description: "Tabularium L2 API gateway DB"
+
+  mercurius:
+    type: psql
+    description: "Mercurius DB"
+
+# Not reachable from studio (Docker-internal or localhost-only):
+#   venator-postgres  — no external port exposed
+#   shared postgres   — bound to 127.0.0.1:5532 only

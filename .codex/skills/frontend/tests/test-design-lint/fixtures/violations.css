@@ -1,0 +1,15 @@
+/* Fixture: known violations for design-lint.sh tests */
+body {
+  font-family: "Inter", sans-serif;
+  color: #000000;
+}
+
+.button {
+  transition: all 0.3s linear;
+  border: 3px solid red;
+}
+
+.card {
+  backdrop-filter: blur(10px);
+  border-left: 4px solid blue;
+}

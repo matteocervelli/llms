@@ -1,0 +1,302 @@
+{
+  "category": "Color Palettes",
+  "subcategory": "IDE & Code Editor Themes",
+  "description": "Professional color schemes extracted from popular code editors and IDEs for design reference",
+  "items": [
+    {
+      "name": "Dracula Official",
+      "description": "Dark purple/pink theme with high contrast, optimized for extended coding sessions",
+      "tags": ["dark", "high-contrast", "popular", "dracula"],
+      "source": "https://draculatheme.com/",
+      "colors": {
+        "background": "#282a36",
+        "foreground": "#f8f8f2",
+        "comment": "#6272a4",
+        "red": "#ff5555",
+        "orange": "#ffb86c",
+        "yellow": "#f1fa8c",
+        "green": "#50fa7b",
+        "cyan": "#8be9fd",
+        "blue": "#bd93f9",
+        "purple": "#ff79c6"
+      },
+      "palette": [
+        "#282a36",
+        "#f8f8f2",
+        "#6272a4",
+        "#ff5555",
+        "#ffb86c",
+        "#f1fa8c",
+        "#50fa7b",
+        "#8be9fd",
+        "#bd93f9",
+        "#ff79c6"
+      ],
+      "accessibility": {
+        "contrastRatio": "high",
+        "wcagLevel": "AAA",
+        "notes": "Excellent for dark mode interfaces"
+      },
+      "useCase": "Dark mode applications, developer tools, modern web interfaces",
+      "example": "VS Code, Terminal emulators, coding websites"
+    },
+    {
+      "name": "Nord",
+      "description": "Arctic blue-based theme inspired by Nordic landscapes, cool and calming",
+      "tags": ["cool", "arctic", "blue", "minimalist"],
+      "source": "https://www.nordtheme.com/",
+      "colors": {
+        "nord0": "#2e3440",
+        "nord1": "#3b4252",
+        "nord2": "#434c5e",
+        "nord3": "#4c566a",
+        "nord4": "#d8dee9",
+        "nord5": "#e5e9f0",
+        "nord6": "#eceff4",
+        "nord7": "#8fbcbb",
+        "nord8": "#88c0d0",
+        "nord9": "#81a1c1",
+        "nord10": "#5e81ac",
+        "nord11": "#bf616a",
+        "nord12": "#d08770",
+        "nord13": "#ebcb8b",
+        "nord14": "#a3be8c",
+        "nord15": "#b48ead"
+      },
+      "palette": [
+        "#2e3440",
+        "#3b4252",
+        "#434c5e",
+        "#4c566a",
+        "#d8dee9",
+        "#e5e9f0",
+        "#eceff4",
+        "#8fbcbb",
+        "#88c0d0",
+        "#81a1c1"
+      ],
+      "accessibility": {
+        "contrastRatio": "AAA",
+        "wcagLevel": "AAA",
+        "notes": "Cool tones reduce eye strain"
+      },
+      "useCase": "Professional applications, technical documentation, long-duration use",
+      "example": "Cross-platform editor theme, design tools"
+    },
+    {
+      "name": "Monokai Pro",
+      "description": "Modern dark theme with vibrant syntax highlighting derived from Monokai classic",
+      "tags": ["vibrant", "professional", "classic", "monokai"],
+      "source": "https://monokai.pro/",
+      "colors": {
+        "background": "#2d2a2e",
+        "foreground": "#fcfcfa",
+        "string": "#ffd866",
+        "number": "#a1efe4",
+        "boolean": "#fd9353",
+        "function": "#a9dc76",
+        "keyword": "#ff6188",
+        "comment": "#727072",
+        "variable": "#fcfcfa"
+      },
+      "palette": [
+        "#2d2a2e",
+        "#fcfcfa",
+        "#ffd866",
+        "#a1efe4",
+        "#fd9353",
+        "#a9dc76",
+        "#ff6188",
+        "#727072"
+      ],
+      "accessibility": {
+        "contrastRatio": "high",
+        "wcagLevel": "AAA",
+        "notes": "Excellent readability with vibrant accents"
+      },
+      "useCase": "Creative coding, high-visibility syntax highlighting, modern development",
+      "example": "Professional code editors, design systems"
+    },
+    {
+      "name": "Solarized Dark",
+      "description": "Precision colors for machines and people, carefully designed for readability",
+      "tags": ["scientific", "precision", "balanced", "solarized"],
+      "source": "https://ethanschoonover.com/solarized/",
+      "colors": {
+        "base03": "#002b36",
+        "base02": "#073642",
+        "base01": "#586e75",
+        "base00": "#657b83",
+        "base0": "#839496",
+        "base1": "#93a1a1",
+        "base2": "#eee8d5",
+        "base3": "#fdf6e3",
+        "yellow": "#b58900",
+        "orange": "#cb4b16",
+        "red": "#dc322f",
+        "magenta": "#d33682",
+        "violet": "#6c71c4",
+        "blue": "#268bd2",
+        "cyan": "#2aa198",
+        "green": "#859900"
+      },
+      "palette": [
+        "#002b36",
+        "#073642",
+        "#839496",
+        "#93a1a1",
+        "#268bd2",
+        "#2aa198",
+        "#859900",
+        "#b58900",
+        "#cb4b16",
+        "#dc322f"
+      ],
+      "accessibility": {
+        "contrastRatio": "AAA",
+        "wcagLevel": "AAA",
+        "notes": "Scientifically designed for accessibility"
+      },
+      "useCase": "Research projects, long-form coding, accessibility-first design",
+      "example": "Academic tools, scientific software"
+    },
+    {
+      "name": "One Dark Pro",
+      "description": "Atom One Dark adapted for VS Code, warm and professional dark theme",
+      "tags": ["warm", "professional", "popular", "atom"],
+      "source": "https://github.com/Binaryify/OneDark-Pro",
+      "colors": {
+        "background": "#282c34",
+        "foreground": "#abb2bf",
+        "red": "#e06c75",
+        "orange": "#d19a66",
+        "yellow": "#e5c07b",
+        "green": "#98c379",
+        "cyan": "#56b6c2",
+        "blue": "#61afef",
+        "purple": "#c678dd"
+      },
+      "palette": [
+        "#282c34",
+        "#abb2bf",
+        "#e06c75",
+        "#d19a66",
+        "#e5c07b",
+        "#98c379",
+        "#56b6c2",
+        "#61afef",
+        "#c678dd"
+      ],
+      "accessibility": {
+        "contrastRatio": "AAA",
+        "wcagLevel": "AAA",
+        "notes": "Warm accent colors reduce harshness"
+      },
+      "useCase": "Daily development, general-purpose coding, comfortable extended use",
+      "example": "VS Code, JetBrains IDEs"
+    },
+    {
+      "name": "GitHub Dark",
+      "description": "GitHub's official dark theme, professional and consistent with platform",
+      "tags": ["official", "github", "professional", "minimal"],
+      "source": "https://github.com/github/primer",
+      "colors": {
+        "background": "#0d1117",
+        "foreground": "#c9d1d9",
+        "border": "#30363d",
+        "red": "#f85149",
+        "orange": "#fb8500",
+        "yellow": "#d29922",
+        "green": "#3fb950",
+        "blue": "#58a6ff",
+        "purple": "#bc8ef0"
+      },
+      "palette": [
+        "#0d1117",
+        "#c9d1d9",
+        "#30363d",
+        "#f85149",
+        "#fb8500",
+        "#d29922",
+        "#3fb950",
+        "#58a6ff",
+        "#bc8ef0"
+      ],
+      "accessibility": {
+        "contrastRatio": "AAA",
+        "wcagLevel": "AAA",
+        "notes": "True black background with carefully chosen accents"
+      },
+      "useCase": "Code collaboration platforms, developer communities, GitHub integrations",
+      "example": "GitHub interface, Git-integrated tools"
+    },
+    {
+      "name": "Gruvbox Dark",
+      "description": "Retro groove color scheme, warm and pleasant dark theme",
+      "tags": ["retro", "warm", "vintage", "gruvbox"],
+      "source": "https://github.com/morhetz/gruvbox",
+      "colors": {
+        "background": "#282828",
+        "foreground": "#ebdbb2",
+        "red": "#cc241d",
+        "green": "#98971a",
+        "yellow": "#d79921",
+        "blue": "#458588",
+        "purple": "#b16286",
+        "aqua": "#689d6a",
+        "orange": "#d65d0e"
+      },
+      "palette": [
+        "#282828",
+        "#ebdbb2",
+        "#cc241d",
+        "#98971a",
+        "#d79921",
+        "#458588",
+        "#b16286",
+        "#689d6a",
+        "#d65d0e"
+      ],
+      "accessibility": {
+        "contrastRatio": "AAA",
+        "wcagLevel": "AAA",
+        "notes": "Warm earthy tones, retro aesthetic"
+      },
+      "useCase": "Terminal environments, minimalist editors, nostalgic interfaces",
+      "example": "Vim, Neovim, terminal applications"
+    },
+    {
+      "name": "JetBrains Darcula",
+      "description": "JetBrains official dark IDE theme, sophisticated and production-ready",
+      "tags": ["official", "jetbrains", "sophisticated", "enterprise"],
+      "source": "https://jetbrains.com/",
+      "colors": {
+        "background": "#2b2d30",
+        "foreground": "#a9b1d6",
+        "red": "#ff5f5f",
+        "orange": "#ffb86c",
+        "yellow": "#f1fa8c",
+        "green": "#51cf66",
+        "blue": "#80d4ff",
+        "purple": "#bb86fc"
+      },
+      "palette": [
+        "#2b2d30",
+        "#a9b1d6",
+        "#ff5f5f",
+        "#ffb86c",
+        "#f1fa8c",
+        "#51cf66",
+        "#80d4ff",
+        "#bb86fc"
+      ],
+      "accessibility": {
+        "contrastRatio": "AAA",
+        "wcagLevel": "AAA",
+        "notes": "Enterprise-grade accessibility"
+      },
+      "useCase": "Enterprise development, Java/Kotlin projects, professional environments",
+      "example": "IntelliJ IDEA, PyCharm, WebStorm"
+    }
+  ]
+}
