@@ -2,7 +2,6 @@
 
 39 skills organized by domain. Invoke with `/skill-name` in Claude Code or Codex.
 
----
 
 ## SDLC Pipeline
 
@@ -18,7 +17,6 @@
 | `/quick`          | "quick fix", "small change"                                        | Zero-ceremony atomic task for tiny fixes (minutes, not hours)               |
 | `/diagnose`       | "investigate this bug", "unknown root cause"                       | Root cause investigation via subagent + companion solver                    |
 
----
 
 ## Quality & Security
 
@@ -33,7 +31,6 @@
 | `/docker-audit`       | "audit my Dockerfile", "Docker best practices", "is my container secure" | Dockerfile and Compose audit against 10 common mistakes                |
 | `/test-scaffold`      | "scaffold tests", "generate test file", "write test boilerplate"         | Unit test files with structure, fixtures, mocking (pytest / Jest)      |
 
----
 
 ## Git / PR / Release
 
@@ -47,7 +44,6 @@
 | `/deploy`     | "deploy", "roll out", "canary", "feature flag"            | Post-merge deployment — canary/blue-green, smoke tests, rollback       |
 | `/progress`   | "where was I", "what's next", "progress"                  | Situational awareness — fresh git/PR snapshot + next action suggestion |
 
----
 
 ## Docs & Ops
 
@@ -61,7 +57,6 @@
 | `/techdebt`              | "find tech debt", "dead code", "duplicated code", "code hygiene"   | Dead code, duplications, TODOs, oversized functions                      |
 | `/website-health`        | "audit my website", "site health", "check SEO"                     | Live website audit — SEO, performance, links, privacy, a11y, security    |
 
----
 
 ## Meta / Tooling
 

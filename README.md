@@ -6,7 +6,6 @@ Production-ready Claude Code and Codex configuration — skills, hooks, rules, a
 [![Run in Smithery](https://smithery.ai/badge/skills/matteocervelli)](https://smithery.ai/skills?ns=matteocervelli&utm_source=github&utm_medium=badge)
 [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-FFDD00?style=flat&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/matteocervelli)
 
----
 
 ## What's inside
 
@@ -17,7 +16,6 @@ Production-ready Claude Code and Codex configuration — skills, hooks, rules, a
 | `docs/anthropic/` | Fetched Anthropic reference docs (API, Claude Code, MCP)       |
 | `.archive/`       | Previous versions — builder tools v0.1, Feature-Implementer v2 |
 
----
 
 ## Quick start
 
@@ -34,7 +32,6 @@ cp -r .claude/rules/* ~/.claude/rules/
 cp -r .claude/hooks/* ~/.claude/hooks/
 ```
 
----
 
 ## Skills (39)
 
@@ -55,7 +52,6 @@ Full catalog with trigger phrases: [`docs/skill-catalog.md`](docs/skill-catalog.
 **Meta**
 `/map-codebase` `/skillify` `/registry` `/review` `/project-create` `/analytics` `/frontend` `/claude-code-guide`
 
----
 
 ## Hooks
 
@@ -77,13 +73,11 @@ Unified dispatcher — one entry point, specialized handlers.
 
 Wired in `.claude/settings.json`.
 
----
 
 ## Rules (21)
 
 `tdd` `safety` `security-gate` `code-quality` `dependencies` `defense-in-depth` `anti-slop` `docker` `python-tools` `scoped-testing` `temporal-awareness` `skill-architecture` `claude-md-structure` `claude-md-branching` `lockfile-safety` `package-freshness` `frontend-verification` `release-workflow` `github-workflow` `github-cli` `migration-safety`
 
----
 
 ## Codex
 
@@ -95,7 +89,6 @@ codex --config .codex/config.toml
 
 See `.codex/instructions.md` for Claude Code vs Codex differences.
 
----
 
 ## Versions
 
@@ -104,13 +97,11 @@ See `.codex/instructions.md` for Claude Code vs Codex differences.
 | **v0.2.0** | Production skill library — 39 skills, unified hook dispatcher, Codex mirror |
 | v0.1.x     | Feature-Implementer v2 (archived in `.archive/`)                            |
 
----
 
 ## Support
 
 [![Buy Me a Coffee](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://buymeacoffee.com/matteocervelli)
 
----
 
 ## License
 

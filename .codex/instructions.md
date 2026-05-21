@@ -1,32 +1,27 @@
 # Codex Instructions
 
-This is the Codex equivalent of `.claude/` — same skills and workflow, different runtime.
+The skills, hooks, and rules in `.codex/` are battle-tested in both Claude Code and Codex.
+They share the same format, same invocation pattern, and same behavioral guarantees — the runtime is different, the skill logic is identical.
 
 ## Key Differences from Claude Code
 
-|             | Claude Code                        | Codex                              |
-| ----------- | ---------------------------------- | ---------------------------------- |
-| Config file | `CLAUDE.md`                        | `AGENTS.md`                        |
-| Skills dir  | `.claude/skills/`                  | `.codex/skills/` (symlink or copy) |
-| Hook system | `.claude/hooks/` via settings.json | `.codex/hooks/` via config.toml    |
-| Danger mode | permission modes                   | `--dangerously-allow-all` flag     |
-| Memory      | custom SQLite + skills             | no built-in persistent memory      |
+|             | Claude Code                        | Codex                           |
+| ----------- | ---------------------------------- | ------------------------------- |
+| Config file | `CLAUDE.md`                        | `AGENTS.md`                     |
+| Skills dir  | `.claude/skills/`                  | `.codex/skills/`                |
+| Hook system | `.claude/hooks/` via settings.json | `.codex/hooks/` via config.toml |
+| Danger mode | permission modes                   | `--dangerously-allow-all` flag  |
+| Memory      | custom SQLite + skills             | no built-in persistent memory   |
 
 ## Setup
 
 ```bash
-# Link skills from .claude (avoid duplication)
-ln -s ../.claude/skills .codex/skills
-
-# Or copy if you want Codex-specific overrides
-cp -r ../.claude/skills .codex/skills
+codex --config .codex/config.toml
 ```
 
-## config.toml
-
-See `../examples/codex-config.example.toml` for the full reference configuration.
+See `config.toml` for hook wiring and approval mode.
 
 ## Hooks
 
-Codex hooks use the same pattern as Claude Code — Python scripts reading JSON from stdin.
-The `.claude/hooks/` handlers are compatible with Codex with minor adjustments.
+Same protocol as Claude Code — Python scripts reading JSON from stdin, exit 2 to block.
+The handlers in `.codex/hooks/` are identical to `.claude/hooks/` — no adjustments needed.
