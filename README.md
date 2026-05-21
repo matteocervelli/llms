@@ -1,5 +1,8 @@
 # LLMs - Configuration Management System
 
+[![Run in Smithery](https://smithery.ai/badge/skills/matteocervelli)](https://smithery.ai/skills?ns=matteocervelli&utm_source=github&utm_medium=badge)
+
+
 > Centralized LLM configuration and documentation management system. Tools for building skills, commands, agents, prompts, and managing MCP servers. Multi-LLM support (Claude Code, Codex, OpenCode).
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
